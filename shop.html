@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shop - JMC Materials</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="styles/general.css" />
+  <link rel="stylesheet" href="styles/topbar.css">
+  <link rel="stylesheet" href="styles/header.css">
+  <link rel="stylesheet" href="styles/category.css">
+  <link rel="stylesheet" href="styles/shop.css">
+  <link rel="stylesheet" href="styles/products.css">
+  <link rel="stylesheet" href="styles/cart.css">
+  <link rel="stylesheet" href="styles/product-modal.css">
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <!-- Left: Logo -->
+    <div class="header-left">
+      <div class="logo">
+        <a href="Page.html">
+          <img class="jmc" src="img/download.png" />
+        </a>
+      </div>
+    </div>
+    <!-- Center: Search -->
+    <div class="header-center">
+      <div class="search-container">
+        <input class="search" type="text" placeholder="Search products..." id="shop-search-input"
+          oninput="
+            const q = this.value.toLowerCase();
+            if (typeof allProducts !== 'undefined') {
+              allProducts = q
+                ? products.filter(p => p.name.toLowerCase().includes(q) || (p.category||'').toLowerCase().includes(q))
+                : [...products];
+              if (typeof renderShop === 'function') renderShop();
+            }
+          "
+          onkeydown="if(event.key==='Enter') this.oninput()" />
+        <button class="search-button" onclick="document.getElementById('shop-search-input').oninput()">Search</button>
+      </div>
+    </div>
+    <!-- Right: Login + Register + Cart -->
+    <div class="header-right">
+      <a href="login.html" id="login-link" class="header-btn btn-login">Login</a>
+      <a href="register.html" id="register-link" class="header-btn btn-register">Register</a>
+      <div class="cart">
+        <img src="Icons/download (1).png" />
+        <span class="cart-badge" id="cart-badge" style="display: none;">0</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- CATEGORY MENU — loaded dynamically from API -->
+  <div class="category-menu">
+    <a href="#" class="cat-filter active" data-category="all">All</a>
+  </div>
+
+  <main class="main" id="main-content">
+    <section class="shop-section">
+      <div class="shop-header">
+        <h2>Shop Products</h2>
+      </div>
+      <div class="products-grid shop-grid js-shop-grid"></div>
+    </section>
+  </main>
+
+  <!-- CART SIDEBAR -->
+  <div id="cart-sidebar" class="cart-sidebar">
+    <div class="cart-header">
+      <h2>Your Cart</h2>
+      <button id="close-cart-btn" class="close-cart-btn">&times;</button>
+    </div>
+    <div id="cart-items" class="cart-items-container"></div>
+    <div class="cart-footer">
+      <div class="cart-total">
+        <span>Total:</span>
+        <span id="cart-total-price">₱0.00</span>
+      </div>
+      <button class="checkout-btn">Proceed to Checkout</button>
+    </div>
+  </div>
+
+  <script src="data/products.js?v=3"></script>
+  <script src="Js/cart.js?v=5"></script>
+  <script src="Js/product-modal.js?v=6"></script>
+  <script src="Js/shop.js?v=4"></script>
+  <script src="Js/product.js?v=2"></script>
+  <script src="Js/navigation.js?v=2"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      if (typeof loadCategories === 'function') loadCategories();
+      if (typeof initShop === 'function') initShop();
+    });
+  </script>
+
+</body>
+</html>

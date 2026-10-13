@@ -1,0 +1,223 @@
+/* ================================
+   FONT
+================================ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+}
+
+/* ================================
+   PAGE — dark background, centered
+================================ */
+.page {
+  min-height: 100vh;
+  background: #f1f5f9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+/* ================================
+   CARD — white box in the middle
+================================ */
+.card {
+  background: white;
+  border-radius: 16px;
+  padding: 40px 36px;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+  text-align: center;
+}
+
+/* ================================
+   LOGO
+================================ */
+.logo {
+  width: 140px;
+  height: auto;
+  margin-bottom: 24px;
+}
+
+/* ================================
+   TITLE & SUBTITLE
+================================ */
+h1 {
+  font-size: 26px;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 6px;
+}
+
+.subtitle {
+  font-size: 14px;
+  color: #64748b;
+  margin-bottom: 28px;
+}
+
+/* ================================
+   FORM LABELS & INPUTS
+================================ */
+.card label {
+  display: block;
+  text-align: left;
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 6px;
+  margin-top: 16px;
+}
+
+.card input {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.card input:focus {
+  border-color: #f97316; /* orange on focus */
+}
+
+/* ================================
+   PASSWORD ROW — input + eye button
+================================ */
+.password-row {
+  display: flex;
+  gap: 8px;
+}
+
+.password-row input {
+  flex: 1;
+}
+
+.password-row button {
+  padding: 0 14px;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 8px;
+  background: white;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.password-row button:hover {
+  background: #f1f5f9;
+}
+
+/* ================================
+   ERROR BOX
+================================ */
+.error-box {
+  background: #fef2f2;
+  color: #dc2626;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 13px;
+  margin-top: 16px;
+  text-align: left;
+}
+
+/* ================================
+   SUBMIT BUTTON
+================================ */
+.submit-btn {
+  width: 100%;
+  margin-top: 24px;
+  padding: 13px;
+  background: #f97316;  /* orange */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.submit-btn:hover {
+  background: #ea6c0a ;  /* blue on hover */
+}
+
+.submit-btn:disabled {
+  background: #94a3b8;
+  cursor: not-allowed;
+}
+
+/* ================================
+   BOTTOM LINKS
+================================ */
+.bottom-text {
+  margin-top: 16px;
+  font-size: 13px;
+  color: #64748b;
+}
+
+.bottom-text a {
+  color: #f97316;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.bottom-text a:hover {
+  text-decoration: underline;
+}
+
+/* ── Mobile Responsive ──────────────────────────── */
+@media (max-width: 480px) {
+  .page {
+    padding: 16px;
+    align-items: flex-start;
+    padding-top: 40px;
+  }
+
+  .card {
+    padding: 28px 20px;
+    border-radius: 12px;
+  }
+
+  .logo {
+    width: 110px;
+    margin-bottom: 16px;
+  }
+
+  h1 {
+    font-size: 22px;
+  }
+
+  .subtitle {
+    font-size: 13px;
+    margin-bottom: 20px;
+  }
+
+  .card input {
+    padding: 11px 12px;
+    font-size: 14px;
+  }
+
+  .submit-btn {
+    padding: 12px;
+    font-size: 14px;
+    margin-top: 20px;
+  }
+
+  .bottom-text {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 360px) {
+  .card {
+    padding: 24px 16px;
+  }
+
+  h1 {
+    font-size: 20px;
+  }
+}

@@ -1,0 +1,267 @@
+/* CART SIDEBAR STYLES */
+.cart-sidebar {
+  position: fixed;
+  top: 0;
+  right: -400px;
+  width: 350px;
+  height: 100vh;
+  background-color: #fff;
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
+  transition: right 0.3s ease;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+}
+
+.cart-sidebar.open {
+  right: 0;
+}
+
+.cart-header {
+  padding: 20px;
+  background-color: #f97316;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cart-header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.close-cart-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #fff;
+  cursor: pointer;
+}
+
+.cart-items-container {
+  flex-grow: 1;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+}
+
+.cart-item-img {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+  margin-right: 15px;
+}
+
+.cart-item-details {
+  flex-grow: 1;
+}
+
+.cart-item-title {
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-bottom: 5px;
+}
+
+.cart-item-price {
+  color: #555;
+  font-size: 0.9rem;
+}
+
+.cart-item-quantity {
+  font-size: 0.8rem;
+  color: #888;
+}
+
+.cart-item-badge {
+  display: inline-block;
+  background: #fef3c7;
+  color: #92400e;
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 4px;
+  margin-top: 4px;
+}
+
+.remove-item-btn {
+  background: none;
+  border: none;
+  color: #e74c3c;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.cart-footer {
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-top: 1px solid #ddd;
+}
+
+.cart-footer .cart-disclaimer {
+  background: #fef3c7;
+  padding: 10px 12px;
+  margin-bottom: 15px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  line-height: 1.4;
+}
+
+.cart-footer .disclaimer-text {
+  color: #92400e;
+}
+
+.cart-footer .disclaimer-text strong {
+  font-weight: 700;
+}
+
+.cart-total {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+
+.checkout-btn {
+  width: 100%;
+  padding: 15px;
+  background-color: #f97316;
+  color: #fff;
+  border: none;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.checkout-btn:hover {
+  background-color: #ea6c0a;
+}
+
+/* Badge for cart icon */
+.cart {
+  position: relative;
+  cursor: pointer;
+}
+.cart-badge {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: #e74c3c;
+  color: #fff;
+  font-size: 0.75rem;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+}
+
+/* Order Success Modal */
+#order-success-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  backdrop-filter: blur(2px);
+}
+
+.order-success-card {
+  background: white;
+  border-radius: 16px;
+  padding: 36px 32px;
+  max-width: 400px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+}
+
+.order-success-title {
+  font-size: 20px;
+  font-weight: 800;
+  color: #0f172a;
+  margin-bottom: 8px;
+}
+
+.order-success-sub {
+  color: #64748b;
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+
+.order-success-id {
+  color: #94a3b8;
+  font-size: 13px;
+  margin-bottom: 24px;
+}
+
+.order-success-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.order-view-btn {
+  padding: 10px 22px;
+  border-radius: 8px;
+  background: #f97316;
+  color: white;
+  font-weight: 700;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.order-view-btn:hover {
+  background: #ea6c0a;
+}
+
+.order-continue-btn {
+  padding: 10px 22px;
+  border-radius: 8px;
+  border: 1.5px solid #e2e8f0;
+  background: white;
+  color: #475569;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.order-continue-btn:hover {
+  background: #f1f5f9;
+}
+
+/* ── Mobile Responsive ──────────────────────────── */
+@media (max-width: 480px) {
+    .cart-sidebar {
+        width: 80%;
+        right: -80%;
+    }
+
+    .cart-sidebar.open {
+        right: 0;
+    }
+
+    .order-success-actions {
+        flex-direction: column;
+    }
+
+    .order-view-btn,
+    .order-continue-btn {
+        width: 100%;
+        text-align: center;
+    }
+}

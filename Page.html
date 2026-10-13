@@ -1,0 +1,406 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JMC Materials</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles/general.css?v=999" />
+  <link rel="stylesheet" href="styles/register.css?v=999">
+  <link rel="stylesheet" href="styles/login.css?v=999">
+  <link rel="stylesheet" href="styles/shop.css?v=999">
+  <link rel="stylesheet" href="styles/slider.css?v=999">
+  <link rel="stylesheet" href="styles/topbar.css?v=999">
+  <link rel="stylesheet" href="styles/products.css?v=999">
+  <link rel="stylesheet" href="styles/header.css?v=999">
+  <link rel="stylesheet" href="styles/footer.css?v=999">
+  <link rel="stylesheet" href="styles/category.css?v=999">
+  <link rel="stylesheet" href="styles/cart.css?v=999">
+  <link rel="stylesheet" href="styles/product-modal.css?v=999">
+
+</head>
+
+<body>
+  <header class="header">
+    <!-- Left: Logo -->
+    <div class="header-left">
+      <div class="logo">
+        <a href="Page.html">
+          <img class="jmc" src="img/download.png" />
+        </a>
+      </div>
+    </div>
+    <!-- Center: Search -->
+    <div class="header-center">
+      <div class="search-container" style="position:relative;">
+        <input class="search" type="text" placeholder="Search products..." id="main-search" autocomplete="off"
+          onkeydown="if(event.key==='Enter'){ const q=this.value.trim(); window.location.href=q?'shop.html?search='+encodeURIComponent(q):'shop.html'; }"
+          oninput="handleHeaderSearch(this.value)" />
+        <button class="search-button" onclick="
+          const q = document.getElementById('main-search').value.trim();
+          if (q) window.location.href = 'shop.html?search=' + encodeURIComponent(q);
+          else window.location.href = 'shop.html';
+        ">Search</button>
+        <div id="header-search-dropdown" style="
+          display:none;
+          position:absolute;
+          top:calc(100% + 4px);
+          left:0;
+          right:0;
+          background:#fff;
+          border:1.5px solid #e2e8f0;
+          border-radius:10px;
+          box-shadow:0 8px 30px rgba(0,0,0,0.12);
+          z-index:9999;
+          max-height:320px;
+          overflow-y:auto;
+        "></div>
+      </div>
+    </div>
+    <!-- Right: Login + Register + Cart -->
+    <div class="header-right">
+      <a href="login.html" id="login-link" class="header-btn btn-login">Login</a>
+      <a href="register.html" id="register-link" class="header-btn btn-register">Register</a>
+      <div class="cart">
+        <img src="Icons/download (1).png" />
+        <span class="cart-badge" id="cart-badge" style="display: none;">0</span>
+      </div>
+    </div>
+  </header>
+  <div class="category-menu">
+    <a href="shop.html" id="shop-link">Shop</a>
+    <!-- Categories loaded dynamically from API (same as shop.html) -->
+  </div>
+  <main class="main" id="main-content">
+    <div class="hero-slider" id="hero-slider">
+      <!-- Banners - To add more: copy the img line and change the src -->
+      <img src="uploads/banner_6ac67f3eb41c4.webp" class="hero-slide active" />
+    </div>
+
+    <!-- SALE ITEMS -->
+    <section class="products-section sale-section" id="sale-section">
+      <div class="section-header">
+        <div class="section-title-group">
+          <span class="section-tag sale-tag">On Sale</span>
+          <h2>Sale Items</h2>
+        </div>
+      </div>
+      <div class="products-grid js-sale-grid"></div>
+    </section>
+        <!-- BEST SELLING -->
+
+    <section class="products-section best-selling-section">
+      <div class="section-header">
+        <div class="section-title-group">
+          <span class="section-tag">Top Picks</span>
+          <h2>Best Selling</h2>
+        </div>
+      </div>
+      <div class="products-grid js-product-grid"></div>
+    </section>
+
+        <a href="#" onclick="checkBulkOrderAccess(event)" class="bulk-banner-link">
+      <img src="img/img/bulk-orders.png" alt="Bulk Orders" />
+    </a>
+
+
+    <!-- NEW ARRIVALS -->
+    <section class="products-section new-arrivals-section" id="new-arrivals-section">
+      <div class="section-header">
+        <div class="section-title-group">
+          <span class="section-tag new-tag">Just In</span>
+          <h2>New Arrivals</h2>
+        </div>
+      </div>
+      <div class="products-grid js-new-arrivals-grid"></div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <!-- Top: Logo + Features -->
+      <div class="footer-top">
+        <div class="footer-features">
+          <div class="feature">
+            <img src="img/diamond.png" alt="Quality Products" />
+            <p>Quality Products</p>
+          </div>
+
+          <div class="feature">
+            <img src="img/truck.png" alt="Fast Delivery" />
+            <p>Fast Delivery</p>
+          </div>
+
+          <div class="feature">
+            <img src="img/cod.png" alt="Cash on Delivery" />
+            <p>Cash-on Delivery</p>
+          </div>
+        </div>
+      </div>
+  </main>
+  <!-- Bottom: Contact & Links -->
+  <div class="footer-bottom">
+    <div class="jmc-logo"><img src="img/jmc.jpg " /></div>
+    <div class="footer-column contact-us">
+      <h3>Contact Us</h3>
+      <div class="branch">
+        <strong>SUCAT BRANCH</strong>
+        <p>421 Purok 2, Muntinlupa, 1770 Metro Manila</p>
+        <p>Tel: +63 9683743025</p>
+        <p>Email: jmcmerchandise@gmail.com</p>
+        <div class="fb">
+          <span class="fb-letter">f:</span> JMC MERCHANDISE
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Links -->
+    <div class="footer-column quick-links">
+      <h3>Quick Links</h3>
+      <ul>
+        <li><a href="terms.html" style="color:white; text-decoration:none;">Terms and Conditions</a></li>
+        <li><a href="privacy.html" style="color:white; text-decoration:none;">Privacy Policy</a></li>
+        <li><a href="returns.html" style="color:white; text-decoration:none;">Return and Refund Policy</a></li>
+        <li>Blogs</li>
+        <li>We deliver in your area!</li>
+      </ul>
+    </div>
+
+    <!-- Business Info -->
+    <div class="footer-column business">
+      <h3>Business</h3>
+      <ul>
+        <li>About Us</li>
+        <li>Invest with Us</li>
+        <li><a href="#" onclick="checkBulkOrderAccess(event)" style="color:white; text-decoration:none;">Bulk Order</a></li>
+      </ul>
+    </div>
+  </div>
+  </footer>
+
+  <!-- CART SIDEBAR -->
+  <div id="cart-sidebar" class="cart-sidebar">
+    <div class="cart-header">
+      <h2>Your Cart</h2>
+      <button id="close-cart-btn" class="close-cart-btn">&times;</button>
+    </div>
+    <div id="cart-items" class="cart-items-container">
+      <!-- Cart items will be dynamically injected here -->
+    </div>
+    <div class="cart-footer">
+      <div class="cart-total">
+        <span>Total:</span>
+        <span id="cart-total-price">₱0.00</span>
+      </div>
+      <button class="checkout-btn">Proceed to Checkout</button>
+    </div>
+  </div>
+
+  <script src="data/products.js?v=999"></script>
+  <script src="Js/cart.js?v=999"></script>
+  <script src="Js/product-modal.js?v=999"></script>
+  <script src="Js/shop.js?v=999"></script>
+  <script src="Js/product.js?v=999"></script>
+  <script src="Js/navigation.js?v=9999"></script>
+  <script src="Js/slider.js?v=999"></script>
+  <script src="Js/login.js?v=999"></script>
+  <script src="Js/register.js?v=999"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      if (typeof loadCategories === 'function') loadCategories();
+    });
+  </script>
+
+  <script>
+    // ── Header search dropdown ──
+    const _hsDrop  = document.getElementById('header-search-dropdown');
+    const _hsInput = document.getElementById('main-search');
+
+    function handleHeaderSearch(val) {
+      const q = val.trim().toLowerCase();
+      if (q.length < 2) { _hsDrop.style.display = 'none'; return; }
+
+      const source = (typeof products !== 'undefined' && products.length) ? products : [];
+      const matches = source.filter(p =>
+        p.name.toLowerCase().includes(q) ||
+        (p.category || '').toLowerCase().includes(q)
+      ).slice(0, 8);
+
+      if (matches.length === 0) {
+        _hsDrop.innerHTML = '<div style="padding:12px 16px;color:#94a3b8;font-size:13px;">No products found.</div>';
+        _hsDrop.style.display = 'block';
+        return;
+      }
+
+      _hsDrop.innerHTML = matches.map(p => {
+        const discount = p.discount || 0;
+        const price = discount > 0 ? p.price * (1 - discount / 100) : p.price;
+        const discBadge = discount > 0
+          ? `<span style="background:#dc2626;color:#fff;font-size:10px;font-weight:700;padding:1px 6px;border-radius:8px;margin-left:6px;">-${discount}%</span>`
+          : '';
+        return `<div class="hs-result-item" style="
+              padding:10px 14px;
+              cursor:pointer;
+              border-bottom:1px solid #f1f5f9;
+              display:flex;
+              align-items:center;
+              justify-content:space-between;
+              gap:12px;
+              transition:background 0.15s;
+            "
+            onmouseover="this.style.background='#fff7ed'"
+            onmouseout="this.style.background=''"
+            onclick="window.location.href='shop.html?search=${encodeURIComponent(p.name)}'"
+          >
+          <div style="min-width:0;">
+            <div style="font-size:13px;font-weight:600;color:#0f172a;">${p.name}${discBadge}</div>
+            <div style="font-size:12px;color:#64748b;margin-top:2px;">${p.category || ''} · ₱${Number(price).toLocaleString('en-PH',{minimumFractionDigits:2})}/${p.unit || 'pcs'}</div>
+          </div>
+          <button onclick="event.stopPropagation(); openProductModal && openProductModal(${JSON.stringify(p).replace(/"/g,'&quot;')}); _hsDrop.style.display='none'; _hsInput.value='';" style="
+            flex-shrink:0;
+            background:#f97316;
+            color:#fff;
+            border:none;
+            border-radius:6px;
+            padding:5px 12px;
+            font-size:12px;
+            font-weight:700;
+            cursor:pointer;
+            font-family:Inter,sans-serif;
+            white-space:nowrap;
+          ">+ Add</button>
+        </div>`;
+      }).join('');
+
+      _hsDrop.style.display = 'block';
+    }
+
+    // Close on outside click
+    document.addEventListener('click', e => {
+      if (!_hsInput.contains(e.target) && !_hsDrop.contains(e.target)) {
+        _hsDrop.style.display = 'none';
+      }
+    });
+  </script>
+
+  <script>
+    // ── Bulk Order Access Validation ──
+    async function checkBulkOrderAccess(event) {
+      event.preventDefault();
+      
+      try {
+        const res = await fetch('/api/auth/me.php', { credentials: 'include' });
+        const json = await res.json();
+        
+        if (json.success && json.user) {
+          // User is logged in, redirect to bulk orders page
+          window.location.href = 'bulk-orders.html';
+        } else {
+          // User not logged in, show modal
+          showBulkOrderAuthModal();
+        }
+      } catch(e) {
+        // Error checking auth, show modal
+        showBulkOrderAuthModal();
+      }
+    }
+
+    function showBulkOrderAuthModal() {
+      // Create modal overlay
+      const modal = document.createElement('div');
+      modal.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 99999;
+        backdrop-filter: blur(4px);
+      `;
+
+      modal.innerHTML = `
+        <div style="
+          background: white;
+          border-radius: 12px;
+          padding: 32px;
+          max-width: 400px;
+          width: 90%;
+          text-align: center;
+          box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        ">
+          <h2 style="
+            font-size: 22px;
+            font-weight: 700;
+            color: #1e293b;
+            margin: 0 0 12px;
+          ">Create an Account First</h2>
+          
+          <p style="
+            font-size: 14px;
+            color: #64748b;
+            line-height: 1.5;
+            margin: 0 0 24px;
+          ">You need to be logged in to submit bulk orders and track your inquiries.</p>
+          
+          <div style="display: flex; gap: 10px; justify-content: center;">
+            <a href="login.html?redirect=bulk-orders.html" style="
+              display: inline-block;
+              padding: 10px 24px;
+              background: white;
+              color: #475569;
+              border: 2px solid #e2e8f0;
+              border-radius: 8px;
+              font-size: 14px;
+              font-weight: 600;
+              text-decoration: none;
+              cursor: pointer;
+            ">
+              Login
+            </a>
+            
+            <a href="register.html?redirect=bulk-orders.html" style="
+              display: inline-block;
+              padding: 10px 24px;
+              background: #f97316;
+              color: white;
+              border: none;
+              border-radius: 8px;
+              font-size: 14px;
+              font-weight: 700;
+              text-decoration: none;
+              cursor: pointer;
+            ">
+              Create Account
+            </a>
+          </div>
+          
+          <button onclick="this.closest('div[style*=fixed]').remove()" style="
+            margin-top: 16px;
+            background: none;
+            border: none;
+            color: #94a3b8;
+            font-size: 13px;
+            cursor: pointer;
+            padding: 8px;
+          ">Maybe later</button>
+        </div>
+      `;
+
+      // Close modal on overlay click
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+          modal.remove();
+        }
+      });
+
+      document.body.appendChild(modal);
+    }
+  </script>
+
+</body>
+
+</html>

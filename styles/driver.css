@@ -1,0 +1,224 @@
+/* driver dashboard styles (mobile first) */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', sans-serif;
+}
+
+body {
+  background-color: #f1f5f9;
+  color: #0f172a;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* header */
+.driver-header {
+  background-color: #334155;
+  color: #ffffff;
+  padding: 16px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+}
+
+.driver-header h1 {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.driver-info {
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+/* login screen */
+#driver-login-screen {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+  background-color: #ffffff;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+
+.login-card h2 {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+}
+
+.login-input {
+  width: 100%;
+  padding: 16px;
+  font-size: 1rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.btn-large {
+  display: block;
+  width: 100%;
+  padding: 16px;
+  background-color: #f97316;
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 6px -1px rgba(249, 115, 22, 0.4);
+}
+
+.btn-large:active {
+  transform: scale(0.98);
+  background-color: #ea580c;
+}
+
+/* main content */
+#driver-main-screen {
+  padding: 16px;
+  display: none;
+}
+
+.section-title {
+  margin-bottom: 16px;
+  font-size: 1.2rem;
+  color: #0f172a;
+}
+
+/* delivery cards */
+.delivery-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  border: 1px solid #e2e8f0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 12px;
+}
+
+.delivery-id {
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.status-badge {
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+.status-badge.pending { background: #fef08a; color: #854d0e; }
+.status-badge.out_for_delivery { background: #bfdbfe; color: #1e40af; }
+.status-badge.delivered { background: #d1fae5; color: #065f46; }
+.status-badge.failed { background: #fee2e2; color: #991b1b; }
+
+.customer-info p {
+  margin-bottom: 6px;
+  font-size: 0.95rem;
+}
+
+.icon {
+  margin-right: 8px;
+  color: #64748b;
+}
+
+.items-list {
+  background: #f1f5f9;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  color: #0f172a;
+}
+
+.actions {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.btn-secondary {
+  background-color: #f1f5f9;
+  color: #0f172a;
+  border: 1px solid #e2e8f0;
+}
+
+/* file upload / camera */
+.upload-container {
+  display: none;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px dashed #e2e8f0;
+}
+
+.camera-btn {
+  background: #f1f5f9;
+  border: 2px dashed #e2e8f0;
+  padding: 20px;
+  text-align: center;
+  border-radius: 12px;
+  cursor: pointer;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.camera-btn input[type="file"] {
+  display: none;
+}
+
+.preview-img {
+  width: 100%;
+  max-height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+  display: none;
+}
+
+textarea.remark-input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  font-family: inherit;
+  resize: none;
+}
+
+.btn-success {
+  background-color: #10b981;
+  color: #ffffff;
+  box-shadow: 0 4px 6px -1px rgba(16, 185, 129, 0.4);
+}
+
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  color: #64748b;
+}

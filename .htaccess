@@ -1,0 +1,98 @@
+Options -Indexes
+DirectoryIndex index.php Page.html index.html
+RewriteEngine On
+RewriteBase /
+
+# Pass through existing files and directories directly
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# Redirect /verify-email?token=X to /api/auth/verify-email.php?token=X
+RewriteRule ^verify-email$ /api/auth/verify-email.php [L,QSA]
+
+# Route /api/auth/*
+RewriteRule ^api/auth/toggle-account-status$ api/auth/toggle-account-status.php [L,QSA]
+RewriteRule ^api/auth/employees/([0-9]+)$ api/auth/employees.php?id=$1 [L,QSA]
+RewriteRule ^api/auth/employees$ api/auth/employees.php [L,QSA]
+RewriteRule ^api/auth/register-employee$ api/auth/register-employee.php [L,QSA]
+RewriteRule ^api/auth/verify-email$ api/auth/verify-email.php [L,QSA]
+RewriteRule ^api/auth/resend-verification$ api/auth/resend-verification.php [L,QSA]
+RewriteRule ^api/auth/update-profile$ api/auth/update-profile.php [L,QSA]
+RewriteRule ^api/auth/login$ api/auth/login.php [L,QSA]
+RewriteRule ^api/auth/logout$ api/auth/logout.php [L,QSA]
+RewriteRule ^api/auth/register$ api/auth/register.php [L,QSA]
+RewriteRule ^api/auth/me$ api/auth/me.php [L,QSA]
+
+# Route /api/products/*
+RewriteRule ^api/products/best-selling$ api/products/best-selling.php [L,QSA]
+RewriteRule ^api/products/upload-image$ api/products/upload-image.php [L,QSA]
+RewriteRule ^api/products/([0-9]+)/variants/([0-9]+)$ api/products/variants.php?id=$1&vid=$2 [L,QSA]
+RewriteRule ^api/products/([0-9]+)/variants$ api/products/variants.php?id=$1 [L,QSA]
+RewriteRule ^api/products/([0-9]+)/restock$ api/products/restock.php?id=$1 [L,QSA]
+RewriteRule ^api/products/([0-9]+)$ api/products/product.php?id=$1 [L,QSA]
+RewriteRule ^api/products$ api/products/index.php [L,QSA]
+
+# Route /api/categories/*
+RewriteRule ^api/categories/([0-9]+)$ api/categories/index.php?id=$1 [L,QSA]
+RewriteRule ^api/categories$ api/categories/index.php [L,QSA]
+
+# Route /api/banners/*
+RewriteRule ^api/banners/([^/]+)$ api/banners/index.php?id=$1 [L,QSA]
+RewriteRule ^api/banners$ api/banners/index.php [L,QSA]
+
+# Route /api/cart/*
+RewriteRule ^api/cart/([0-9]+)$ api/cart/index.php?item_id=$1 [L,QSA]
+RewriteRule ^api/cart$ api/cart/index.php [L,QSA]
+
+# Route /api/orders/*
+RewriteRule ^api/orders/stats$ api/orders/stats.php [L,QSA]
+RewriteRule ^api/orders/my$ api/orders/my.php [L,QSA]
+RewriteRule ^api/orders/cancellations$ api/orders/cancellations.php [L,QSA]
+RewriteRule ^api/orders/cancellations/([^/]+)$ api/orders/cancellations.php?ref=$1 [L,QSA]
+RewriteRule ^api/orders/([^/]+)/approve_cancel$ api/orders/approve_cancel.php?ref=$1 [L,QSA]
+RewriteRule ^api/orders/([^/]+)/complete$ api/orders/complete.php?ref=$1 [L,QSA]
+RewriteRule ^api/orders/([^/]+)/status$ api/orders/status.php?ref=$1 [L,QSA]
+RewriteRule ^api/orders/([^/]+)/cancel$ api/orders/cancel.php?ref=$1 [L,QSA]
+RewriteRule ^api/orders/([^/]+)$ api/orders/index.php?ref=$1 [L,QSA]
+RewriteRule ^api/orders/?$ api/orders/index.php [L,QSA]
+
+# Route /api/customers/*
+RewriteRule ^api/customers/([0-9]+)$ api/customers/index.php?id=$1 [L,QSA]
+RewriteRule ^api/customers$ api/customers/index.php [L,QSA]
+
+# Route /api/deliveries/*
+RewriteRule ^api/deliveries/driver$ api/deliveries/driver.php [L,QSA]
+RewriteRule ^api/deliveries/driver/([^/]+)$ api/deliveries/driver.php?name=$1 [L,QSA,B]
+RewriteRule ^api/deliveries/batch/([0-9]+)/dispatch$ api/deliveries/batch.php?id=$1&action=dispatch [L,QSA]
+RewriteRule ^api/deliveries/batch/([0-9]+)$ api/deliveries/batch.php?id=$1 [L,QSA]
+RewriteRule ^api/deliveries/batch/?$ api/deliveries/batch.php [L,QSA]
+RewriteRule ^api/deliveries/([^/]+)/status$ api/deliveries/status.php?ref=$1 [L,QSA]
+RewriteRule ^api/deliveries/([^/]+)/assign$ api/deliveries/assign.php?ref=$1 [L,QSA]
+RewriteRule ^api/deliveries/([^/]+)/proof$ api/deliveries/proof.php?ref=$1 [L,QSA]
+RewriteRule ^api/deliveries/([0-9a-zA-Z\-]+)$ api/deliveries/index.php?ref=$1 [L,QSA]
+RewriteRule ^api/deliveries$ api/deliveries/index.php [L,QSA]
+
+# Route /api/returns/*
+RewriteCond %{REQUEST_METHOD} !OPTIONS
+RewriteRule ^api/returns/([^/]+)/approve$ api/returns/approve.php?ref=$1 [L,QSA]
+RewriteCond %{REQUEST_METHOD} !OPTIONS
+RewriteRule ^api/returns/([^/]+)/reject$ api/returns/reject.php?ref=$1 [L,QSA]
+RewriteCond %{REQUEST_METHOD} !OPTIONS
+RewriteRule ^api/returns/([^/]+)$ api/returns/index.php?ref=$1 [L,QSA]
+RewriteCond %{REQUEST_METHOD} !OPTIONS
+RewriteRule ^api/returns/?$ api/returns/index.php [L,QSA]
+
+# Route /api/dashboard/*
+RewriteRule ^api/dashboard/stats$ api/dashboard/stats.php [L,QSA]
+RewriteRule ^api/dashboard/charts$ api/dashboard/charts.php [L,QSA]
+
+# Route /api/bulk-orders/*
+RewriteRule ^api/bulk-orders/([^/]+)$ api/bulk-orders/update.php?ref=$1 [L,QSA]
+RewriteRule ^api/bulk-orders/?$ api/bulk-orders/index.php [L,QSA]
+
+# Route /api/logs
+RewriteRule ^api/logs$ api/logs/index.php [L,QSA]
+
+# Default: serve Page.html as root
+RewriteRule ^$ Page.html [L]

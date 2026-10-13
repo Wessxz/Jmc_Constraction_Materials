@@ -1,0 +1,53 @@
+# JMC Hardware - Git Ignore File
+# Prevent sensitive files from being committed
+
+# Environment variables (contains passwords!)
+.env
+
+# Database files
+*.sql
+!create-admin.sql
+!add-missing-columns.sql
+*.db
+*.sqlite
+
+# Logs
+*.log
+error.log
+
+# Temporary files
+*.tmp
+*.temp
+~*
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Upload folders (may contain user data)
+uploads/*
+!uploads/.gitkeep
+
+# Node modules (if any)
+node_modules/
+
+# Test files
+test-*.php
+test-*.html
+test-*.js
+
+# Backup files
+*-backup.*
+*.bak
+*.old
+
+# PHP composer
+vendor/
+composer.lock

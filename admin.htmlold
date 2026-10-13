@@ -1,0 +1,3174 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard - JMC Materials</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles/admin.css" />
+  </head>
+
+  <body>
+    <div class="admin-layout">
+      <!-- SIDEBAR -->
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <div
+            style="
+              background: white;
+              border-radius: 10px;
+              padding: 8px;
+              display: inline-block;
+            "
+          >
+            <img
+              src="img/download.png"
+              alt="JMC Logo"
+              style="width: 90px; height: auto; display: block"
+            />
+          </div>
+        </div>
+        <ul class="nav-links">
+          <li>
+            <a href="#" class="nav-btn active" data-target="dashboard-view">Dashboard</a>
+          </li>
+          <li>
+            <a href="#" class="nav-btn" data-target="products-view">Product Mgmt</a>
+          </li>
+          <li>
+            <a href="#" class="nav-btn" data-target="orders-view">Order Mgmt</a>
+          </li>
+          <li>
+            <a href="#" class="nav-btn" data-target="deliveries-view">Deliveries</a>
+          </li>
+          <li>
+            <a href="#" class="nav-btn" data-target="truck-planner-view">Truck Planner</a>
+          </li>
+          <li>
+            <a href="#" class="nav-btn" data-target="customers-view">Customers</a>
+          </li>
+          <li>
+            <a href="#" class="nav-btn" data-target="employees-view">Employees</a>
+          </li>
+          <li>
+            <a href="#" class="nav-btn" data-target="inventory-view">Inventory</a>
+          </li>
+          <li>
+            <a href="#" class="nav-btn" data-target="categories-view">Categories</a>
+          </li>
+          <li>
+            <a href="#" class="nav-btn" data-target="banners-view">Banners</a>
+          </li>
+          <li>
+            <a href="#" class="nav-btn" data-target="returns-view">Returns &amp; Cancellations</a>
+          </li>
+          <li>
+            <a href="#" class="nav-btn" data-target="bulk-orders-view">Bulk Orders</a>
+          </li>
+          <li>
+            <a href="#" class="nav-btn" data-target="logs-view">Activity Logs</a>
+          </li>
+        </ul>
+        <div class="sidebar-footer">
+          <a href="#" class="logout-btn" id="admin-logout-btn">Logout</a>
+        </div>
+      </aside>
+
+      <!-- MAIN CONTENT -->
+      <main class="main-content">
+        <header class="top-header">
+          <div class="search-bar">
+            <input type="text" id="global-search-input" placeholder="Search anything..." />
+          </div>
+          <div class="admin-profile">
+            <!-- Bell Notification Icon -->
+            <div
+              class="notif-bell"
+              id="admin-notif-bell"
+              onclick="toggleAdminNotif()"
+            >
+              <span class="bell-icon">🔔</span>
+              <span
+                class="notif-badge"
+                id="admin-notif-badge"
+                style="display: none"
+                >0</span
+              >
+              <div class="notif-dropdown" id="admin-notif-dropdown">
+                <div class="notif-header">Notifications</div>
+                <ul id="admin-notif-list">
+                  <li class="notif-empty">No alerts</li>
+                </ul>
+              </div>
+            </div>
+            <span class="admin-name">Administrator</span>
+          </div>
+        </header>
+
+        <div class="content-wrapper">
+          <!-- DASHBOARD VIEW - OPTION A: INDUSTRY-STANDARD (SHOPIFY-STYLE) -->
+          <section id="dashboard-view" class="view-section active">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+              <div style="display:flex; align-items:center; gap:16px;">
+                <h1 style="margin:0;">Dashboard</h1>
+                
+                <!-- View Selector Dropdown -->
+                <select id="dashboard-view-selector" style="padding:8px 16px; border:2px solid #f97316; border-radius:8px; font-size:0.875rem; font-weight:600; cursor:pointer; background:#fff; color:#f97316;">
+                  <option value="sales">Sales Overview</option>
+                  <option value="logistics">Logistics</option>
+                  <option value="inventory">Inventory</option>
+                </select>
+              </div>
+              
+              <!-- Date Range Filter -->
+              <div style="display:flex; align-items:center; gap:12px; background:#fff; padding:10px 16px; border-radius:10px; border:1px solid #e2e8f0; box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+                <label style="font-size:0.85rem; font-weight:600; color:#64748b;">Date Range:</label>
+                <select id="dashboard-date-filter" style="padding:6px 12px; border:1px solid #e2e8f0; border-radius:6px; font-size:0.875rem; cursor:pointer; background:#fff;">
+                  <option value="today">Today</option>
+                  <option value="yesterday">Yesterday</option>
+                  <option value="this_week">This Week</option>
+                  <option value="last_week">Last Week</option>
+                  <option value="this_month">This Month</option>
+                  <option value="last_month">Last Month</option>
+                  <option value="custom">Custom Range</option>
+                </select>
+                <div id="custom-date-inputs" style="display:none; gap:8px; align-items:center;">
+                  <input type="date" id="filter-start-date" style="padding:6px 10px; border:1px solid #e2e8f0; border-radius:6px; font-size:0.85rem;" />
+                  <span style="color:#94a3b8;">to</span>
+                  <input type="date" id="filter-end-date" style="padding:6px 10px; border:1px solid #e2e8f0; border-radius:6px; font-size:0.85rem;" />
+                  <button id="apply-custom-filter" style="padding:6px 16px; background:#f97316; color:#fff; border:none; border-radius:6px; font-size:0.85rem; font-weight:600; cursor:pointer;">Apply</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- ══ SALES OVERVIEW ═══════════════════════════════════════════════ -->
+            <div id="dashboard-sales-view" class="dashboard-sub-view" style="display:block;">
+            <div id="urgent-alerts-banner" style="display:none; background:linear-gradient(135deg, #fee2e2 0%, #fecaca 100%); border-left:4px solid #dc2626; border-radius:10px; padding:16px 20px; margin-bottom:20px; box-shadow:0 2px 8px rgba(220,38,38,0.15);">
+              <div style="display:flex; align-items:center; gap:12px;">
+                <div style="font-size:24px; font-weight:bold; color:#dc2626;">!</div>
+                <div style="flex:1;">
+                  <div style="font-size:13px; font-weight:700; color:#991b1b; margin-bottom:6px;">URGENT ACTION NEEDED</div>
+                  <div id="urgent-alerts-list" style="font-size:13px; color:#7f1d1d; line-height:1.8;"></div>
+                </div>
+                <button onclick="document.getElementById('urgent-alerts-banner').style.display='none'" style="background:none; border:none; color:#dc2626; font-size:20px; cursor:pointer; padding:4px 8px;">&times;</button>
+              </div>
+            </div>
+
+            <!-- ══ HERO METRIC - TODAY'S SALES ════════════════════════════════ -->
+            <div style="background:linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%); border-radius:16px; padding:40px; text-align:center; margin-bottom:24px; box-shadow:0 4px 20px rgba(249,115,22,0.12); border:2px solid #fed7aa;">
+              <div style="font-size:13px; font-weight:700; text-transform:uppercase; letter-spacing:2px; color:#9a3412; margin-bottom:12px;">Today's Sales</div>
+              <div id="hero-sales-amount" style="font-size:4rem; font-weight:900; color:#ea580c; line-height:1;">₱0</div>
+            </div>
+
+            <!-- ══ 4 MINI METRICS ══════════════════════════════════════════════ -->
+            <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-bottom:28px;">
+              
+              <!-- Pending Orders -->
+              <div class="stat-card" style="cursor:pointer; text-align:center; padding:20px;" onclick="document.querySelector('[data-target=orders-view]').click()">
+                <div style="font-size:12px; color:#64748b; margin-bottom:8px; font-weight:600; text-transform:uppercase; letter-spacing:0.5px;">Pending Orders</div>
+                <div id="mini-pending-orders" style="font-size:2.5rem; font-weight:800; color:#f59e0b; line-height:1;">0</div>
+                <div style="font-size:11px; color:#94a3b8; margin-top:6px;">To process</div>
+              </div>
+
+              <!-- Pending Deliveries -->
+              <div class="stat-card" style="cursor:pointer; text-align:center; padding:20px;" onclick="document.querySelector('[data-target=deliveries-view]').click()">
+                <div style="font-size:12px; color:#64748b; margin-bottom:8px; font-weight:600; text-transform:uppercase; letter-spacing:0.5px;">Deliveries</div>
+                <div id="mini-pending-deliveries" style="font-size:2.5rem; font-weight:800; color:#f59e0b; line-height:1;">0</div>
+                <div style="font-size:11px; color:#94a3b8; margin-top:6px;">To assign</div>
+              </div>
+
+              <!-- Low Stock -->
+              <div class="stat-card" style="cursor:pointer; text-align:center; padding:20px;" onclick="document.querySelector('[data-target=inventory-view]').click()">
+                <div style="font-size:12px; color:#64748b; margin-bottom:8px; font-weight:600; text-transform:uppercase; letter-spacing:0.5px;">Low Stock</div>
+                <div id="mini-low-stock" style="font-size:2.5rem; font-weight:800; color:#f59e0b; line-height:1;">0</div>
+                <div style="font-size:11px; color:#94a3b8; margin-top:6px;">Items</div>
+              </div>
+
+              <!-- Returns -->
+              <div class="stat-card" style="cursor:pointer; text-align:center; padding:20px;" onclick="document.querySelector('[data-target=returns-view]').click()">
+                <div style="font-size:12px; color:#64748b; margin-bottom:8px; font-weight:600; text-transform:uppercase; letter-spacing:0.5px;">Returns</div>
+                <div id="mini-pending-returns" style="font-size:2.5rem; font-weight:800; color:#f59e0b; line-height:1;">0</div>
+                <div style="font-size:11px; color:#94a3b8; margin-top:6px;">Pending</div>
+              </div>
+            </div>
+
+            <!-- ══ MAIN CHART - SALES TREND ═══════════════════════════════════ -->
+            <div class="card" style="padding:24px; margin-bottom:24px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+                <div>
+                  <h2 style="font-size:18px; margin-bottom:4px;">Sales Trend</h2>
+                  <p style="font-size:13px; color:#64748b;">Last 30 days performance</p>
+                </div>
+                <div style="text-align:right;">
+                  <div style="font-size:12px; color:#64748b;">Total Revenue (30d)</div>
+                  <div id="chart-total-30d" style="font-size:20px; font-weight:700; color:#f97316;">₱0</div>
+                </div>
+              </div>
+              <div style="position:relative; height:320px; width:100%;">
+                <canvas id="salesChart"></canvas>
+              </div>
+            </div>
+
+            <!-- ══ BOTTOM 2-COLUMN ═════════════════════════════════════════════ -->
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+              
+              <!-- Left: Top Products -->
+              <div class="card" style="padding:20px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+                  <h3 style="font-size:16px; font-weight:700; color:#0f172a;">Top Products</h3>
+                  <span style="font-size:11px; color:#94a3b8; font-weight:600;">This Month</span>
+                </div>
+                <div id="top-products-list" style="font-size:13px; line-height:2.2;">
+                  <p style="text-align:center; color:#94a3b8; padding:30px;">Loading...</p>
+                </div>
+              </div>
+
+              <!-- Right: Recent Orders -->
+              <div class="card" style="padding:20px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+                  <h3 style="font-size:16px; font-weight:700; color:#0f172a;">Recent Orders</h3>
+                  <button onclick="document.querySelector('[data-target=orders-view]').click()" style="font-size:11px; color:#f97316; font-weight:600; background:none; border:none; cursor:pointer;">View All →</button>
+                </div>
+                <div id="dashboard-recent-orders" style="font-size:13px; max-height:280px; overflow-y:auto;">
+                  <p style="text-align:center; color:#94a3b8; padding:30px;">Loading...</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- ══ ADDITIONAL QUICK STATS (Collapsible) ═══════════════════════ -->
+            <div style="margin-top:24px; text-align:center;">
+              <button id="toggle-quick-stats" onclick="toggleQuickStats()" style="background:none; border:1px solid #e2e8f0; border-radius:20px; padding:8px 20px; font-size:12px; color:#64748b; font-weight:600; cursor:pointer; transition:all 0.2s;">
+                Show More Stats ▼
+              </button>
+            </div>
+
+            <div id="quick-stats-panel" style="display:none; margin-top:16px; padding:24px; background:#f8fafc; border-radius:12px; border:1.5px solid #e2e8f0;">
+              <!-- Row 1: Main metrics -->
+              <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-bottom:12px;">
+                <div style="text-align:center; padding:20px; background:#fff; border-radius:8px; box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+                  <div style="font-size:11px; color:#64748b; margin-bottom:8px; font-weight:600; text-transform:uppercase; letter-spacing:0.5px;">Total Sales</div>
+                  <div id="stat-total-sales" style="font-size:24px; font-weight:700; color:#f97316;">₱0</div>
+                </div>
+                <div style="text-align:center; padding:20px; background:#fff; border-radius:8px; box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+                  <div style="font-size:11px; color:#64748b; margin-bottom:8px; font-weight:600; text-transform:uppercase; letter-spacing:0.5px;">Total Orders</div>
+                  <div id="stat-total-orders" style="font-size:24px; font-weight:700; color:#64748b;">0</div>
+                </div>
+                <div style="text-align:center; padding:20px; background:#f0fdf4; border-radius:8px; box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+                  <div style="font-size:11px; color:#166534; margin-bottom:8px; font-weight:600; text-transform:uppercase; letter-spacing:0.5px;">Completed Orders</div>
+                  <div id="stat-completed-orders" style="font-size:24px; font-weight:700; color:#10b981;">0</div>
+                </div>
+                <div style="text-align:center; padding:20px; background:#eff6ff; border-radius:8px; box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+                  <div style="font-size:11px; color:#1e40af; margin-bottom:8px; font-weight:600; text-transform:uppercase; letter-spacing:0.5px;">Delivered Orders</div>
+                  <div id="stat-delivered-orders" style="font-size:24px; font-weight:700; color:#3b82f6;">0</div>
+                </div>
+              </div>
+              
+              <!-- Row 2: Additional status metrics -->
+              <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:16px;">
+                <div style="text-align:center; padding:20px; background:#fef3c7; border-radius:8px; box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+                  <div style="font-size:11px; color:#92400e; margin-bottom:8px; font-weight:600; text-transform:uppercase; letter-spacing:0.5px;">Pending Orders</div>
+                  <div id="stat-pending-orders-count" style="font-size:24px; font-weight:700; color:#d97706;">0</div>
+                </div>
+                <div style="text-align:center; padding:20px; background:#fee2e2; border-radius:8px; box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+                  <div style="font-size:11px; color:#991b1b; margin-bottom:8px; font-weight:600; text-transform:uppercase; letter-spacing:0.5px;">Cancelled Orders</div>
+                  <div id="stat-cancelled-orders" style="font-size:24px; font-weight:700; color:#dc2626;">0</div>
+                </div>
+                <div style="text-align:center; padding:20px; background:#f3e8ff; border-radius:8px; box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+                  <div style="font-size:11px; color:#6b21a8; margin-bottom:8px; font-weight:600; text-transform:uppercase; letter-spacing:0.5px;">Return Orders</div>
+                  <div id="stat-return-orders" style="font-size:24px; font-weight:700; color:#9333ea;">0</div>
+                </div>
+                <div style="text-align:center; padding:20px; background:#fff; border-radius:8px; box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+                  <div style="font-size:11px; color:#64748b; margin-bottom:8px; font-weight:600; text-transform:uppercase; letter-spacing:0.5px;">Total Products</div>
+                  <div id="stat-total-products" style="font-size:24px; font-weight:700; color:#0f172a;">0</div>
+                </div>
+              </div>
+            </div>
+
+            <style>
+            /* Hero metric animation */
+            #hero-sales-amount {
+              animation: fadeInScale 0.6s ease-out;
+            }
+            
+            @keyframes fadeInScale {
+              from {
+                opacity: 0;
+                transform: scale(0.95);
+              }
+              to {
+                opacity: 1;
+                transform: scale(1);
+              }
+            }
+
+            /* Mini card hover */
+            .stat-card {
+              transition: all 0.2s ease;
+            }
+            .stat-card:hover {
+              transform: translateY(-3px);
+              box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+            }
+
+            /* Toggle button hover */
+            #toggle-quick-stats:hover {
+              background: #f8fafc;
+              border-color: #cbd5e1;
+              color: #0f172a;
+            }
+            </style>
+
+            <script>
+            // Toggle quick stats panel
+            function toggleQuickStats() {
+              const panel = document.getElementById('quick-stats-panel');
+              const btn = document.getElementById('toggle-quick-stats');
+              if (panel.style.display === 'none') {
+                panel.style.display = 'block';
+                btn.innerHTML = 'Show Less Stats ▲';
+              } else {
+                panel.style.display = 'none';
+                btn.innerHTML = 'Show More Stats ▼';
+              }
+            }
+            </script>
+            </div>
+            <!-- END: SALES OVERVIEW -->
+
+            <!-- ══ LOGISTICS VIEW ═══════════════════════════════════════════════ -->
+            <div id="dashboard-logistics-view" class="dashboard-sub-view" style="display:none;">
+              
+              <!-- ══ HERO METRIC - TOTAL DELIVERIES ═════════════════════════════ -->
+              <div style="background:linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%); border-radius:16px; padding:40px; text-align:center; margin-bottom:24px; box-shadow:0 4px 20px rgba(59,130,246,0.12); border:2px solid #bfdbfe;">
+                <div style="font-size:13px; font-weight:700; text-transform:uppercase; letter-spacing:2px; color:#1e40af; margin-bottom:12px;">Total Deliveries Today</div>
+                <div id="hero-deliveries-count" style="font-size:4rem; font-weight:900; color:#3b82f6; line-height:1;">0</div>
+              </div>
+
+              <!-- ══ 4 MINI METRICS ══════════════════════════════════════════════ -->
+              <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-bottom:28px;">
+                
+                <!-- Pending Deliveries -->
+                <div class="stat-card" style="cursor:pointer; text-align:center; padding:20px;" onclick="document.querySelector('[data-target=deliveries-view]').click()">
+                  <div style="font-size:12px; color:#64748b; margin-bottom:8px; font-weight:600; text-transform:uppercase; letter-spacing:0.5px;">Pending</div>
+                  <div id="logistics-pending" style="font-size:2.5rem; font-weight:800; color:#f59e0b; line-height:1;">0</div>
+                  <div style="font-size:11px; color:#94a3b8; margin-top:6px;">To assign</div>
+                </div>
+
+                <!-- In Transit -->
+                <div class="stat-card" style="cursor:pointer; text-align:center; padding:20px;">
+                  <div style="font-size:12px; color:#64748b; margin-bottom:8px; font-weight:600; text-transform:uppercase; letter-spacing:0.5px;">In Transit</div>
+                  <div id="logistics-transit" style="font-size:2.5rem; font-weight:800; color:#3b82f6; line-height:1;">0</div>
+                  <div style="font-size:11px; color:#94a3b8; margin-top:6px;">On the way</div>
+                </div>
+
+                <!-- Completed -->
+                <div class="stat-card" style="cursor:pointer; text-align:center; padding:20px;">
+                  <div style="font-size:12px; color:#64748b; margin-bottom:8px; font-weight:600; text-transform:uppercase; letter-spacing:0.5px;">Completed</div>
+                  <div id="logistics-completed" style="font-size:2.5rem; font-weight:800; color:#10b981; line-height:1;">0</div>
+                  <div style="font-size:11px; color:#94a3b8; margin-top:6px;">Delivered</div>
+                </div>
+
+                <!-- Truck Batches -->
+                <div class="stat-card" style="cursor:pointer; text-align:center; padding:20px;" onclick="document.querySelector('[data-target=truck-planner-view]').click()">
+                  <div style="font-size:12px; color:#64748b; margin-bottom:8px; font-weight:600; text-transform:uppercase; letter-spacing:0.5px;">Truck Batches</div>
+                  <div id="logistics-batches" style="font-size:2.5rem; font-weight:800; color:#8b5cf6; line-height:1;">0</div>
+                  <div style="font-size:11px; color:#94a3b8; margin-top:6px;">Dispatched</div>
+                </div>
+              </div>
+
+              <!-- ══ MAIN CHART - DELIVERIES TREND ══════════════════════════════ -->
+              <div class="card" style="padding:24px; margin-bottom:24px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+                  <div>
+                    <h2 style="font-size:18px; margin-bottom:4px;">Deliveries Trend</h2>
+                    <p style="font-size:13px; color:#64748b;">Last 30 days performance</p>
+                  </div>
+                  <div style="text-align:right;">
+                    <div style="font-size:12px; color:#64748b;">Total Deliveries (30d)</div>
+                    <div id="logistics-chart-total-30d" style="font-size:20px; font-weight:700; color:#3b82f6;">0</div>
+                  </div>
+                </div>
+                <div style="position:relative; height:320px; width:100%;">
+                  <canvas id="logisticsChart"></canvas>
+                </div>
+              </div>
+
+              <!-- ══ BOTTOM 2-COLUMN ═════════════════════════════════════════════ -->
+              <!-- ══ BOTTOM SECTION - RECENT DELIVERIES (Full Width) ════════════ -->
+              <div class="card" style="padding:20px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+                  <h3 style="font-size:16px; font-weight:700; color:#0f172a;">Recent Deliveries</h3>
+                  <button onclick="document.querySelector('[data-target=deliveries-view]').click()" style="font-size:11px; color:#3b82f6; font-weight:600; background:none; border:none; cursor:pointer;">View All →</button>
+                </div>
+                <div id="logistics-recent-deliveries" style="font-size:13px; max-height:280px; overflow-y:auto;">
+                  <p style="text-align:center; color:#94a3b8; padding:30px;">Loading...</p>
+                </div>
+              </div>
+
+              <!-- ══ ADDITIONAL QUICK STATS (Collapsible) ═══════════════════════ -->
+              <div style="margin-top:24px; text-align:center;">
+                <button id="toggle-logistics-stats" onclick="toggleLogisticsStats()" style="background:none; border:1px solid #e2e8f0; border-radius:20px; padding:8px 20px; font-size:12px; color:#64748b; font-weight:600; cursor:pointer; transition:all 0.2s;">
+                  Show More Stats ▼
+                </button>
+              </div>
+
+              <div id="logistics-stats-panel" style="display:none; margin-top:16px; padding:24px; background:#f8fafc; border-radius:12px; border:1.5px solid #e2e8f0;">
+                <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:16px;">
+                  <div style="text-align:center; padding:20px; background:#fff; border-radius:8px; box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+                    <div style="font-size:11px; color:#64748b; margin-bottom:8px; font-weight:600; text-transform:uppercase; letter-spacing:0.5px;">Total Drivers</div>
+                    <div id="logistics-total-drivers" style="font-size:24px; font-weight:700; color:#0f172a;">0</div>
+                  </div>
+                  <div style="text-align:center; padding:20px; background:#fff; border-radius:8px; box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+                    <div style="font-size:11px; color:#64748b; margin-bottom:8px; font-weight:600; text-transform:uppercase; letter-spacing:0.5px;">Active Trucks</div>
+                    <div id="logistics-active-trucks" style="font-size:24px; font-weight:700; color:#0f172a;">0</div>
+                  </div>
+                  <div style="text-align:center; padding:20px; background:#fff; border-radius:8px; box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+                    <div style="font-size:11px; color:#64748b; margin-bottom:8px; font-weight:600; text-transform:uppercase; letter-spacing:0.5px;">Avg Delivery Time</div>
+                    <div id="logistics-avg-time" style="font-size:24px; font-weight:700; color:#0f172a;">0h</div>
+                  </div>
+                  <div style="text-align:center; padding:20px; background:#f0fdf4; border-radius:8px; box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+                    <div style="font-size:11px; color:#166534; margin-bottom:8px; font-weight:600; text-transform:uppercase; letter-spacing:0.5px;">Success Rate</div>
+                    <div id="logistics-success-rate" style="font-size:24px; font-weight:700; color:#10b981;">0%</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- END: LOGISTICS VIEW -->
+
+            <!-- ══ INVENTORY VIEW ═══════════════════════════════════════════════ -->
+            <div id="dashboard-inventory-view" class="dashboard-sub-view" style="display:none;">
+              
+              <!-- ══ HERO METRIC - TOTAL PRODUCTS ═══════════════════════════════ -->
+              <div style="background:linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%); border-radius:16px; padding:40px; text-align:center; margin-bottom:24px; box-shadow:0 4px 20px rgba(16,185,129,0.12); border:2px solid #bbf7d0;">
+                <div style="font-size:13px; font-weight:700; text-transform:uppercase; letter-spacing:2px; color:#166534; margin-bottom:12px;">Total Products</div>
+                <div id="hero-products-count" style="font-size:4rem; font-weight:900; color:#10b981; line-height:1;">0</div>
+              </div>
+
+              <!-- ══ 4 MINI METRICS ══════════════════════════════════════════════ -->
+              <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-bottom:28px;">
+                
+                <!-- Out of Stock -->
+                <div class="stat-card" style="cursor:pointer; text-align:center; padding:20px;" onclick="document.querySelector('[data-target=inventory-view]').click()">
+                  <div style="font-size:12px; color:#64748b; margin-bottom:8px; font-weight:600; text-transform:uppercase; letter-spacing:0.5px;">Out of Stock</div>
+                  <div id="inventory-out-stock" style="font-size:2.5rem; font-weight:800; color:#dc2626; line-height:1;">0</div>
+                  <div style="font-size:11px; color:#94a3b8; margin-top:6px;">Items</div>
+                </div>
+
+                <!-- Low Stock -->
+                <div class="stat-card" style="cursor:pointer; text-align:center; padding:20px;" onclick="document.querySelector('[data-target=inventory-view]').click()">
+                  <div style="font-size:12px; color:#64748b; margin-bottom:8px; font-weight:600; text-transform:uppercase; letter-spacing:0.5px;">Low Stock</div>
+                  <div id="inventory-low" style="font-size:2.5rem; font-weight:800; color:#f59e0b; line-height:1;">0</div>
+                  <div style="font-size:11px; color:#94a3b8; margin-top:6px;">Warning</div>
+                </div>
+
+                <!-- Critical Stock -->
+                <div class="stat-card" style="cursor:pointer; text-align:center; padding:20px;" onclick="document.querySelector('[data-target=inventory-view]').click()">
+                  <div style="font-size:12px; color:#64748b; margin-bottom:8px; font-weight:600; text-transform:uppercase; letter-spacing:0.5px;">Critical</div>
+                  <div id="inventory-critical" style="font-size:2.5rem; font-weight:800; color:#ef4444; line-height:1;">0</div>
+                  <div style="font-size:11px; color:#94a3b8; margin-top:6px;">Urgent</div>
+                </div>
+
+                <!-- Total Value -->
+                <div class="stat-card" style="cursor:pointer; text-align:center; padding:20px;">
+                  <div style="font-size:12px; color:#64748b; margin-bottom:8px; font-weight:600; text-transform:uppercase; letter-spacing:0.5px;">Stock Value</div>
+                  <div id="inventory-value" style="font-size:2.5rem; font-weight:800; color:#10b981; line-height:1;">₱0</div>
+                  <div style="font-size:11px; color:#94a3b8; margin-top:6px;">Total</div>
+                </div>
+              </div>
+
+              <!-- ══ MAIN CHART - STOCK BY CATEGORY ═════════════════════════════ -->
+              <div class="card" style="padding:24px; margin-bottom:24px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+                  <div>
+                    <h2 style="font-size:18px; margin-bottom:4px;">Stock Levels by Category</h2>
+                    <p style="font-size:13px; color:#64748b;">Current inventory distribution</p>
+                  </div>
+                  <div style="text-align:right;">
+                    <div style="font-size:12px; color:#64748b;">Categories</div>
+                    <div id="inventory-categories-count" style="font-size:20px; font-weight:700; color:#10b981;">0</div>
+                  </div>
+                </div>
+                <div style="position:relative; height:320px; width:100%;">
+                  <canvas id="inventoryChart"></canvas>
+                </div>
+              </div>
+
+              <!-- ══ BOTTOM 2-COLUMN ═════════════════════════════════════════════ -->
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+                
+                <!-- Left: Top Categories by Value -->
+                <div class="card" style="padding:20px;">
+                  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+                    <h3 style="font-size:16px; font-weight:700; color:#0f172a;">Top Categories</h3>
+                    <span style="font-size:11px; color:#94a3b8; font-weight:600;">By Value</span>
+                  </div>
+                  <div id="inventory-top-categories" style="font-size:13px; line-height:2.2;">
+                    <p style="text-align:center; color:#94a3b8; padding:30px;">Loading...</p>
+                  </div>
+                </div>
+
+                <!-- Right: Low Stock Alert List -->
+                <div class="card" style="padding:20px;">
+                  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+                    <h3 style="font-size:16px; font-weight:700; color:#0f172a;">Stock Alerts</h3>
+                    <button onclick="document.querySelector('[data-target=inventory-view]').click()" style="font-size:11px; color:#f97316; font-weight:600; background:none; border:none; cursor:pointer;">View All →</button>
+                  </div>
+                  <div id="inventory-alerts-list" style="font-size:13px; max-height:280px; overflow-y:auto;">
+                    <p style="text-align:center; color:#94a3b8; padding:30px;">Loading...</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ══ ADDITIONAL QUICK STATS (Collapsible) ═══════════════════════ -->
+              <div style="margin-top:24px; text-align:center;">
+                <button id="toggle-inventory-stats" onclick="toggleInventoryStats()" style="background:none; border:1px solid #e2e8f0; border-radius:20px; padding:8px 20px; font-size:12px; color:#64748b; font-weight:600; cursor:pointer; transition:all 0.2s;">
+                  Show More Stats ▼
+                </button>
+              </div>
+
+              <div id="inventory-stats-panel" style="display:none; margin-top:16px; padding:24px; background:#f8fafc; border-radius:12px; border:1.5px solid #e2e8f0;">
+                <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:16px;">
+                  <div style="text-align:center; padding:20px; background:#fff; border-radius:8px; box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+                    <div style="font-size:11px; color:#64748b; margin-bottom:8px; font-weight:600; text-transform:uppercase; letter-spacing:0.5px;">Total SKUs</div>
+                    <div id="inventory-total-skus" style="font-size:24px; font-weight:700; color:#0f172a;">0</div>
+                  </div>
+                  <div style="text-align:center; padding:20px; background:#fff; border-radius:8px; box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+                    <div style="font-size:11px; color:#64748b; margin-bottom:8px; font-weight:600; text-transform:uppercase; letter-spacing:0.5px;">Avg Stock/Product</div>
+                    <div id="inventory-avg-stock" style="font-size:24px; font-weight:700; color:#0f172a;">0</div>
+                  </div>
+                  <div style="text-align:center; padding:20px; background:#fff; border-radius:8px; box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+                    <div style="font-size:11px; color:#64748b; margin-bottom:8px; font-weight:600; text-transform:uppercase; letter-spacing:0.5px;">Restock Needed</div>
+                    <div id="inventory-restock-needed" style="font-size:24px; font-weight:700; color:#f59e0b;">0</div>
+                  </div>
+                  <div style="text-align:center; padding:20px; background:#f0fdf4; border-radius:8px; box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+                    <div style="font-size:11px; color:#166534; margin-bottom:8px; font-weight:600; text-transform:uppercase; letter-spacing:0.5px;">Stock Turnover</div>
+                    <div id="inventory-turnover" style="font-size:24px; font-weight:700; color:#10b981;">0x</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- END: INVENTORY VIEW -->
+
+            <script>
+            // Dashboard View Selector
+            document.getElementById('dashboard-view-selector').addEventListener('change', function(e) {
+              const view = e.target.value;
+              
+              // Hide all sub-views
+              document.querySelectorAll('.dashboard-sub-view').forEach(el => el.style.display = 'none');
+              
+              // Show selected view
+              if (view === 'sales') {
+                document.getElementById('dashboard-sales-view').style.display = 'block';
+              } else if (view === 'logistics') {
+                document.getElementById('dashboard-logistics-view').style.display = 'block';
+                if (window.loadLogisticsData) window.loadLogisticsData();
+              } else if (view === 'inventory') {
+                document.getElementById('dashboard-inventory-view').style.display = 'block';
+                if (window.loadInventoryData) window.loadInventoryData();
+              }
+            });
+
+            // Toggle Logistics Stats
+            function toggleLogisticsStats() {
+              const panel = document.getElementById('logistics-stats-panel');
+              const btn = document.getElementById('toggle-logistics-stats');
+              if (panel.style.display === 'none') {
+                panel.style.display = 'block';
+                btn.innerHTML = 'Show Less Stats ▲';
+              } else {
+                panel.style.display = 'none';
+                btn.innerHTML = 'Show More Stats ▼';
+              }
+            }
+
+            // Toggle Inventory Stats
+            function toggleInventoryStats() {
+              const panel = document.getElementById('inventory-stats-panel');
+              const btn = document.getElementById('toggle-inventory-stats');
+              if (panel.style.display === 'none') {
+                panel.style.display = 'block';
+                btn.innerHTML = 'Show Less Stats ▲';
+              } else {
+                panel.style.display = 'none';
+                btn.innerHTML = 'Show More Stats ▼';
+              }
+            }
+            </script>
+          </section>
+
+          <!-- PRODUCT MANAGEMENT VIEW -->
+          <section id="products-view" class="view-section">
+            <div class="section-header">
+              <h1>Product Management</h1>
+              <div style="display: flex; gap: 10px; align-items: center">
+                <select
+                  id="product-category-filter"
+                  style="
+                    padding: 8px 12px;
+                    border: 1px solid #e2e8f0;
+                    border-radius: 6px;
+                    font-size: 0.875rem;
+                  "
+                >
+                  <option value="all">All Categories</option>
+                </select>
+                <button class="action-btn primary" id="open-add-product-btn">
+                  + Add Product
+                </button>
+              </div>
+            </div>
+            <div class="card">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Image</th>
+                    <th>Product Name</th>
+                    <th>Category</th>
+                    <th>Discount</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="products-table-body"></tbody>
+              </table>
+            </div>
+          </section>
+
+          <!-- ORDER MANAGEMENT VIEW -->
+          <section id="orders-view" class="view-section">
+            <h1>Order Management</h1>
+            <div class="card">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Order ID</th>
+                    <th>Type</th>
+                    <th>Customer</th>
+                    <th>Date</th>
+                    <th>Total / Discount</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="orders-table-body">
+                  <!-- Populated by JS -->
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <!-- DELIVERIES MANAGEMENT VIEW -->
+          <section id="deliveries-view" class="view-section">
+            <div class="section-header">
+              <h1>Delivery Management</h1>
+            </div>
+            <div class="stats-grid" style="margin-bottom:20px;">
+              <div class="stat-card"><h3>Total Deliveries</h3><p class="stat-value" id="stat-del-total">0</p></div>
+              <div class="stat-card"><h3>Pending Setup</h3><p class="stat-value" id="stat-del-pending">0</p></div>
+              <div class="stat-card"><h3>Out for Delivery</h3><p class="stat-value" id="stat-del-out">0</p></div>
+              <div class="stat-card"><h3>Delivered (Today)</h3><p class="stat-value" id="stat-del-done">0</p></div>
+            </div>
+            <div class="card">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Delivery ID</th>
+                    <th>Customer</th>
+                    <th>Address</th>
+                    <th>Contact</th>
+                    <th>Plate No.</th>
+                    <th>Assigned Driver / Batch</th>
+                    <th>Cycles</th>
+                    <th>Delivered At</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="deliveries-table-body"></tbody>
+              </table>
+            </div>
+          </section>
+
+          <!-- TRUCK PLANNER VIEW -->
+          <section id="truck-planner-view" class="view-section">
+            <div class="section-header">
+              <h1>Truck Load Planner</h1>
+              <button class="action-btn primary" id="open-create-batch-btn">+ New Truck Batch</button>
+            </div>
+            <p style="color:#64748b; margin-bottom:20px; font-size:0.875rem;">
+              Group pending bulk order deliveries into a truck batch. Dispatch them all at once to assign the driver and move deliveries to "Out for Delivery".
+            </p>
+            <div class="stats-grid" style="margin-bottom:20px;">
+              <div class="stat-card"><h3>Open Batches</h3><p class="stat-value" id="stat-batch-open">0</p></div>
+              <div class="stat-card"><h3>Dispatched Today</h3><p class="stat-value" id="stat-batch-dispatched">0</p></div>
+              <div class="stat-card alert-card"><h3>Unassigned</h3><p class="stat-value" id="stat-batch-unassigned">0</p></div>
+              <div class="stat-card"><h3>Orders Queued</h3><p class="stat-value" id="stat-batch-items">0</p></div>
+            </div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px; align-items:start;">
+              <div>
+                <h2 style="font-size:1rem; font-weight:700; margin-bottom:12px; color:#0f172a;">Active Truck Batches</h2>
+                <div id="truck-batches-list" style="display:flex; flex-direction:column; gap:14px;">
+                  <div style="text-align:center; color:#94a3b8; padding:24px;">Loading...</div>
+                </div>
+              </div>
+              <div>
+                <h2 style="font-size:1rem; font-weight:700; margin-bottom:12px; color:#0f172a;">Pending Bulk Deliveries (unassigned)</h2>
+                <div id="pending-deliveries-picker" style="display:flex; flex-direction:column; gap:10px;">
+                  <div style="text-align:center; color:#94a3b8; padding:24px;">Loading...</div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- CUSTOMERS VIEW -->
+          <section id="customers-view" class="view-section">
+            <h1>Customers Directory</h1>
+            <div class="card">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Full Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Town</th>
+                    <th>Joined Date</th>
+                  </tr>
+                </thead>
+                <tbody id="customers-table-body">
+                  <!-- Populated by JS -->
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <!-- EMPLOYEES VIEW -->
+          <section id="employees-view" class="view-section">
+            <div class="section-header">
+              <h1>Employee Management</h1>
+              <button class="action-btn primary" id="open-add-employee-btn">
+                + Add Employee
+              </button>
+            </div>
+            <div class="card">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Full Name</th>
+                    <th>Username / Email</th>
+                    <th>Role</th>
+                    <th>Contact</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="employees-table-body">
+                  <!-- Populated by JS -->
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <!-- INVENTORY VIEW -->
+          <section id="inventory-view" class="view-section">
+            <h1>Inventory &amp; Stock</h1>
+            <div
+              style="
+                display: flex;
+                gap: 10px;
+                align-items: center;
+                margin-bottom: 16px;
+              "
+            >
+              <select
+                id="inventory-category-filter"
+                style="
+                  padding: 8px 12px;
+                  border: 1px solid #e2e8f0;
+                  border-radius: 6px;
+                  font-size: 0.875rem;
+                "
+              >
+                <option value="all">All Categories</option>
+              </select>
+            </div>
+            <div class="card">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Product</th>
+                    <th>SKU</th>
+                    <th>Category</th>
+                    <th>Stock</th>
+                    <th>Min Qty</th>
+                    <th style="color: #dc2626">Critical Qty</th>
+                    <th>Status</th>
+                    <th>Restock</th>
+                  </tr>
+                </thead>
+                <tbody id="inventory-table-body">
+                  <!-- Populated by JS -->
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <!-- CATEGORIES VIEW -->
+          <section id="categories-view" class="view-section">
+            <div class="section-header">
+              <h1>Category Management</h1>
+              <button class="action-btn primary" id="open-add-category-btn">
+                + Add Category
+              </button>
+            </div>
+            <div class="card" style="max-width: 600px">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Category Name</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="categories-table-body">
+                  <!-- Populated by JS -->
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <!-- BANNERS VIEW -->
+          <section id="banners-view" class="view-section">
+            <div class="section-header">
+              <h1>Banner Management</h1>
+              <label class="action-btn primary" style="cursor: pointer">
+                + Add Banner
+                <input
+                  type="file"
+                  id="add-banner-input"
+                  accept="image/*"
+                  style="display: none"
+                />
+              </label>
+            </div>
+            <p style="color: #64748b; margin-bottom: 20px; font-size: 14px">
+              These are the sliding banners shown on the homepage. Click a
+              banner to replace it.
+            </p>
+            <div
+              id="banners-grid"
+              style="
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+                gap: 20px;
+              "
+            >
+              <!-- Populated by JS -->
+            </div>
+          </section>
+
+          <!-- RETURNS & CANCELLATIONS VIEW -->
+          <section id="returns-view" class="view-section">
+            <div class="section-header">
+              <h1>Returns &amp; Cancellations</h1>
+            </div>
+
+            <!-- Sub-tabs -->
+            <div
+              style="
+                display: flex;
+                gap: 8px;
+                margin-bottom: 20px;
+                border-bottom: 2px solid #e5e7eb;
+                padding-bottom: 0;
+              "
+            >
+              <button
+                id="subtab-returns-btn"
+                onclick="switchReturnSubtab('returns')"
+                style="
+                  padding: 8px 20px;
+                  border: none;
+                  background: none;
+                  cursor: pointer;
+                  font-size: 0.95rem;
+                  font-weight: 600;
+                  color: #f97316;
+                  border-bottom: 3px solid #f97316;
+                  margin-bottom: -2px;
+                "
+              >
+                Returns
+              </button>
+              <button
+                id="subtab-cancellations-btn"
+                onclick="switchReturnSubtab('cancellations')"
+                style="
+                  padding: 8px 20px;
+                  border: none;
+                  background: none;
+                  cursor: pointer;
+                  font-size: 0.95rem;
+                  font-weight: 600;
+                  color: #94a3b8;
+                  border-bottom: 3px solid transparent;
+                  margin-bottom: -2px;
+                "
+              >
+                Cancellations
+              </button>
+            </div>
+
+            <!-- RETURNS SUB-TAB -->
+            <div id="subtab-returns">
+              <div class="stats-grid" style="margin-bottom: 20px">
+                <div class="stat-card">
+                  <h3>Total Returns</h3>
+                  <p class="stat-value" id="stat-ret-total">0</p>
+                </div>
+                <div class="stat-card alert-card">
+                  <h3>Pending Review</h3>
+                  <p class="stat-value" id="stat-ret-pending">0</p>
+                </div>
+                <div class="stat-card">
+                  <h3>Approved</h3>
+                  <p class="stat-value" id="stat-ret-approved">0</p>
+                </div>
+                <div class="stat-card">
+                  <h3>Rejected</h3>
+                  <p class="stat-value" id="stat-ret-rejected">0</p>
+                </div>
+              </div>
+              <div class="card">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Return ID</th>
+                      <th>Order Ref</th>
+                      <th>Customer</th>
+                      <th>Items</th>
+                      <th>Refund Amt</th>
+                      <th>Status</th>
+                      <th>Handled By</th>
+                      <th>Date</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="admin-returns-table-body">
+                    <!-- Populated by JS -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- CANCELLATIONS SUB-TAB -->
+            <div id="subtab-cancellations" style="display: none">
+              <div class="stats-grid" style="margin-bottom: 20px">
+                <div class="stat-card">
+                  <h3>Total</h3>
+                  <p class="stat-value" id="stat-cancel-total">0</p>
+                </div>
+                <div class="stat-card alert-card">
+                  <h3>Pending Review</h3>
+                  <p class="stat-value" id="stat-cancel-pending">0</p>
+                </div>
+                <div class="stat-card">
+                  <h3>Approved</h3>
+                  <p class="stat-value" id="stat-cancel-approved">0</p>
+                </div>
+                <div class="stat-card">
+                  <h3>Rejected</h3>
+                  <p class="stat-value" id="stat-cancel-rejected">0</p>
+                </div>
+              </div>
+              <div class="card">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Cancel ID</th>
+                      <th>Order Ref</th>
+                      <th>Customer</th>
+                      <th>Reason</th>
+                      <th>Total</th>
+                      <th>Date</th>
+                      <th>Status</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody id="admin-cancellations-table-body">
+                    <!-- Populated by JS -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+
+          <!-- BULK ORDERS VIEW -->
+          <section id="bulk-orders-view" class="view-section">
+            <div class="section-header">
+              <h1>Bulk Orders</h1>
+            </div>
+
+            <!-- Stats -->
+            <div class="stats-grid" style="margin-bottom: 20px">
+              <div class="stat-card">
+                <h3>Total</h3>
+                <p class="stat-value" id="stat-bulk-total">0</p>
+              </div>
+              <div class="stat-card alert-card">
+                <h3>Pending</h3>
+                <p class="stat-value" id="stat-bulk-pending">0</p>
+              </div>
+              <div class="stat-card">
+                <h3>In Progress</h3>
+                <p class="stat-value" id="stat-bulk-active">0</p>
+              </div>
+              <div class="stat-card">
+                <h3>Completed</h3>
+                <p class="stat-value" id="stat-bulk-completed">0</p>
+              </div>
+            </div>
+
+            <!-- Table -->
+            <div class="card">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Ref</th>
+                    <th>Source</th>
+                    <th>Customer</th>
+                    <th>Contact</th>
+                    <th>Project</th>
+                    <th>Quoted</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="bulk-orders-table-body">
+                  <tr>
+                    <td colspan="9" style="text-align: center; padding: 20px; color: #94a3b8">
+                      Loading...
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <!-- ACTIVITY LOGS VIEW -->
+          <section id="logs-view" class="view-section">
+            <div class="section-header">
+              <h1>Activity Logs</h1>
+            </div>
+            <div
+              class="card"
+              style="
+                margin-bottom: 16px;
+                padding: 16px;
+                display: flex;
+                gap: 12px;
+                flex-wrap: wrap;
+                align-items: center;
+              "
+            >
+              <input
+                type="text"
+                id="log-filter-actor"
+                placeholder="Filter by staff name…"
+                style="
+                  padding: 8px 12px;
+                  border: 1px solid #ccc;
+                  border-radius: 6px;
+                  min-width: 180px;
+                "
+              />
+              <select
+                id="log-filter-role"
+                style="
+                  padding: 8px 12px;
+                  border: 1px solid #ccc;
+                  border-radius: 6px;
+                "
+              >
+                <option value="">All Roles</option>
+                <option value="admin">Admin</option>
+                <option value="staff">Staff</option>
+                <option value="cashier">Cashier</option>
+                <option value="driver">Driver</option>
+              </select>
+              <select
+                id="log-filter-action"
+                style="
+                  padding: 8px 12px;
+                  border: 1px solid #ccc;
+                  border-radius: 6px;
+                "
+              >
+                <option value="">All Actions</option>
+                <option value="complete_sale">Complete Sale</option>
+                <option value="create_return">Create Return</option>
+                <option value="approve_return">Approve Return</option>
+                <option value="reject_return">Reject Return</option>
+                <option value="restock">Restock</option>
+                <option value="add_product">Add Product</option>
+                <option value="edit_product">Edit Product</option>
+                <option value="delete_product">Delete Product</option>
+                <option value="update_order_status">Update Order Status</option>
+              </select>
+              <button class="action-btn primary" onclick="loadLogs()">
+                Apply Filter
+              </button>
+            </div>
+            <div class="card">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Date &amp; Time</th>
+                    <th>Staff Member</th>
+                    <th>Role</th>
+                    <th>Action</th>
+                    <th>Record</th>
+                    <th>Details</th>
+                  </tr>
+                </thead>
+                <tbody id="logs-table-body">
+                  <!-- Populated by JS -->
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section id="settings-view" class="view-section">
+            <h1>Store Settings</h1>
+            <div class="card" style="max-width: 600px">
+              <form
+                onsubmit="
+                  event.preventDefault();
+                  alert('Settings saved successfully!');
+                "
+              >
+                <div class="form-group" style="margin-bottom: 15px">
+                  <label
+                    style="
+                      display: block;
+                      margin-bottom: 5px;
+                      font-weight: bold;
+                    "
+                    >Store Name</label
+                  >
+                  <input
+                    type="text"
+                    value="JMC Materials"
+                    style="
+                      width: 100%;
+                      padding: 10px;
+                      border: 1px solid #ccc;
+                      border-radius: 5px;
+                    "
+                  />
+                </div>
+                <div class="form-group" style="margin-bottom: 15px">
+                  <label
+                    style="
+                      display: block;
+                      margin-bottom: 5px;
+                      font-weight: bold;
+                    "
+                    >Support Email</label
+                  >
+                  <input
+                    type="email"
+                    value="support@jmcmaterials.com"
+                    style="
+                      width: 100%;
+                      padding: 10px;
+                      border: 1px solid #ccc;
+                      border-radius: 5px;
+                    "
+                  />
+                </div>
+                <div class="form-group" style="margin-bottom: 15px">
+                  <label
+                    style="
+                      display: block;
+                      margin-bottom: 5px;
+                      font-weight: bold;
+                    "
+                    >Tax Rate (%)</label
+                  >
+                  <input
+                    type="number"
+                    value="12"
+                    style="
+                      width: 100%;
+                      padding: 10px;
+                      border: 1px solid #ccc;
+                      border-radius: 5px;
+                    "
+                  />
+                </div>
+                <div class="form-group" style="margin-bottom: 20px">
+                  <label
+                    style="
+                      display: block;
+                      margin-bottom: 5px;
+                      font-weight: bold;
+                    "
+                    >Platform Status</label
+                  >
+                  <select
+                    style="
+                      width: 100%;
+                      padding: 10px;
+                      border: 1px solid #ccc;
+                      border-radius: 5px;
+                    "
+                  >
+                    <option value="live" selected>
+                      Online & Receiving Orders
+                    </option>
+                    <option value="maintenance">Maintenance Mode</option>
+                  </select>
+                </div>
+                <button
+                  type="submit"
+                  class="action-btn primary"
+                  style="padding: 10px 20px"
+                >
+                  Save System Preferences
+                </button>
+              </form>
+            </div>
+          </section>
+        </div>
+      </main>
+    </div>
+
+    <!-- ADD PRODUCT MODAL -->
+    <div id="add-product-modal" class="modal">
+      <div class="modal-content" style="max-width: 500px">
+        <div class="modal-header">
+          <h2>Add New Product</h2>
+          <span class="close-modal" id="close-add-product-modal">&times;</span>
+        </div>
+        <div class="modal-body">
+          <form id="add-product-form">
+            <div class="form-group" style="margin-bottom: 15px">
+              <label
+                for="prod-name"
+                style="display: block; margin-bottom: 5px; font-weight: 500"
+                >Product Name *</label
+              >
+              <input
+                type="text"
+                id="prod-name"
+                required
+                style="
+                  width: 100%;
+                  padding: 10px;
+                  border: 1px solid #ccc;
+                  border-radius: 5px;
+                "
+              />
+            </div>
+            <div
+              style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px"
+            >
+              <div class="form-group" style="margin-bottom: 15px">
+                <label
+                  for="prod-price"
+                  style="display: block; margin-bottom: 5px; font-weight: 500"
+                  >Price (₱) *</label
+                >
+                <input
+                  type="number"
+                  id="prod-price"
+                  required
+                  min="0"
+                  step="0.01"
+                  style="
+                    width: 100%;
+                    padding: 10px;
+                    border: 1px solid #ccc;
+                    border-radius: 5px;
+                  "
+                />
+              </div>
+              <div class="form-group" style="margin-bottom: 15px">
+                <label
+                  for="prod-unit"
+                  style="display: block; margin-bottom: 5px; font-weight: 500"
+                  >Unit of Measure *</label
+                >
+                <input
+                  type="text"
+                  id="prod-unit"
+                  placeholder="e.g. pcs, bags, sheets"
+                  required
+                  style="
+                    width: 100%;
+                    padding: 10px;
+                    border: 1px solid #ccc;
+                    border-radius: 5px;
+                  "
+                  value="pcs"
+                />
+              </div>
+            </div>
+            <div class="form-group" style="margin-bottom: 15px">
+              <label
+                for="prod-category"
+                style="display: block; margin-bottom: 5px; font-weight: 500"
+                >Category *</label
+              >
+              <select
+                id="prod-category"
+                required
+                style="
+                  width: 100%;
+                  padding: 10px;
+                  border: 1px solid #ccc;
+                  border-radius: 5px;
+                "
+              >
+                <option value="">Select Category</option>
+                <option value="Construction">Construction</option>
+                <option value="Hardware">Hardware</option>
+                <option value="Plumbing">Plumbing</option>
+                <option value="Electrical">Electrical</option>
+              </select>
+            </div>
+            <div class="form-group" style="margin-bottom: 15px">
+              <label
+                for="prod-availability"
+                style="display: block; margin-bottom: 5px; font-weight: 500"
+                >Product Availability *</label
+              >
+              <select
+                id="prod-availability"
+                required
+                style="
+                  width: 100%;
+                  padding: 10px;
+                  border: 1px solid #ccc;
+                  border-radius: 5px;
+                "
+              >
+                <option value="both">Both (Bulk Orders & Walk-in)</option>
+                <option value="bulk_only">Bulk Orders Only (Delivery Required)</option>
+                <option value="walkin_only">Walk-in Only (Store Pickup)</option>
+              </select>
+              <small style="color: #64748b; margin-top: 4px; display: block;"
+                >Choose where this product can be ordered</small
+              >
+            </div>
+            <div
+              style="
+                display: grid;
+                grid-template-columns: 1fr 1fr 1fr;
+                gap: 12px;
+              "
+            >
+              <div class="form-group" style="margin-bottom: 15px">
+                <label
+                  for="prod-stock"
+                  style="display: block; margin-bottom: 5px; font-weight: 500"
+                  >Initial Stock *</label
+                >
+                <input
+                  type="number"
+                  id="prod-stock"
+                  required
+                  min="0"
+                  style="
+                    width: 100%;
+                    padding: 10px;
+                    border: 1px solid #ccc;
+                    border-radius: 5px;
+                  "
+                />
+              </div>
+              <div class="form-group" style="margin-bottom: 15px">
+                <label
+                  for="prod-min-qty"
+                  style="display: block; margin-bottom: 5px; font-weight: 500"
+                  >Min Quantity</label
+                >
+                <input
+                  type="number"
+                  id="prod-min-qty"
+                  min="1"
+                  value="20"
+                  style="
+                    width: 100%;
+                    padding: 10px;
+                    border: 1px solid #ccc;
+                    border-radius: 5px;
+                  "
+                />
+              </div>
+              <div class="form-group" style="margin-bottom: 15px">
+                <label
+                  for="prod-critical-qty"
+                  style="
+                    display: block;
+                    margin-bottom: 5px;
+                    font-weight: 500;
+                    color: #dc2626;
+                  "
+                  >Critical Qty</label
+                >
+                <input
+                  type="number"
+                  id="prod-critical-qty"
+                  min="1"
+                  value="5"
+                  style="
+                    width: 100%;
+                    padding: 10px;
+                    border: 1px solid #ccc;
+                    border-radius: 5px;
+                  "
+                />
+              </div>
+            </div>
+            <div class="form-group" style="margin-bottom: 15px">
+              <label
+                for="prod-discount"
+                style="display: block; margin-bottom: 5px; font-weight: 500"
+                >Discount <span style="color: #dc2626">%</span>
+                <small style="color: #64748b; font-weight: 400"
+                  >(0 = no discount)</small
+                ></label
+              >
+              <input
+                type="number"
+                id="prod-discount"
+                min="0"
+                max="100"
+                step="0.1"
+                value="0"
+                placeholder="e.g. 9"
+                style="
+                  width: 100%;
+                  padding: 10px;
+                  border: 1px solid #ccc;
+                  border-radius: 5px;
+                "
+              />
+              <small style="color: #64748b"
+                >Enter a percentage (e.g. 9 for -9%). Badge will appear on
+                product cards.</small
+              >
+            </div>
+            <div class="form-group" style="margin-bottom: 15px">
+              <label
+                for="prod-image"
+                style="display: block; margin-bottom: 5px; font-weight: 500"
+                >Product Image</label
+              >
+              <div style="display: flex; align-items: center; gap: 12px">
+                <img
+                  id="prod-image-preview"
+                  src="img/concrete-hollow-block-300x300.jpg"
+                  style="
+                    width: 72px;
+                    height: 72px;
+                    object-fit: cover;
+                    border-radius: 8px;
+                    border: 1px solid #e2e8f0;
+                    flex-shrink: 0;
+                  "
+                  onerror="this.src = 'img/concrete-hollow-block-300x300.jpg'"
+                />
+                <div style="flex: 1">
+                  <label
+                    for="prod-image-file"
+                    style="
+                      display: inline-block;
+                      padding: 8px 16px;
+                      background: #f1f5f9;
+                      border: 1px solid #cbd5e1;
+                      border-radius: 6px;
+                      cursor: pointer;
+                      font-size: 0.875rem;
+                      font-weight: 500;
+                      color: #475569;
+                    "
+                  >
+                    Upload Image
+                  </label>
+                  <input
+                    type="file"
+                    id="prod-image-file"
+                    accept="image/*"
+                    style="display: none"
+                  />
+                  <input
+                    type="hidden"
+                    id="prod-image"
+                    value="img/concrete-hollow-block-300x300.jpg"
+                  />
+                  <p
+                    id="prod-image-name"
+                    style="margin: 4px 0 0; font-size: 0.78rem; color: #94a3b8"
+                  >
+                    No file chosen
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div
+              id="form-feedback"
+              style="
+                margin-bottom: 15px;
+                text-align: center;
+                display: none;
+                padding: 10px;
+                border-radius: 5px;
+              "
+            ></div>
+            <div style="display: flex; justify-content: flex-end; gap: 10px">
+              <button
+                type="button"
+                class="action-btn secondary"
+                id="cancel-add-product"
+              >
+                Cancel
+              </button>
+              <button type="submit" class="action-btn primary">
+                Save Product
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- ASSIGN DRIVER MODAL -->
+    <div id="assign-driver-modal" class="modal">
+      <div class="modal-content" style="max-width: 400px">
+        <div class="modal-header">
+          <h2>Assign Delivery Driver</h2>
+          <span class="close-modal" id="close-assign-modal">&times;</span>
+        </div>
+        <div class="modal-body">
+          <form id="assign-driver-form">
+            <input type="hidden" id="assign-delivery-id" />
+            <div class="form-group" style="margin-bottom: 15px">
+              <label
+                for="driver-name"
+                style="display: block; margin-bottom: 5px; font-weight: 500"
+              >
+                Driver *
+              </label>
+              <select
+                id="driver-name"
+                required
+                style="
+                  width: 100%;
+                  padding: 10px;
+                  border: 1px solid #ccc;
+                  border-radius: 5px;
+                  font-size: 0.9rem;
+                  background: #fff;
+                "
+              >
+                <option value="">Loading...</option>
+              </select>
+              <p
+                id="driver-select-hint"
+                style="font-size: 11px; color: #94a3b8; margin-top: 4px"
+              >
+                Only registered driver accounts are shown.
+              </p>
+            </div>
+            <div class="form-group" style="margin-bottom: 15px">
+              <label
+                for="driver-plate"
+                style="display: block; margin-bottom: 5px; font-weight: 500"
+              >
+                Plate Number
+              </label>
+              <input
+                type="text"
+                id="driver-plate"
+                placeholder="e.g. ABC 1234"
+                style="
+                  width: 100%;
+                  padding: 10px;
+                  border: 1px solid #ccc;
+                  border-radius: 5px;
+                "
+              />
+            </div>
+            <div class="form-group" style="margin-bottom: 15px">
+              <label
+                for="driver-notes"
+                style="display: block; margin-bottom: 5px; font-weight: 500"
+              >
+                Delivery Notes
+              </label>
+              <textarea
+                id="driver-notes"
+                rows="3"
+                placeholder="Special instructions for the driver…"
+                style="
+                  width: 100%;
+                  padding: 10px;
+                  border: 1px solid #ccc;
+                  border-radius: 5px;
+                "
+              ></textarea>
+            </div>
+            <div style="display: flex; justify-content: flex-end; gap: 10px">
+              <button
+                type="button"
+                class="action-btn secondary"
+                id="cancel-assign-driver"
+              >
+                Cancel
+              </button>
+              <button type="submit" class="action-btn primary">
+                Assign Driver
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- MANAGE VARIANTS MODAL -->
+    <div id="variants-modal" class="modal">
+      <div class="modal-content" style="max-width: 560px">
+        <div class="modal-header">
+          <h2>Manage Variants — <span id="variants-product-name"></span></h2>
+          <span
+            class="close-modal"
+            onclick="
+              document
+                .getElementById('variants-modal')
+                .classList.remove('active')
+            "
+            >&times;</span
+          >
+        </div>
+        <div class="modal-body">
+          <!-- Existing variants list -->
+          <div id="variants-list" style="margin-bottom: 20px"></div>
+
+          <!-- Add new variant form -->
+          <div style="border-top: 1px solid #e2e8f0; padding-top: 16px">
+            <h3
+              style="
+                font-size: 0.95rem;
+                font-weight: 600;
+                margin-bottom: 12px;
+                color: #374151;
+              "
+            >
+              Add New Variant
+            </h3>
+            <div
+              style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px"
+            >
+              <div>
+                <label
+                  style="
+                    font-size: 12px;
+                    font-weight: 600;
+                    color: #64748b;
+                    display: block;
+                    margin-bottom: 4px;
+                  "
+                  >Size / Label *</label
+                >
+                <input
+                  type="text"
+                  id="new-variant-size"
+                  placeholder="e.g. 10mm, Large, 50kg"
+                  style="
+                    width: 100%;
+                    padding: 9px 12px;
+                    border: 1px solid #e2e8f0;
+                    border-radius: 6px;
+                    font-size: 0.875rem;
+                  "
+                />
+              </div>
+              <div>
+                <label
+                  style="
+                    font-size: 12px;
+                    font-weight: 600;
+                    color: #64748b;
+                    display: block;
+                    margin-bottom: 4px;
+                  "
+                  >Price (₱) *</label
+                >
+                <input
+                  type="number"
+                  id="new-variant-price"
+                  min="0"
+                  step="0.01"
+                  placeholder="0.00"
+                  style="
+                    width: 100%;
+                    padding: 9px 12px;
+                    border: 1px solid #e2e8f0;
+                    border-radius: 6px;
+                    font-size: 0.875rem;
+                  "
+                />
+              </div>
+              <div>
+                <label
+                  style="
+                    font-size: 12px;
+                    font-weight: 600;
+                    color: #64748b;
+                    display: block;
+                    margin-bottom: 4px;
+                  "
+                  >Stock *</label
+                >
+                <input
+                  type="number"
+                  id="new-variant-stock"
+                  min="0"
+                  placeholder="0"
+                  style="
+                    width: 100%;
+                    padding: 9px 12px;
+                    border: 1px solid #e2e8f0;
+                    border-radius: 6px;
+                    font-size: 0.875rem;
+                  "
+                />
+              </div>
+              <div>
+                <label
+                  style="
+                    font-size: 12px;
+                    font-weight: 600;
+                    color: #64748b;
+                    display: block;
+                    margin-bottom: 4px;
+                  "
+                  >Min Stock</label
+                >
+                <input
+                  type="number"
+                  id="new-variant-min"
+                  min="0"
+                  placeholder="5"
+                  style="
+                    width: 100%;
+                    padding: 9px 12px;
+                    border: 1px solid #e2e8f0;
+                    border-radius: 6px;
+                    font-size: 0.875rem;
+                  "
+                />
+              </div>
+            </div>
+            <div
+              id="variants-feedback"
+              style="
+                display: none;
+                margin-top: 10px;
+                padding: 8px 12px;
+                border-radius: 6px;
+                font-size: 0.875rem;
+              "
+            ></div>
+            <button
+              onclick="addVariant()"
+              class="action-btn primary"
+              style="margin-top: 14px; width: 100%"
+            >
+              + Add Variant
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROOF OF DELIVERY MODAL -->
+    <div id="proof-modal" class="modal">
+      <div class="modal-content" style="max-width: 400px; text-align: center">
+        <div class="modal-header">
+          <h2>Proof of Delivery</h2>
+          <span
+            class="close-modal"
+            onclick="
+              document.getElementById('proof-modal').classList.remove('active')
+            "
+            >&times;</span
+          >
+        </div>
+        <div class="modal-body">
+          <img
+            id="proof-modal-img"
+            src=""
+            alt="Delivery Proof"
+            style="max-width: 100%; border-radius: 8px; margin-bottom: 15px"
+          />
+          <div
+            style="
+              background: #f8fafc;
+              padding: 10px;
+              border-radius: 6px;
+              text-align: left;
+            "
+          >
+            <strong>Driver Remarks:</strong>
+            <p
+              id="proof-modal-notes"
+              style="margin-top: 5px; color: #475569; font-size: 0.95rem"
+            ></p>
+          </div>
+        </div>
+        <div
+          class="modal-footer"
+          style="
+            padding: 15px;
+            border-top: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: flex-end;
+          "
+        >
+          <button
+            class="action-btn secondary"
+            onclick="
+              document.getElementById('proof-modal').classList.remove('active')
+            "
+          >
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- VIEW ORDER MODAL -->
+    <div id="view-order-modal" class="modal">
+      <div class="modal-content" style="max-width: 500px">
+        <div class="modal-header">
+          <h2 id="view-order-title">Order Details</h2>
+          <span
+            class="close-modal"
+            onclick="
+              document
+                .getElementById('view-order-modal')
+                .classList.remove('active')
+            "
+            >&times;</span
+          >
+        </div>
+        <div class="modal-body">
+          <div
+            style="
+              background: #f8fafc;
+              padding: 15px;
+              border-radius: 6px;
+              margin-bottom: 20px;
+            "
+          >
+            <p>
+              <strong>Customer:</strong> <span id="view-order-customer"></span>
+            </p>
+            <p><strong>Date:</strong> <span id="view-order-date"></span></p>
+            <p>
+              <strong>Status:</strong>
+              <span
+                id="view-order-status"
+                style="text-transform: capitalize; font-weight: bold"
+              ></span>
+            </p>
+            <p>
+              <strong>Total:</strong>
+              <span
+                id="view-order-total"
+                style="color: #10b981; font-weight: bold; font-size: 1.1em"
+              ></span>
+            </p>
+          </div>
+
+          <!-- Customer contact & location details -->
+          <div
+            id="view-order-customer-details"
+            style="
+              background: #f0f9ff;
+              border: 1px solid #bae6fd;
+              border-radius: 6px;
+              padding: 12px;
+              margin-bottom: 16px;
+            "
+          >
+            <p
+              style="
+                font-size: 12px;
+                font-weight: 700;
+                color: #0369a1;
+                text-transform: uppercase;
+                letter-spacing: 0.05em;
+                margin: 0 0 8px;
+              "
+            >
+              Customer Details
+            </p>
+            <!-- Populated by viewOrder() in admin.js -->
+          </div>
+          <h3>Purchased Items</h3>
+          <table class="data-table" style="margin-top: 10px">
+            <thead style="background: #e2e8f0">
+              <tr>
+                <th>Item</th>
+                <th>Price</th>
+                <th>Qty</th>
+                <th>Subtotal</th>
+                <th>Notes</th>
+              </tr>
+            </thead>
+            <tbody id="view-order-items-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- VIEW DELIVERY ITEMS MODAL -->
+    <div id="view-delivery-items-modal" class="modal">
+      <div class="modal-content" style="max-width: 500px">
+        <div class="modal-header">
+          <h2>Delivery Items</h2>
+          <span
+            class="close-modal"
+            onclick="
+              document
+                .getElementById('view-delivery-items-modal')
+                .classList.remove('active')
+            "
+            >&times;</span
+          >
+        </div>
+        <div class="modal-body">
+          <table class="data-table" style="margin-top: 10px">
+            <thead style="background: #e2e8f0">
+              <tr>
+                <th>Product Name</th>
+                <th>Quantity</th>
+              </tr>
+            </thead>
+            <tbody id="view-delivery-items-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ADD EMPLOYEE MODAL -->
+    <div id="add-employee-modal" class="modal">
+      <div class="modal-content" style="max-width: 500px">
+        <div class="modal-header">
+          <h2>Register Employee Account</h2>
+          <span class="close-modal" id="close-add-employee-modal">&times;</span>
+        </div>
+        <div class="modal-body">
+          <form id="add-employee-form">
+            <div class="form-group" style="margin-bottom: 15px">
+              <label
+                for="emp-name"
+                style="display: block; margin-bottom: 5px; font-weight: 500"
+                >Full Name *</label
+              >
+              <input
+                type="text"
+                id="emp-name"
+                required
+                style="
+                  width: 100%;
+                  padding: 10px;
+                  border: 1px solid #ccc;
+                  border-radius: 5px;
+                "
+              />
+            </div>
+            <div class="form-group" style="margin-bottom: 15px">
+              <label
+                for="emp-email"
+                style="display: block; margin-bottom: 5px; font-weight: 500"
+                >Email / Username *</label
+              >
+              <input
+                type="email"
+                id="emp-email"
+                required
+                style="
+                  width: 100%;
+                  padding: 10px;
+                  border: 1px solid #ccc;
+                  border-radius: 5px;
+                "
+              />
+            </div>
+            <div class="form-group" style="margin-bottom: 15px">
+              <label
+                for="emp-password"
+                style="display: block; margin-bottom: 5px; font-weight: 500"
+                >Password *</label
+              >
+              <input
+                type="password"
+                id="emp-password"
+                required
+                minlength="6"
+                style="
+                  width: 100%;
+                  padding: 10px;
+                  border: 1px solid #ccc;
+                  border-radius: 5px;
+                "
+              />
+            </div>
+            <div class="form-group" style="margin-bottom: 15px">
+              <label
+                for="emp-phone"
+                style="display: block; margin-bottom: 5px; font-weight: 500"
+                >Contact Number *</label
+              >
+              <input
+                type="text"
+                id="emp-phone"
+                required
+                style="
+                  width: 100%;
+                  padding: 10px;
+                  border: 1px solid #ccc;
+                  border-radius: 5px;
+                "
+              />
+            </div>
+            <div class="form-group" style="margin-bottom: 15px">
+              <label
+                for="emp-role"
+                style="display: block; margin-bottom: 5px; font-weight: 500"
+                >Employee Role *</label
+              >
+              <select
+                id="emp-role"
+                required
+                style="
+                  width: 100%;
+                  padding: 10px;
+                  border: 1px solid #ccc;
+                  border-radius: 5px;
+                "
+              >
+                <option value="staff">Staff (Inventory & Orders)</option>
+                <option value="cashier">Cashier (Point of Sale)</option>
+                <option value="driver">Rider (Deliveries Only)</option>
+              </select>
+            </div>
+            <div
+              style="
+                display: flex;
+                justify-content: flex-end;
+                gap: 10px;
+                margin-top: 20px;
+              "
+            >
+              <button
+                type="button"
+                class="action-btn secondary"
+                id="cancel-add-employee"
+              >
+                Cancel
+              </button>
+              <button type="submit" class="action-btn primary">
+                Register Employee
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- EDIT PRODUCT MODAL -->
+    <div id="edit-product-modal" class="modal">
+      <div class="modal-content" style="max-width: 500px">
+        <div class="modal-header">
+          <h2>Edit Product</h2>
+          <span
+            class="close-modal"
+            onclick="
+              document
+                .getElementById('edit-product-modal')
+                .classList.remove('active')
+            "
+            >&times;</span
+          >
+        </div>
+        <div class="modal-body">
+          <form id="edit-product-form">
+            <input type="hidden" id="edit-prod-id" />
+            <div class="form-group" style="margin-bottom: 15px">
+              <label
+                for="edit-prod-name"
+                style="display: block; margin-bottom: 5px; font-weight: 500"
+                >Product Name *</label
+              >
+              <input
+                type="text"
+                id="edit-prod-name"
+                required
+                style="
+                  width: 100%;
+                  padding: 10px;
+                  border: 1px solid #ccc;
+                  border-radius: 5px;
+                "
+              />
+              <small style="color: #94a3b8"
+                >Cannot be changed if product has transaction history.</small
+              >
+            </div>
+            <div
+              style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px"
+            >
+              <div class="form-group" style="margin-bottom: 15px">
+                <label
+                  for="edit-prod-price"
+                  style="display: block; margin-bottom: 5px; font-weight: 500"
+                  >Price (₱) *</label
+                >
+                <input
+                  type="number"
+                  id="edit-prod-price"
+                  required
+                  min="0"
+                  step="0.01"
+                  style="
+                    width: 100%;
+                    padding: 10px;
+                    border: 1px solid #ccc;
+                    border-radius: 5px;
+                  "
+                />
+                <small style="color: #f97316"
+                  >Cannot edit while pending orders exist.</small
+                >
+              </div>
+              <div class="form-group" style="margin-bottom: 15px">
+                <label
+                  for="edit-prod-unit"
+                  style="display: block; margin-bottom: 5px; font-weight: 500"
+                  >Unit of Measure</label
+                >
+                <input
+                  type="text"
+                  id="edit-prod-unit"
+                  placeholder="pcs"
+                  style="
+                    width: 100%;
+                    padding: 10px;
+                    border: 1px solid #ccc;
+                    border-radius: 5px;
+                  "
+                />
+              </div>
+            </div>
+            <div class="form-group" style="margin-bottom: 15px">
+              <label
+                for="edit-prod-category"
+                style="display: block; margin-bottom: 5px; font-weight: 500"
+                >Category *</label
+              >
+              <select
+                id="edit-prod-category"
+                required
+                style="
+                  width: 100%;
+                  padding: 10px;
+                  border: 1px solid #ccc;
+                  border-radius: 5px;
+                "
+              >
+                <option value="Construction">Construction</option>
+                <option value="Hardware">Hardware</option>
+                <option value="Plumbing">Plumbing</option>
+                <option value="Electrical">Electrical</option>
+              </select>
+            </div>
+            <div
+              id="parent-stock-fields"
+              style="
+                display: grid;
+                grid-template-columns: 1fr 1fr 1fr;
+                gap: 12px;
+              "
+            >
+              <div class="form-group" style="margin-bottom: 15px">
+                <label
+                  for="edit-prod-stock"
+                  style="display: block; margin-bottom: 5px; font-weight: 500"
+                  >Stock</label
+                >
+                <input
+                  type="number"
+                  id="edit-prod-stock"
+                  required
+                  min="0"
+                  style="
+                    width: 100%;
+                    padding: 10px;
+                    border: 1px solid #ccc;
+                    border-radius: 5px;
+                  "
+                />
+              </div>
+              <div class="form-group" style="margin-bottom: 15px">
+                <label
+                  for="edit-prod-min-qty"
+                  style="display: block; margin-bottom: 5px; font-weight: 500"
+                  >Min Quantity</label
+                >
+                <input
+                  type="number"
+                  id="edit-prod-min-qty"
+                  min="1"
+                  style="
+                    width: 100%;
+                    padding: 10px;
+                    border: 1px solid #ccc;
+                    border-radius: 5px;
+                  "
+                />
+              </div>
+              <div class="form-group" style="margin-bottom: 15px">
+                <label
+                  for="edit-prod-critical-qty"
+                  style="
+                    display: block;
+                    margin-bottom: 5px;
+                    font-weight: 500;
+                    color: #dc2626;
+                  "
+                  >Critical Qty</label
+                >
+                <input
+                  type="number"
+                  id="edit-prod-critical-qty"
+                  min="1"
+                  style="
+                    width: 100%;
+                    padding: 10px;
+                    border: 1px solid #ccc;
+                    border-radius: 5px;
+                  "
+                />
+              </div>
+            </div>
+            <div class="form-group" style="margin-bottom: 15px">
+              <label
+                for="edit-prod-discount"
+                style="display: block; margin-bottom: 5px; font-weight: 500"
+                >Discount <span style="color: #dc2626">%</span>
+                <small style="color: #64748b; font-weight: 400"
+                  >(0 = no discount)</small
+                ></label
+              >
+              <input
+                type="number"
+                id="edit-prod-discount"
+                min="0"
+                max="100"
+                step="0.1"
+                value="0"
+                placeholder="e.g. 9"
+                style="
+                  width: 100%;
+                  padding: 10px;
+                  border: 1px solid #ccc;
+                  border-radius: 5px;
+                "
+              />
+              <small style="color: #64748b"
+                >Enter a percentage (e.g. 9 for -9%). Badge will appear on
+                product cards.</small
+              >
+            </div>
+            <div class="form-group" style="margin-bottom: 15px">
+              <label
+                for="edit-prod-image"
+                style="display: block; margin-bottom: 5px; font-weight: 500"
+                >Product Image</label
+              >
+              <div style="display: flex; align-items: center; gap: 12px">
+                <img
+                  id="edit-prod-image-preview"
+                  src="img/concrete-hollow-block-300x300.jpg"
+                  style="
+                    width: 72px;
+                    height: 72px;
+                    object-fit: cover;
+                    border-radius: 8px;
+                    border: 1px solid #e2e8f0;
+                    flex-shrink: 0;
+                  "
+                  onerror="this.src = 'img/concrete-hollow-block-300x300.jpg'"
+                />
+                <div style="flex: 1">
+                  <label
+                    for="edit-prod-image-file"
+                    style="
+                      display: inline-block;
+                      padding: 8px 16px;
+                      background: #f1f5f9;
+                      border: 1px solid #cbd5e1;
+                      border-radius: 6px;
+                      cursor: pointer;
+                      font-size: 0.875rem;
+                      font-weight: 500;
+                      color: #475569;
+                    "
+                  >
+                    Upload Image
+                  </label>
+                  <input
+                    type="file"
+                    id="edit-prod-image-file"
+                    accept="image/*"
+                    style="display: none"
+                  />
+                  <input type="hidden" id="edit-prod-image" />
+                  <p
+                    id="edit-prod-image-name"
+                    style="margin: 4px 0 0; font-size: 0.78rem; color: #94a3b8"
+                  >
+                    No file chosen
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div
+              style="
+                display: flex;
+                justify-content: flex-end;
+                gap: 10px;
+                margin-top: 20px;
+              "
+            >
+              <button
+                type="button"
+                class="action-btn secondary"
+                onclick="
+                  document
+                    .getElementById('edit-product-modal')
+                    .classList.remove('active')
+                "
+              >
+                Cancel
+              </button>
+              <button type="submit" class="action-btn primary">
+                Save Changes
+              </button>
+            </div>
+          </form>
+
+          <!-- VARIANTS SECTION -->
+          <div
+            style="
+              margin-top: 24px;
+              border-top: 1.5px solid #e2e8f0;
+              padding-top: 20px;
+            "
+          >
+            <h3
+              style="
+                font-size: 15px;
+                font-weight: 700;
+                margin-bottom: 14px;
+                color: #0f172a;
+              "
+            >
+              Size Variants
+              <small style="font-weight: 400; color: #64748b"
+                >(per-size stock &amp; price)</small
+              >
+            </h3>
+            <p style="font-size: 12px; color: #94a3b8; margin-bottom: 12px">
+              When variants are added, parent stock &amp; price are
+              auto-computed from variants.
+            </p>
+            <div id="variants-list" style="margin-bottom: 14px"></div>
+            <div
+              style="
+                display: grid;
+                grid-template-columns: 1fr 1fr 1fr 1fr auto;
+                gap: 8px;
+                align-items: end;
+              "
+            >
+              <div>
+                <label
+                  style="
+                    font-size: 13px;
+                    font-weight: 600;
+                    display: block;
+                    margin-bottom: 4px;
+                  "
+                  >Size</label
+                >
+                <input
+                  type="text"
+                  id="new-variant-size"
+                  placeholder="e.g. 2inch"
+                  style="
+                    width: 100%;
+                    padding: 8px;
+                    border: 1px solid #ccc;
+                    border-radius: 5px;
+                  "
+                />
+              </div>
+              <div>
+                <label
+                  style="
+                    font-size: 13px;
+                    font-weight: 600;
+                    display: block;
+                    margin-bottom: 4px;
+                  "
+                  >Price (₱)</label
+                >
+                <input
+                  type="number"
+                  id="new-variant-price"
+                  min="0"
+                  step="0.01"
+                  placeholder="0.00"
+                  style="
+                    width: 100%;
+                    padding: 8px;
+                    border: 1px solid #ccc;
+                    border-radius: 5px;
+                  "
+                />
+              </div>
+              <div>
+                <label
+                  style="
+                    font-size: 13px;
+                    font-weight: 600;
+                    display: block;
+                    margin-bottom: 4px;
+                  "
+                  >Stock</label
+                >
+                <input
+                  type="number"
+                  id="new-variant-stock"
+                  min="0"
+                  placeholder="0"
+                  style="
+                    width: 100%;
+                    padding: 8px;
+                    border: 1px solid #ccc;
+                    border-radius: 5px;
+                  "
+                />
+              </div>
+              <div>
+                <label
+                  style="
+                    font-size: 13px;
+                    font-weight: 600;
+                    display: block;
+                    margin-bottom: 4px;
+                    color: #f59e0b;
+                  "
+                  >Low Stock Alert at</label
+                >
+                <input
+                  type="number"
+                  id="new-variant-min-stock"
+                  min="1"
+                  placeholder="5"
+                  value="5"
+                  style="
+                    width: 100%;
+                    padding: 8px;
+                    border: 1px solid #ccc;
+                    border-radius: 5px;
+                  "
+                />
+              </div>
+              <button
+                onclick="addVariant()"
+                class="action-btn primary btn-small"
+                style="margin-bottom: 0"
+              >
+                Add
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ADD CATEGORY MODAL -->
+    <div id="add-category-modal" class="modal">
+      <div class="modal-content" style="max-width: 400px">
+        <div class="modal-header">
+          <h2>Add New Category</h2>
+          <span class="close-modal" id="close-add-category-modal">&times;</span>
+        </div>
+        <div class="modal-body">
+          <form id="add-category-form">
+            <div class="form-group" style="margin-bottom: 15px">
+              <label
+                for="cat-name"
+                style="display: block; margin-bottom: 5px; font-weight: 500"
+                >Category Name *</label
+              >
+              <input
+                type="text"
+                id="cat-name"
+                required
+                style="
+                  width: 100%;
+                  padding: 10px;
+                  border: 1px solid #ccc;
+                  border-radius: 5px;
+                "
+              />
+            </div>
+            <div
+              id="cat-feedback"
+              style="
+                margin-bottom: 15px;
+                display: none;
+                padding: 10px;
+                border-radius: 5px;
+                text-align: center;
+              "
+            ></div>
+            <div style="display: flex; justify-content: flex-end; gap: 10px">
+              <button
+                type="button"
+                class="action-btn secondary"
+                id="cancel-add-category"
+              >
+                Cancel
+              </button>
+              <button type="submit" class="action-btn primary">
+                Add Category
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- ADMIN RETURN REVIEW MODAL -->
+    <div id="admin-return-review-modal" class="modal">
+      <div class="modal-content" style="max-width: 560px">
+        <div class="modal-header">
+          <h2>Review Return Request</h2>
+          <span class="close-modal" id="close-admin-return-modal">&times;</span>
+        </div>
+        <div class="modal-body">
+          <div
+            id="admin-return-review-details"
+            style="
+              background: #f8fafc;
+              padding: 14px;
+              border-radius: 6px;
+              margin-bottom: 16px;
+            "
+          ></div>
+          <div style="margin-bottom: 12px">
+            <label style="display: block; margin-bottom: 5px; font-weight: 500"
+              >Notes (optional)</label
+            >
+            <textarea
+              id="admin-return-notes"
+              rows="2"
+              style="
+                width: 100%;
+                padding: 10px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+              "
+            ></textarea>
+          </div>
+          <input type="hidden" id="admin-return-ref" />
+          <div style="display: flex; justify-content: flex-end; gap: 10px">
+            <button
+              type="button"
+              class="action-btn secondary"
+              id="cancel-admin-return"
+            >
+              Cancel
+            </button>
+            <button
+              type="button"
+              id="admin-reject-return-btn"
+              style="
+                background: #ef4444;
+                color: #fff;
+                border: none;
+                padding: 8px 16px;
+                border-radius: 6px;
+                cursor: pointer;
+                font-size: 0.875rem;
+              "
+            >
+              Reject
+            </button>
+            <button
+              type="button"
+              class="action-btn primary"
+              id="admin-approve-return-btn"
+            >
+              Approve &amp; Restore Stock
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ADMIN CANCELLATION REVIEW MODAL -->
+    <div id="admin-cancel-review-modal" class="modal">
+      <div class="modal-content" style="max-width: 560px">
+        <div class="modal-header">
+          <h2>Review Cancellation Request</h2>
+          <span class="close-modal" id="close-admin-cancel-modal">&times;</span>
+        </div>
+        <div class="modal-body">
+          <div
+            id="admin-cancel-review-details"
+            style="
+              background: #f8fafc;
+              padding: 14px;
+              border-radius: 6px;
+              margin-bottom: 16px;
+            "
+          ></div>
+          <div style="margin-bottom: 12px">
+            <label style="display: block; margin-bottom: 5px; font-weight: 500"
+              >Review Notes (optional)</label
+            >
+            <textarea
+              id="admin-cancel-notes"
+              rows="2"
+              style="
+                width: 100%;
+                padding: 10px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+              "
+            ></textarea>
+          </div>
+          <input type="hidden" id="admin-cancel-ref" />
+          <div style="display: flex; justify-content: flex-end; gap: 10px">
+            <button
+              type="button"
+              class="action-btn secondary"
+              id="close-admin-cancel-btn"
+            >
+              Close
+            </button>
+            <button
+              type="button"
+              id="admin-reject-cancel-btn"
+              style="
+                background: #ef4444;
+                color: #fff;
+                border: none;
+                padding: 8px 16px;
+                border-radius: 6px;
+                cursor: pointer;
+                font-size: 0.875rem;
+              "
+            >
+              Reject (Restore Order)
+            </button>
+            <button
+              type="button"
+              class="action-btn primary"
+              id="admin-approve-cancel-btn"
+            >
+              Approve Cancellation
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BULK ORDER REVIEW MODAL -->
+    <div id="bulk-review-modal" class="modal">
+      <div class="modal-content" style="max-width: 600px">
+        <div class="modal-header">
+          <h2>Bulk Order Details</h2>
+          <span class="close-modal" id="close-bulk-review-modal">&times;</span>
+        </div>
+        <div class="modal-body">
+          <div
+            id="bulk-review-details"
+            style="
+              background: #f8fafc;
+              padding: 14px;
+              border-radius: 6px;
+              margin-bottom: 16px;
+              font-size: 0.875rem;
+              line-height: 1.8;
+            "
+          ></div>
+          <div id="bulk-quote-fields" style="margin-bottom: 12px">
+            <label style="display: block; margin-bottom: 5px; font-weight: 500"
+              >Quoted Amount (₱)</label
+            >
+            <input
+              type="number"
+              id="bulk-quoted-amount"
+              min="0"
+              step="0.01"
+              placeholder="0.00"
+              style="
+                width: 100%;
+                padding: 9px 12px;
+                border: 1px solid #ccc;
+                border-radius: 6px;
+                font-size: 0.875rem;
+              "
+            />
+            <label style="display: block; margin: 10px 0 5px; font-weight: 500"
+              >Quotation Notes (optional)</label
+            >
+            <textarea
+              id="bulk-quotation-notes"
+              rows="2"
+              style="
+                width: 100%;
+                padding: 9px 12px;
+                border: 1px solid #ccc;
+                border-radius: 6px;
+                font-size: 0.875rem;
+              "
+            ></textarea>
+            <!-- Discount selector shown when completing the order -->
+            <label style="display: block; margin: 10px 0 5px; font-weight: 500"
+              >Apply Discount (for completion)</label
+            >
+            <select
+              id="bulk-discount-type"
+              style="
+                width: 100%;
+                padding: 9px 12px;
+                border: 1px solid #ccc;
+                border-radius: 6px;
+                font-size: 0.875rem;
+              "
+            >
+              <option value="">No Discount</option>
+              <option value="promo">Promo Discount (5%)</option>
+              <option value="bulk">Bulk Order Discount (10%)</option>
+            </select>
+          </div>
+          <div
+            id="bulk-cancel-fields"
+            style="display: none; margin-bottom: 12px"
+          >
+            <label style="display: block; margin-bottom: 5px; font-weight: 500"
+              >Cancellation Reason <span style="color: #dc2626">*</span></label
+            >
+            <input
+              type="text"
+              id="bulk-cancel-reason"
+              placeholder="Reason for cancellation"
+              style="
+                width: 100%;
+                padding: 9px 12px;
+                border: 1px solid #ccc;
+                border-radius: 6px;
+                font-size: 0.875rem;
+              "
+            />
+          </div>
+          <input type="hidden" id="bulk-review-ref" />
+          <input type="hidden" id="bulk-review-status" />
+          <div
+            style="
+              display: flex;
+              justify-content: flex-end;
+              gap: 10px;
+              flex-wrap: wrap;
+            "
+          >
+            <button
+              type="button"
+              class="action-btn secondary"
+              id="close-bulk-review-btn"
+            >
+              Close
+            </button>
+            <button
+              type="button"
+              id="bulk-print-po-btn"
+              style="
+                background: #f1f5f9;
+                color: #475569;
+                border: 1px solid #e2e8f0;
+                padding: 8px 16px;
+                border-radius: 6px;
+                cursor: pointer;
+                font-size: 0.875rem;
+              "
+            >
+              Print PO
+            </button>
+            <button
+              type="button"
+              id="bulk-cancel-btn"
+              style="
+                background: #ef4444;
+                color: #fff;
+                border: none;
+                padding: 8px 16px;
+                border-radius: 6px;
+                cursor: pointer;
+                font-size: 0.875rem;
+              "
+            >
+              Cancel Order
+            </button>
+            <button
+              type="button"
+              id="bulk-next-status-btn"
+              class="action-btn primary"
+            >
+              Next Step →
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BULK WALK-IN ADD MODAL -->
+    <div id="bulk-walkin-modal" class="modal">
+      <div class="modal-content" style="max-width: 560px">
+        <div class="modal-header">
+          <h2>Add Walk-in Bulk Order</h2>
+          <span class="close-modal" id="close-bulk-walkin-modal">&times;</span>
+        </div>
+        <div class="modal-body">
+          <div
+            style="
+              display: grid;
+              grid-template-columns: 1fr 1fr;
+              gap: 12px;
+              margin-bottom: 12px;
+            "
+          >
+            <div>
+              <label
+                style="
+                  display: block;
+                  margin-bottom: 4px;
+                  font-weight: 500;
+                  font-size: 0.875rem;
+                "
+                >Customer Name *</label
+              >
+              <input
+                type="text"
+                id="wi-name"
+                style="
+                  width: 100%;
+                  padding: 9px;
+                  border: 1px solid #ccc;
+                  border-radius: 6px;
+                  font-size: 0.875rem;
+                "
+              />
+            </div>
+            <div>
+              <label
+                style="
+                  display: block;
+                  margin-bottom: 4px;
+                  font-weight: 500;
+                  font-size: 0.875rem;
+                "
+                >Contact Number *</label
+              >
+              <input
+                type="tel"
+                id="wi-phone"
+                style="
+                  width: 100%;
+                  padding: 9px;
+                  border: 1px solid #ccc;
+                  border-radius: 6px;
+                  font-size: 0.875rem;
+                "
+              />
+            </div>
+            <div>
+              <label
+                style="
+                  display: block;
+                  margin-bottom: 4px;
+                  font-weight: 500;
+                  font-size: 0.875rem;
+                "
+                >Email</label
+              >
+              <input
+                type="email"
+                id="wi-email"
+                style="
+                  width: 100%;
+                  padding: 9px;
+                  border: 1px solid #ccc;
+                  border-radius: 6px;
+                  font-size: 0.875rem;
+                "
+              />
+            </div>
+            <div>
+              <label
+                style="
+                  display: block;
+                  margin-bottom: 4px;
+                  font-weight: 500;
+                  font-size: 0.875rem;
+                "
+                >Project Type</label
+              >
+              <select
+                id="wi-project"
+                style="
+                  width: 100%;
+                  padding: 9px;
+                  border: 1px solid #ccc;
+                  border-radius: 6px;
+                  font-size: 0.875rem;
+                "
+              >
+                <option value="">— Select —</option>
+                <option>Residential Construction</option>
+                <option>Commercial Construction</option>
+                <option>Renovation / Repair</option>
+                <option>Infrastructure / Roads</option>
+                <option>Reseller / Dealer</option>
+                <option>Other</option>
+              </select>
+            </div>
+          </div>
+          <div style="margin-bottom: 12px">
+            <label
+              style="
+                display: block;
+                margin-bottom: 4px;
+                font-weight: 500;
+                font-size: 0.875rem;
+              "
+              >Delivery Address *</label
+            >
+            <input
+              type="text"
+              id="wi-address"
+              style="
+                width: 100%;
+                padding: 9px;
+                border: 1px solid #ccc;
+                border-radius: 6px;
+                font-size: 0.875rem;
+              "
+            />
+          </div>
+          <div style="margin-bottom: 12px">
+            <label
+              style="
+                display: block;
+                margin-bottom: 4px;
+                font-weight: 500;
+                font-size: 0.875rem;
+              "
+              >Materials & Quantities *</label
+            >
+            <textarea
+              id="wi-items"
+              rows="4"
+              placeholder="e.g. Cement × 200 bags, Deformed Bars 10mm × 100 pcs"
+              style="
+                width: 100%;
+                padding: 9px;
+                border: 1px solid #ccc;
+                border-radius: 6px;
+                font-size: 0.875rem;
+              "
+            ></textarea>
+          </div>
+          <div style="margin-bottom: 16px">
+            <label
+              style="
+                display: block;
+                margin-bottom: 4px;
+                font-weight: 500;
+                font-size: 0.875rem;
+              "
+              >Notes</label
+            >
+            <textarea
+              id="wi-notes"
+              rows="2"
+              style="
+                width: 100%;
+                padding: 9px;
+                border: 1px solid #ccc;
+                border-radius: 6px;
+                font-size: 0.875rem;
+              "
+            ></textarea>
+          </div>
+          <div style="display: flex; justify-content: flex-end; gap: 10px">
+            <button
+              type="button"
+              class="action-btn secondary"
+              id="close-bulk-walkin-btn"
+            >
+              Cancel
+            </button>
+            <button
+              type="button"
+              class="action-btn primary"
+              id="save-bulk-walkin-btn"
+            >
+              Save Walk-in Order
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CREATE TRUCK BATCH MODAL -->
+    <div id="create-batch-modal" class="modal">
+      <div class="modal-content" style="max-width:420px;">
+        <div class="modal-header">
+          <h2>Create Truck Batch</h2>
+          <span class="close-modal" onclick="document.getElementById('create-batch-modal').classList.remove('active')">&times;</span>
+        </div>
+        <div class="modal-body">
+          <form id="create-batch-form">
+            <div class="form-group" style="margin-bottom:15px;">
+              <label style="display:block; margin-bottom:5px; font-weight:500;">Truck Plate Number *</label>
+              <input type="text" id="batch-plate" placeholder="e.g. ABC 1234" required
+                style="width:100%; padding:10px; border:1px solid #ccc; border-radius:5px;" />
+            </div>
+            <div class="form-group" style="margin-bottom:15px;">
+              <label style="display:block; margin-bottom:5px; font-weight:500;">Assign Driver</label>
+              <select id="batch-driver"
+                style="width:100%; padding:10px; border:1px solid #ccc; border-radius:5px; background:#fff; font-size:0.9rem;">
+                <option value="">Loading...</option>
+              </select>
+            </div>
+            <div class="form-group" style="margin-bottom:15px;">
+              <label style="display:block; margin-bottom:5px; font-weight:500;">Batch Notes</label>
+              <textarea id="batch-notes" rows="2" placeholder="Optional instructions for this truck run…"
+                style="width:100%; padding:10px; border:1px solid #ccc; border-radius:5px;"></textarea>
+            </div>
+            <div style="display:flex; justify-content:flex-end; gap:10px;">
+              <button type="button" class="action-btn secondary"
+                onclick="document.getElementById('create-batch-modal').classList.remove('active')">Cancel</button>
+              <button type="submit" class="action-btn primary">Create Batch</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- TRUCK BATCH DETAIL MODAL -->
+    <div id="batch-detail-modal" class="modal">
+      <div class="modal-content" style="max-width:600px;">
+        <div class="modal-header">
+          <h2 id="batch-detail-title">Batch Details</h2>
+          <span class="close-modal" onclick="document.getElementById('batch-detail-modal').classList.remove('active')">&times;</span>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" id="batch-detail-id" />
+
+          <!-- Batch info edit row -->
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:16px;">
+            <div>
+              <label style="font-size:12px; font-weight:600; color:#64748b; display:block; margin-bottom:4px;">Plate Number *</label>
+              <input type="text" id="batch-detail-plate" placeholder="ABC 1234"
+                style="width:100%; padding:9px 12px; border:1px solid #e2e8f0; border-radius:6px; font-size:0.875rem;" />
+            </div>
+            <div>
+              <label style="font-size:12px; font-weight:600; color:#64748b; display:block; margin-bottom:4px;">Driver</label>
+              <select id="batch-detail-driver"
+                style="width:100%; padding:9px 12px; border:1px solid #e2e8f0; border-radius:6px; background:#fff; font-size:0.875rem;">
+                <option value="">— None —</option>
+              </select>
+            </div>
+          </div>
+          <div style="margin-bottom:16px;">
+            <label style="font-size:12px; font-weight:600; color:#64748b; display:block; margin-bottom:4px;">Notes</label>
+            <textarea id="batch-detail-notes" rows="2"
+              style="width:100%; padding:9px 12px; border:1px solid #e2e8f0; border-radius:6px; font-size:0.875rem;"></textarea>
+          </div>
+          <button class="action-btn secondary" style="margin-bottom:16px;" onclick="saveBatchDetails()">Save Changes</button>
+
+          <!-- Capacity bar -->
+          <div style="margin-bottom:16px;">
+            <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+              <span style="font-size:0.8rem; font-weight:600; color:#374151;">Truck Load</span>
+              <span id="batch-capacity-label" style="font-size:0.8rem; color:#64748b;">0 items</span>
+            </div>
+            <div style="background:#e5e7eb; border-radius:999px; height:10px; overflow:hidden;">
+              <div id="batch-capacity-bar" style="height:100%; background:#f97316; border-radius:999px; width:0%; transition:width .3s;"></div>
+            </div>
+            <div style="font-size:0.75rem; color:#94a3b8; margin-top:3px;">Recommended max: 50 items per truck</div>
+          </div>
+
+          <!-- Deliveries in this batch -->
+          <h3 style="font-size:0.9rem; font-weight:700; margin-bottom:10px; color:#0f172a;">Queued Deliveries</h3>
+          <div id="batch-detail-deliveries" style="max-height:220px; overflow-y:auto; border:1px solid #e2e8f0; border-radius:8px; padding:8px; margin-bottom:16px;">
+            <div style="text-align:center; color:#94a3b8; padding:12px;">No deliveries added yet.</div>
+          </div>
+
+          <!-- Add delivery to batch -->
+          <div style="display:flex; gap:8px; margin-bottom:16px;">
+            <input type="text" id="batch-add-del-ref" placeholder="DEL-XXX — delivery ref"
+              style="flex:1; padding:9px 12px; border:1px solid #e2e8f0; border-radius:6px; font-size:0.875rem;" />
+            <button class="action-btn primary" onclick="addDeliveryToBatch()">+ Add</button>
+          </div>
+
+          <!-- Dispatch button -->
+          <div id="batch-dispatch-section" style="border-top:1px solid #e2e8f0; padding-top:14px; margin-top:4px;">
+            <button id="dispatch-batch-btn" class="action-btn primary"
+              style="width:100%; font-size:1rem; padding:12px; background:#059669;"
+              onclick="dispatchBatch()">
+              Dispatch Truck
+            </button>
+            <p style="font-size:0.78rem; color:#64748b; margin-top:6px; text-align:center;">
+              This will assign the driver &amp; plate to all queued deliveries and mark them as "Out for Delivery".
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="data/products.js?v=2"></script>
+    <script src="data/deliveries.js?v=2"></script>
+    <script src="Js/admin.js?v=2"></script>
+  </body>
+</html>

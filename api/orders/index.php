@@ -1,0 +1,163 @@
+<?php
+// GET /api/orders  — list all sales (unified: online orders, walk-in, bulk)
+// POST /api/orders  — create sale and deduct stock immediately
+// VERSION: 2026-10-06-unified-sales (merged orders and transactions)
+require_once __DIR__ . '/../db.php';
+
+// Set timezone to match Philippines
+date_default_timezone_set('Asia/Manila');
+
+$method = $_SERVER['REQUEST_METHOD'];
+$pdo    = get_db();
+
+if ($method === 'GET') {
+    // Check if requesting a specific order by ref or ID
+    $ref = $_GET['ref'] ?? '';
+    
+    if ($ref) {
+        // Check if it's a numeric ID or order_ref
+        if (is_numeric($ref)) {
+            // Fetch by ID
+            $stmt = $pdo->prepare('SELECT * FROM sales WHERE id = ? LIMIT 1');
+            $stmt->execute([(int)$ref]);
+        } else {
+            // Fetch by order_ref
+            $stmt = $pdo->prepare('SELECT * FROM sales WHERE order_ref = ? LIMIT 1');
+            $stmt->execute([$ref]);
+        }
+        
+        $sale = $stmt->fetch();
+        
+        if (!$sale) {
+            json_err('Order not found', 404);
+        }
+        
+        json_ok(sale_to_dict($sale));
+    } else {
+        // Get all orders
+        $rows = $pdo->query('SELECT * FROM sales ORDER BY created_at DESC')->fetchAll();
+        json_ok(array_map('sale_to_dict', $rows));
+    }
+
+} elseif ($method === 'POST') {
+    $body         = get_json_body();
+    $items        = $body['items']         ?? [];
+    $total        = (float)($body['total']        ?? 0);
+    $subtotal     = (float)($body['subtotal']     ?? $total);
+    $discountType = trim($body['discount_type']   ?? '');
+    $discountAmt  = (float)($body['discount_amount'] ?? 0);
+    $tendered     = (float)($body['tendered']     ?? 0);
+    $change       = (float)($body['change']       ?? 0);    
+    $customerName = trim($body['customer_name']   ?? 'Walk-in Customer');
+    $customerPhone = trim($body['customer_phone']  ?? '');
+    $customerAddr = trim($body['customer_address'] ?? '');
+    $actorName    = trim($body['actorName']        ?? 'System');
+    $actorRole    = trim($body['actorRole']        ?? 'cashier');
+
+    if (empty($items))  json_err('Order must contain at least one item.');
+    if ($total <= 0)    json_err('Order total must be greater than 0.');
+
+    start_session();
+    $userId    = isset($_SESSION['user_id']) ? (int)$_SESSION['user_id'] : null;
+    
+    // Check if this is explicitly marked as walk-in (from cashier)
+    $forceWalkIn = isset($body['force_walk_in']) && $body['force_walk_in'];
+    
+    // Determine order type:
+    // - If force_walk_in flag is set, it's a walk-in order (but keep user_id if logged in)
+    // - Otherwise, if user_id exists, it's online
+    $orderType = $forceWalkIn ? 'walk-in' : ($userId ? 'online' : 'walk-in');
+    
+    // DEBUG: Log what we received
+    error_log("ORDER_DEBUG: userId=$userId, forceWalkIn=" . ($forceWalkIn ? 'true' : 'false') . ", orderType=$orderType, customerName=$customerName");
+
+    if ($userId && $customerName === 'Walk-in Customer') {
+        $uRow = $pdo->prepare('SELECT full_name FROM users WHERE id = ? LIMIT 1');
+        $uRow->execute([$userId]);
+        $uData = $uRow->fetch();
+        if ($uData) $customerName = $uData['full_name'];
+    }
+
+    do {
+        $orderRef = 'ORD-' . str_pad((string)random_int(10000, 99999), 5, '0', STR_PAD_LEFT);
+        $exists   = $pdo->prepare('SELECT id FROM sales WHERE order_ref = ? LIMIT 1');
+        $exists->execute([$orderRef]);
+    } while ($exists->fetch());
+
+    $today     = date('Y-m-d');
+    $itemsJson = json_encode($items);
+    
+    // Determine status based on order type
+    // - Walk-in (cashier): completed immediately (payment made on spot)
+    // - Online (customer): pending (awaits confirmation/payment)
+    $orderStatus = ($orderType === 'walk-in') ? 'completed' : 'pending';
+
+    $pdo->beginTransaction();
+    try {
+        // Check stock availability
+        foreach ($items as $item) {
+            $name      = $item['name']       ?? '';
+            $productId = isset($item['product_id']) ? (int)$item['product_id'] : 0;
+            $qty       = max(1, (int)($item['qty'] ?? 1));
+
+            // Check stock
+            if ($productId > 0) {
+                $p = $pdo->prepare('SELECT stock FROM products WHERE id = ? LIMIT 1');
+                $p->execute([$productId]);
+                $prod = $p->fetch();
+                if (!$prod || (int)$prod['stock'] < $qty) {
+                    $pdo->rollBack();
+                    json_err('Insufficient stock for: ' . $name, 409);
+                }
+            }
+        }
+
+        // Deduct stock ONLY for walk-in orders (cashier - payment already received)
+        // For online orders (pending), stock should not be deducted
+        if ($orderType === 'walk-in') {
+            foreach ($items as $item) {
+                $productId = isset($item['product_id']) ? (int)$item['product_id'] : 0;
+                $qty = max(1, (int)($item['qty'] ?? 1));
+
+                if ($productId > 0) {
+                    $pdo->prepare('UPDATE products SET stock = GREATEST(0, stock - ?) WHERE id = ?')
+                        ->execute([$qty, $productId]);
+                }
+            }
+        }
+
+        // Insert into unified sales table
+        $pdo->prepare(
+            'INSERT INTO sales (order_ref, user_id, customer_name, customer_phone, customer_address, date, total, subtotal, discount_type, discount_amount, tendered, `change`, status, order_type, items_json)
+             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
+        )->execute([
+            $orderRef, $userId, $customerName, $customerPhone ?: null, $customerAddr ?: null, 
+            $today, $total, $subtotal, $discountType ?: null, $discountAmt, 
+            $orderType === 'walk-in' ? $tendered : null,
+            $orderType === 'walk-in' ? $change : null,
+            $orderStatus, $orderType, $itemsJson
+        ]);
+
+        write_log($actorName, $actorRole, 'create_order', 'sale', $orderRef,
+            "Sale $orderRef created with status $orderStatus. Total: ₱" . number_format($total, 2));
+
+        $pdo->commit();
+    } catch (\Exception $e) {
+        $pdo->rollBack();
+        json_err('Failed to create order: ' . $e->getMessage(), 500);
+    }
+
+    $sRow = $pdo->prepare('SELECT * FROM sales WHERE order_ref = ? LIMIT 1');
+    $sRow->execute([$orderRef]);
+    $sale = $sRow->fetch();
+
+    json_response([
+        'success'     => true,
+        'order'       => sale_to_dict($sale),
+        '_version'    => '2026-10-06-unified-sales',
+    ], 201);
+
+} else {
+    json_err('Method not allowed.', 405);
+}
+?>

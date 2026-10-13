@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Driver Dashboard - JMC Materials</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles/driver.css">
+</head>
+<body>
+
+  <!-- LOGIN SCREEN -->
+  <div id="driver-login-screen">
+    <div class="login-card">
+      <img src="Icons/download (1).png" alt="Driver Icon" style="width: 80px; margin-bottom: 20px;">
+      <h2>Driver Login</h2>
+      <p style="color: var(--text-muted); margin-bottom: 24px;">Enter your registered vehicle or driver name.</p>
+      
+      <input type="text" id="login-driver-name" class="login-input" placeholder="e.g. Mike Driver" required>
+      <button class="btn-large" id="driver-login-btn">Start Shift</button>
+    </div>
+  </div>
+
+  <!-- MAIN DASHBOARD SCREEN (Hidden Initially) -->
+  <div id="driver-main-screen">
+    <!-- Header -->
+    <header class="driver-header">
+      <div>
+        <h1>Deliveries</h1>
+        <div class="driver-info" id="active-driver-name">Logged in as: Unknown</div>
+      </div>
+      <button class="btn-secondary" style="padding: 8px 12px; border-radius: 8px;" id="logout-btn">Exit</button>
+    </header>
+
+    <div style="padding: 16px;">
+
+      <!-- Summary Bar -->
+      <div id="driver-summary-bar" style="display:none; background:#fff; border-radius:14px; padding:14px 16px; margin-bottom:16px; box-shadow:0 2px 8px rgba(0,0,0,0.07); border:1px solid #e2e8f0;">
+        <div style="font-size:0.78rem; color:#64748b; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:8px;">Today's Run</div>
+        <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; text-align:center;">
+          <div style="background:#f1f5f9; border-radius:10px; padding:10px 6px;">
+            <div id="stat-total" style="font-size:1.6rem; font-weight:800; color:#0f172a; line-height:1;">0</div>
+            <div style="font-size:0.72rem; color:#64748b; margin-top:2px;">Total</div>
+          </div>
+          <div style="background:#fef9c3; border-radius:10px; padding:10px 6px;">
+            <div id="stat-pending" style="font-size:1.6rem; font-weight:800; color:#854d0e; line-height:1;">0</div>
+            <div style="font-size:0.72rem; color:#854d0e; margin-top:2px;">Pending</div>
+          </div>
+          <div style="background:#d1fae5; border-radius:10px; padding:10px 6px;">
+            <div id="stat-done" style="font-size:1.6rem; font-weight:800; color:#065f46; line-height:1;">0</div>
+            <div style="font-size:0.72rem; color:#065f46; margin-top:2px;">Done</div>
+          </div>
+        </div>
+        <!-- Customer list summary -->
+        <div style="margin-top:12px; border-top:1px solid #e2e8f0; padding-top:10px;">
+          <div style="font-size:0.75rem; color:#64748b; font-weight:600; margin-bottom:6px;">CUSTOMERS THIS RUN</div>
+          <div id="customer-summary-list" style="display:flex; flex-direction:column; gap:4px;"></div>
+        </div>
+      </div>
+
+      <h2 class="section-title">My Tasks For Today</h2>
+
+      <!-- List Container -->
+      <div id="delivery-list-container">
+        <!-- Rendered via JS -->
+      </div>
+    </div>
+  </div>
+
+  <script src="data/deliveries.js?v=2"></script>
+  <script src="Js/driver.js?v=4"></script>
+</body>
+</html>

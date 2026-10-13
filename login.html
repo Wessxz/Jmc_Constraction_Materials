@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login - JMC Materials</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles/login.css" />
+</head>
+<body>
+  <div class="page">
+    <div class="card">
+      <a href="Page.html"><img src="img/download.png" alt="JMC Logo" class="logo" /></a>
+      <h1>Sign In</h1>
+      <p class="subtitle">Welcome back! Please login to your account.</p>
+      <div id="error-box" class="error-box" style="display:none;"></div>
+      <form onsubmit="event.preventDefault(); handleLogin(this);">
+        <label>Email</label>
+        <input type="email" name="email" placeholder="you@example.com" required />
+        <label>Password</label>
+        <div class="password-row">
+          <input type="password" name="password" id="password-input" placeholder="Your password" required />
+          <button type="button" onclick="togglePassword()" style="background:none; border:none; cursor:pointer; padding:4px; display:flex; align-items:center;">
+            <img src="img/Showpassword.png" alt="Show password" style="height:18px; width:auto; opacity:0.55;" id="toggle-pw-icon" />
+          </button>
+        </div>
+        <div style="text-align: right; margin-top: 8px; margin-bottom: 12px;">
+          <a href="forgot-password.html" style="font-size: 14px; color: #f97316; text-decoration: none;">Forgot Password?</a>
+        </div>
+        <button type="submit" id="submit-btn" class="submit-btn">Login</button>
+      </form>
+      <p class="bottom-text">No account yet? <a href="register.html">Create one here</a></p>
+      <p class="bottom-text"><a href="Page.html">← Back to Store</a></p>
+    </div>
+  </div>
+
+  <script src="Js/login.js?v=3"></script>
+  <script>
+    function togglePassword() {
+      const input = document.getElementById('password-input');
+      const icon  = document.getElementById('toggle-pw-icon');
+      const isShowing = input.type === 'text';
+      input.type = isShowing ? 'password' : 'text';
+      if (icon) icon.style.opacity = isShowing ? '0.6' : '1';
+    }
+  </script>
+</body>
+</html>

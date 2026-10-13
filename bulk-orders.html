@@ -1,0 +1,1656 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bulk Orders - JMC Materials Hardware</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles/general.css" />
+    <link rel="stylesheet" href="styles/header.css" />
+    <link rel="stylesheet" href="styles/footer.css" />
+    <link rel="stylesheet" href="styles/category.css" />
+    <link rel="stylesheet" href="styles/cart.css" />
+    <style>
+      /* ── Page Container ── */
+      .bulk-container {
+        max-width: 900px;
+        margin: 48px auto;
+        padding: 0 24px 80px;
+      }
+
+      /* ── Hero Banner ── */
+      .bulk-hero {
+        background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+        border-radius: 20px;
+        padding: 48px 48px;
+        color: white;
+        margin-bottom: 48px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .bulk-hero::before {
+        content: "";
+        position: absolute;
+        top: -40px;
+        right: -40px;
+        width: 220px;
+        height: 220px;
+        background: rgba(249, 115, 22, 0.15);
+        border-radius: 50%;
+      }
+
+      .bulk-hero::after {
+        content: "";
+        position: absolute;
+        bottom: -60px;
+        left: -30px;
+        width: 160px;
+        height: 160px;
+        background: rgba(249, 115, 22, 0.1);
+        border-radius: 50%;
+      }
+
+      .bulk-hero-tag {
+        display: inline-block;
+        background: rgba(249, 115, 22, 0.2);
+        color: #fb923c;
+        font-size: 12px;
+        font-weight: 700;
+        padding: 4px 14px;
+        border-radius: 20px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 16px;
+      }
+
+      .bulk-hero h1 {
+        font-size: 2.2rem;
+        font-weight: 800;
+        margin-bottom: 12px;
+        line-height: 1.2;
+      }
+
+      .bulk-hero h1 span {
+        color: #f97316;
+      }
+
+      .bulk-hero p {
+        font-size: 15px;
+        color: #94a3b8;
+        line-height: 1.7;
+        max-width: 540px;
+        margin-bottom: 28px;
+      }
+
+      .bulk-hero-cta {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: #f97316;
+        color: white;
+        font-weight: 700;
+        font-size: 14px;
+        padding: 12px 24px;
+        border-radius: 10px;
+        text-decoration: none;
+        transition: background 0.2s;
+      }
+
+      .bulk-hero-cta:hover {
+        background: #ea6c0a;
+      }
+
+      /* ── Benefits Grid ── */
+      .benefits-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+        margin-bottom: 48px;
+      }
+
+      .benefit-card {
+        background: white;
+        border-radius: 14px;
+        padding: 24px 20px;
+        border: 1.5px solid #f1f5f9;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+        text-align: center;
+      }
+
+      .benefit-icon {
+        font-size: 32px;
+        margin-bottom: 12px;
+      }
+
+      .benefit-card h3 {
+        font-size: 14px;
+        font-weight: 700;
+        color: #0f172a;
+        margin-bottom: 6px;
+      }
+
+      .benefit-card p {
+        font-size: 13px;
+        color: #64748b;
+        line-height: 1.6;
+      }
+
+      /* ── Section Titles ── */
+      .section-label {
+        display: inline-block;
+        background: #fff3e8;
+        color: #f97316;
+        font-size: 11px;
+        font-weight: 700;
+        padding: 3px 12px;
+        border-radius: 20px;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        margin-bottom: 8px;
+      }
+
+      .bulk-section {
+        margin-bottom: 48px;
+      }
+
+      .bulk-section h2 {
+        font-size: 1.4rem;
+        font-weight: 800;
+        color: #0f172a;
+        margin-bottom: 20px;
+      }
+
+      /* ── How It Works Steps ── */
+      .steps-list {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      .step {
+        display: flex;
+        align-items: flex-start;
+        gap: 18px;
+        background: white;
+        border-radius: 14px;
+        padding: 20px 22px;
+        border: 1.5px solid #f1f5f9;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+      }
+
+      .step-num {
+        flex-shrink: 0;
+        width: 38px;
+        height: 38px;
+        background: #f97316;
+        color: white;
+        font-weight: 800;
+        font-size: 16px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .step-body h3 {
+        font-size: 14px;
+        font-weight: 700;
+        color: #0f172a;
+        margin-bottom: 4px;
+      }
+
+      .step-body p {
+        font-size: 13px;
+        color: #64748b;
+        line-height: 1.6;
+      }
+
+      /* ── Categories ── */
+      .categories-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+        margin-bottom: 16px;
+      }
+
+      .cat-item {
+        background: white;
+        border-radius: 12px;
+        padding: 16px 14px;
+        border: 1.5px solid #f1f5f9;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 13px;
+        font-weight: 600;
+        color: #1e293b;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+      }
+
+      .cat-item span.cat-icon {
+        font-size: 22px;
+      }
+
+      /* ── Inquiry Form ── */
+      .form-card {
+        background: white;
+        border-radius: 16px;
+        padding: 36px 36px;
+        border: 1.5px solid #f1f5f9;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+      }
+
+      .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        margin-bottom: 16px;
+      }
+
+      .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+
+      .form-group.full {
+        grid-column: 1 / -1;
+      }
+
+      .form-group label {
+        font-size: 13px;
+        font-weight: 600;
+        color: #374151;
+      }
+
+      .form-group label span {
+        color: #dc2626;
+      }
+
+      .form-group input,
+      .form-group select,
+      .form-group textarea {
+        padding: 10px 14px;
+        border: 1.5px solid #e2e8f0;
+        border-radius: 8px;
+        font-size: 14px;
+        font-family: "Inter", sans-serif;
+        color: #1e293b;
+        outline: none;
+        transition: border-color 0.2s;
+        background: #fafafa;
+      }
+
+      .form-group input:focus,
+      .form-group select:focus,
+      .form-group textarea:focus {
+        border-color: #f97316;
+        background: white;
+      }
+
+      .form-group textarea {
+        resize: vertical;
+        min-height: 110px;
+      }
+
+      .form-note {
+        font-size: 12px;
+        color: #94a3b8;
+        margin-bottom: 20px;
+      }
+
+      .form-submit {
+        width: 100%;
+        padding: 13px;
+        background: #f97316;
+        color: white;
+        font-size: 15px;
+        font-weight: 700;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: background 0.2s;
+      }
+
+      .form-submit:hover {
+        background: #ea6c0a;
+      }
+
+      .form-success {
+        display: none;
+        background: #f0fdf4;
+        border: 1.5px solid #bbf7d0;
+        border-radius: 10px;
+        padding: 18px 20px;
+        color: #15803d;
+        font-weight: 600;
+        font-size: 14px;
+        text-align: center;
+        margin-top: 16px;
+      }
+
+      /* ── Contact Info ── */
+      .contact-strip {
+        background: #fff7ed;
+        border: 1.5px solid #fed7aa;
+        border-radius: 14px;
+        padding: 24px 28px;
+        display: flex;
+        gap: 32px;
+        flex-wrap: wrap;
+        align-items: center;
+        margin-bottom: 48px;
+      }
+
+      .contact-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 14px;
+        color: #92400e;
+      }
+
+      .contact-item strong {
+        color: #7c2d12;
+      }
+      .contact-item span.ico {
+        font-size: 20px;
+      }
+
+      /* ── Mobile ── */
+      @media (max-width: 640px) {
+        .bulk-hero {
+          padding: 32px 24px;
+        }
+        .bulk-hero h1 {
+          font-size: 1.6rem;
+        }
+        .benefits-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+        .categories-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+        .form-grid {
+          grid-template-columns: 1fr;
+        }
+        .form-card {
+          padding: 24px 18px;
+        }
+        .contact-strip {
+          gap: 16px;
+          flex-direction: column;
+        }
+        .bulk-container {
+          margin: 24px auto;
+          padding: 0 14px 60px;
+        }
+        .bulk-hero p {
+          font-size: 13px;
+        }
+        .bulk-hero-cta {
+          font-size: 13px;
+          padding: 10px 18px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .bulk-hero {
+          padding: 24px 18px;
+          border-radius: 14px;
+        }
+        .bulk-hero h1 {
+          font-size: 1.35rem;
+        }
+        .bulk-hero p {
+          font-size: 12px;
+          margin-bottom: 18px;
+        }
+        .benefit-card {
+          padding: 16px 12px;
+        }
+        .benefit-icon {
+          font-size: 24px;
+          margin-bottom: 8px;
+        }
+        .benefit-card h3 {
+          font-size: 0.85rem;
+        }
+        .form-card {
+          padding: 18px 14px;
+          border-radius: 12px;
+        }
+        .form-card h2 {
+          font-size: 1.1rem;
+        }
+        .bulk-container {
+          padding: 0 10px 50px;
+        }
+      }
+
+      @media (max-width: 400px) {
+        .benefits-grid {
+          grid-template-columns: 1fr;
+        }
+        .categories-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+        .bulk-hero h1 {
+          font-size: 1.2rem;
+        }
+      }
+
+      /* ── Auto Quotation Builder ── */
+      .quote-step-label {
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        color: #f97316;
+        background: #fff3e8;
+        display: inline-block;
+        padding: 3px 12px;
+        border-radius: 20px;
+        margin-bottom: 14px;
+      }
+
+      .bq-search-wrap {
+        position: relative;
+        margin-bottom: 4px;
+      }
+
+      .bq-search-wrap input {
+        width: 100%;
+        padding: 12px 16px;
+        border: 2px solid #e2e8f0;
+        border-radius: 10px;
+        font-size: 14px;
+        font-family: "Inter", sans-serif;
+        outline: none;
+        transition: border-color 0.2s;
+        box-sizing: border-box;
+        background: #fafafa;
+      }
+
+      .bq-search-wrap input:focus {
+        border-color: #f97316;
+        background: #fff;
+      }
+
+      .bq-dropdown {
+        position: absolute;
+        top: calc(100% + 4px);
+        left: 0;
+        right: 0;
+        background: #fff;
+        border: 1.5px solid #e2e8f0;
+        border-radius: 10px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+        z-index: 999;
+        max-height: 320px;
+        overflow-y: auto;
+        display: none;
+      }
+
+      .bq-dropdown.open {
+        display: block;
+      }
+
+      .bq-result-item {
+        padding: 10px 16px;
+        cursor: pointer;
+        border-bottom: 1px solid #f1f5f9;
+        transition: background 0.15s;
+      }
+
+      .bq-result-item:last-child {
+        border-bottom: none;
+      }
+      .bq-result-item:hover {
+        background: #fff7ed;
+      }
+
+      .bq-result-name {
+        font-weight: 600;
+        font-size: 13px;
+        color: #0f172a;
+      }
+
+      .bq-result-meta {
+        font-size: 12px;
+        color: #64748b;
+        margin-top: 2px;
+      }
+
+      .bq-result-variants {
+        margin-top: 6px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+
+      .bq-variant-btn {
+        background: #f1f5f9;
+        border: 1.5px solid #e2e8f0;
+        border-radius: 6px;
+        padding: 4px 10px;
+        font-size: 11px;
+        font-weight: 600;
+        color: #374151;
+        cursor: pointer;
+        transition: all 0.15s;
+      }
+
+      .bq-variant-btn:hover {
+        background: #f97316;
+        color: #fff;
+        border-color: #f97316;
+      }
+
+      .bq-add-base-btn {
+        background: #f97316;
+        color: #fff;
+        border: none;
+        border-radius: 6px;
+        padding: 5px 12px;
+        font-size: 12px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: background 0.15s;
+      }
+
+      .bq-add-base-btn:hover {
+        background: #ea6c0a;
+      }
+
+      .bq-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 13px;
+      }
+
+      .bq-table th {
+        text-align: left;
+        padding: 10px 12px;
+        background: #f8fafc;
+        color: #64748b;
+        font-weight: 600;
+        font-size: 12px;
+        border-bottom: 1.5px solid #e2e8f0;
+      }
+
+      .bq-table td {
+        padding: 10px 12px;
+        border-bottom: 1px solid #f1f5f9;
+        vertical-align: middle;
+      }
+
+      .bq-table tr:last-child td {
+        border-bottom: none;
+      }
+
+      .bq-qty-input {
+        width: 70px;
+        padding: 6px 10px;
+        border: 1.5px solid #e2e8f0;
+        border-radius: 6px;
+        font-size: 13px;
+        text-align: center;
+        font-family: "Inter", sans-serif;
+      }
+
+      .bq-qty-input:focus {
+        outline: none;
+        border-color: #f97316;
+      }
+
+      .bq-remove-btn {
+        background: none;
+        border: none;
+        color: #dc2626;
+        cursor: pointer;
+        font-size: 16px;
+        padding: 4px 8px;
+        border-radius: 6px;
+        transition: background 0.15s;
+      }
+
+      .bq-remove-btn:hover {
+        background: #fee2e2;
+      }
+
+      .bq-summary {
+        margin-top: 16px;
+        padding: 16px 20px;
+        background: #f8fafc;
+        border-radius: 10px;
+        border: 1.5px solid #e2e8f0;
+      }
+
+      .bq-summary-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 14px;
+        padding: 4px 0;
+        color: #374151;
+      }
+
+      .bq-total-row {
+        font-size: 16px;
+        font-weight: 700;
+        color: #0f172a;
+        border-top: 1.5px solid #e2e8f0;
+        margin-top: 8px;
+        padding-top: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- HEADER -->
+    <header class="header">
+      <div class="header-left">
+        <div class="logo">
+          <a href="Page.html">
+            <img class="jmc" src="img/download.png" />
+          </a>
+        </div>
+      </div>
+      <div class="header-center">
+        <div class="search-container">
+          <input class="search" type="text" placeholder="Search" />
+          <button class="search-button">Search</button>
+        </div>
+      </div>
+      <div class="header-right">
+        <a href="login.html" id="login-link" class="header-btn btn-login"
+          >Login</a
+        >
+        <a
+          href="register.html"
+          id="register-link"
+          class="header-btn btn-register"
+          >Register</a
+        >
+        <div class="cart">
+          <img src="Icons/download (1).png" />
+          <span class="cart-badge" id="cart-badge" style="display: none"
+            >0</span
+          >
+        </div>
+      </div>
+    </header>
+
+    <div class="bulk-container">
+      <!-- ── Hero ── -->
+      <div class="bulk-hero">
+        <div class="bulk-hero-tag">Bulk Orders</div>
+        <h1>Big Projects Deserve <span>Big Savings</span></h1>
+        <p>
+          Planning a construction project or need large quantities of hardware
+          materials? JMC Materials offers special pricing and priority handling
+          for bulk orders within Muntinlupa City.
+        </p>
+        <a href="#inquiry-form" class="bulk-hero-cta">Submit an Inquiry ↓</a>
+      </div>
+
+      <!-- ── Benefits ── -->
+      <div class="bulk-section">
+        <div class="section-label">Why Bulk?</div>
+        <h2>Benefits of Ordering in Bulk</h2>
+        <div class="benefits-grid">
+          <div class="benefit-card">
+            <div class="benefit-icon"></div>
+            <h3>Volume Discounts</h3>
+            <p>
+              Get special pricing on large quantity orders — the more you order,
+              the more you save.
+            </p>
+          </div>
+          <div class="benefit-card">
+            <div class="benefit-icon"></div>
+            <h3>Free Delivery</h3>
+            <p>
+              All bulk orders within Muntinlupa City are delivered free using
+              our own trucks.
+            </p>
+          </div>
+          <div class="benefit-card">
+            <div class="benefit-icon"></div>
+            <h3>Priority Handling</h3>
+            <p>
+              Bulk orders are given priority processing and dedicated staff
+              assistance.
+            </p>
+          </div>
+          <div class="benefit-card">
+            <div class="benefit-icon"></div>
+            <h3>Custom Quotations</h3>
+            <p>
+              Receive a tailored quotation based on your specific project needs
+              and quantities.
+            </p>
+          </div>
+          <div class="benefit-card">
+            <div class="benefit-icon"></div>
+            <h3>Project Support</h3>
+            <p>
+              Our team can help you estimate materials needed based on your
+              project scope.
+            </p>
+          </div>
+          <div class="benefit-card">
+            <div class="benefit-icon"></div>
+            <h3>Flexible Scheduling</h3>
+            <p>
+              We coordinate delivery schedules that fit your project timeline.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── How It Works ── -->
+      <div class="bulk-section">
+        <div class="section-label">Process</div>
+        <h2>How Bulk Ordering Works</h2>
+        <div class="steps-list">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-body">
+              <h3>Submit Your Inquiry</h3>
+              <p>
+                Fill out the inquiry form below with your name, contact details,
+                and the materials you need with estimated quantities.
+              </p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-body">
+              <h3>We Prepare Your Quotation</h3>
+              <p>
+                Our team will review your request and prepare a custom quotation
+                with volume pricing. We'll contact you within 1 business day.
+              </p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-body">
+              <h3>Confirm and Schedule</h3>
+              <p>
+                Once you approve the quotation, we'll confirm your order and
+                schedule a delivery date that works for you.
+              </p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-body">
+              <h3>Delivery & Payment</h3>
+              <p>
+                We deliver to your project site within Muntinlupa City. Payment
+                is via Cash on Delivery upon receipt of materials.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Categories Available ── -->
+      <div class="bulk-section">
+        <div class="section-label">Available</div>
+        <h2>Materials We Carry</h2>
+        <div class="categories-grid">
+          <div class="cat-item">
+            <span class="cat-icon">🧱</span> Cement & Masonry
+          </div>
+          <div class="cat-item">
+            <span class="cat-icon">🔩</span> Steel & Metal
+          </div>
+          <div class="cat-item">
+            <span class="cat-icon">🪵</span> Lumber & Wood
+          </div>
+          <div class="cat-item">
+            <span class="cat-icon">⚡</span> Electrical
+          </div>
+          <div class="cat-item">
+            <span class="cat-icon">💧</span> Pipes & Plumbing
+          </div>
+          <div class="cat-item">
+            <span class="cat-icon">🛠️</span> Hardware & Tools
+          </div>
+          <div class="cat-item"><span class="cat-icon">🏠</span> Roofing</div>
+          <div class="cat-item">
+            <span class="cat-icon">🪟</span> Doors & Windows
+          </div>
+          <div class="cat-item">
+            <span class="cat-icon">🎨</span> Paints & Finishes
+          </div>
+        </div>
+        <p style="font-size: 13px; color: #64748b">
+          Don't see what you need? Mention it in the inquiry form — we may be
+          able to source it for you.
+        </p>
+      </div>
+
+      <!-- ── Contact Strip ── -->
+      <div class="contact-strip">
+        <div class="contact-item">
+          <div><strong>Call or Text</strong><br />+63 9683743025</div>
+        </div>
+        <div class="contact-item">
+          <div><strong>Email Us</strong><br />jmcmerchandise@gmail.com</div>
+        </div>
+        <div class="contact-item">
+          <div>
+            <strong>Visit Our Store</strong><br />421 Purok 2, Muntinlupa City
+          </div>
+        </div>
+        <div class="contact-item">
+          <div><strong>Facebook</strong><br />JMC MERCHANDISE</div>
+        </div>
+      </div>
+
+      <!-- ── Auto Quotation Builder ── -->
+      <div class="bulk-section" id="inquiry-form">
+        <div class="section-label">Get a Quote</div>
+        <h2>Build Your Bulk Order & Get Instant Quote</h2>
+        <div class="form-card">
+          <!-- STEP 1: Contact Info -->
+          <div class="quote-step-label">Step 1 — Your Details</div>
+          <div class="form-grid" style="margin-bottom: 24px">
+            <div class="form-group">
+              <label>Full Name <span>*</span></label>
+              <input
+                type="text"
+                id="bulk-name"
+                placeholder="e.g. Juan dela Cruz"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label>Contact Number <span>*</span></label>
+              <input
+                type="tel"
+                id="bulk-phone"
+                placeholder="e.g. 09XX XXX XXXX"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label>Email Address</label>
+              <input type="email" id="bulk-email" placeholder="optional" />
+            </div>
+            <div class="form-group">
+              <label>Delivery Address <span>*</span></label>
+              <input
+                type="text"
+                id="bulk-address"
+                placeholder="Within Muntinlupa City only"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label>Project Type</label>
+              <select id="bulk-project">
+                <option value="">— Select —</option>
+                <option>Residential Construction</option>
+                <option>Commercial Construction</option>
+                <option>Renovation / Repair</option>
+                <option>Infrastructure / Roads</option>
+                <option>Reseller / Dealer</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Preferred Delivery Date</label>
+              <input type="date" id="bulk-date" />
+            </div>
+          </div>
+
+          <!-- STEP 2: Product Search Builder -->
+          <div class="quote-step-label">Step 2 — Add Materials</div>
+
+          <!-- Search Bar -->
+          <div class="bq-search-wrap">
+            <input
+              type="text"
+              id="bq-search-input"
+              placeholder="🔍  Search product (e.g. cement, hollow block, steel bar…)"
+              autocomplete="off"
+            />
+            <div id="bq-search-results" class="bq-dropdown"></div>
+          </div>
+
+          <!-- Selected Items Table -->
+          <div id="bq-items-wrap" style="display: none; margin-top: 16px">
+            <table class="bq-table">
+              <thead>
+                <tr>
+                  <th>Product</th>
+                  <th>Variant / Size</th>
+                  <th>Unit Price</th>
+                  <th>Qty</th>
+                  <th>Subtotal</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="bq-items-tbody"></tbody>
+            </table>
+
+            <!-- Quotation Summary -->
+            <div class="bq-summary">
+              <div class="bq-summary-row">
+                <span>Subtotal</span>
+                <strong id="bq-subtotal">₱0.00</strong>
+              </div>
+              <div
+                class="bq-summary-row"
+                id="bq-discount-row"
+                style="display: none; color: #dc2626"
+              >
+                <span id="bq-discount-label">Bulk Discount (10%)</span>
+                <strong id="bq-discount-val">−₱0.00</strong>
+              </div>
+              <div class="bq-summary-row bq-total-row">
+                <span>Estimated Total</span>
+                <strong id="bq-total">₱0.00</strong>
+              </div>
+              <p
+                id="bq-discount-note"
+                style="
+                  font-size: 12px;
+                  color: #64748b;
+                  margin: 8px 0 0;
+                  display: none;
+                "
+              >
+                🎉 10% bulk discount applied — orders ₱5,000 and above qualify.
+              </p>
+            </div>
+          </div>
+
+          <div
+            id="bq-empty-note"
+            style="
+              margin: 16px 0 24px;
+              padding: 16px;
+              background: #f8fafc;
+              border-radius: 10px;
+              border: 1.5px dashed #e2e8f0;
+              text-align: center;
+              color: #94a3b8;
+              font-size: 13px;
+            "
+          >
+            Search and add products above to build your order list.
+          </div>
+
+          <!-- STEP 3: Notes & Submit -->
+          <div class="quote-step-label" style="margin-top: 8px">
+            Step 3 — Additional Notes & Submit
+          </div>
+          <div class="form-group full" style="margin-bottom: 16px">
+            <label
+              >Additional Notes
+              <span style="font-weight: 400; color: #94a3b8"
+                >(optional)</span
+              ></label
+            >
+            <textarea
+              id="bulk-notes"
+              placeholder="Any special requirements, questions, or details about your project..."
+              style="min-height: 80px"
+            ></textarea>
+          </div>
+
+          <p class="form-note">
+            * We only deliver within Muntinlupa City. Quoted price is an
+            estimate — final amount may vary based on availability.
+          </p>
+          <button type="button" class="form-submit" onclick="submitBulkForm()">
+            Submit Bulk Order Inquiry
+          </button>
+          <div class="form-success" id="form-success"></div>
+          <div
+            id="form-error"
+            style="
+              display: none;
+              margin-top: 12px;
+              padding: 12px 16px;
+              background: #fee2e2;
+              border: 1.5px solid #fca5a5;
+              border-radius: 8px;
+              color: #dc2626;
+              font-size: 13px;
+              font-weight: 600;
+            "
+          ></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <div class="footer-top">
+        <div class="footer-features">
+          <div class="feature">
+            <img src="img/diamond.png" alt="Quality Products" />
+            <p>Quality Products</p>
+          </div>
+          <div class="feature">
+            <img src="img/truck.png" alt="Fast Delivery" />
+            <p>Fast Delivery</p>
+          </div>
+          <div class="feature">
+            <img src="img/cod.png" alt="Cash on Delivery" />
+            <p>Cash-on Delivery</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <div class="footer-bottom">
+      <div class="jmc-logo"><img src="img/jmc.jpg" /></div>
+      <div class="footer-column contact-us">
+        <h3>Contact Us</h3>
+        <div class="branch">
+          <strong>SUCAT BRANCH</strong>
+          <p>421 Purok 2, Muntinlupa, 1770 Metro Manila</p>
+          <p>Tel: +63 9683743025</p>
+          <p>Email: jmcmerchandise@gmail.com</p>
+        </div>
+      </div>
+      <div class="footer-column quick-links">
+        <h3>Quick Links</h3>
+        <ul>
+          <li>
+            <a href="terms.html" style="color: white; text-decoration: none"
+              >Terms and Conditions</a
+            >
+          </li>
+          <li>
+            <a
+              href="bulk-orders.html"
+              style="color: white; text-decoration: none"
+              >Bulk Orders</a
+            >
+          </li>
+        </ul>
+      </div>
+      <div class="footer-column business">
+        <h3>Business</h3>
+        <ul>
+          <li>
+            <a
+              href="bulk-orders.html"
+              style="color: white; text-decoration: none"
+              >Bulk Order</a
+            >
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div id="cart-sidebar" class="cart-sidebar">
+      <div class="cart-header">
+        <h2>Your Cart</h2>
+        <button id="close-cart-btn" class="close-cart-btn">&times;</button>
+      </div>
+      <div id="cart-items" class="cart-items-container"></div>
+      <div class="cart-footer">
+        <div class="cart-total">
+          <span>Total:</span>
+          <span id="cart-total-price">₱0.00</span>
+        </div>
+        <button class="checkout-btn">Proceed to Checkout</button>
+      </div>
+    </div>
+
+    <script src="data/products.js"></script>
+    <script src="Js/cart.js"></script>
+    <script src="Js/navigation.js"></script>
+    <script>
+      // ── Auth Check: Require login for bulk orders ──
+      (async function checkAuth() {
+        try {
+          const res = await fetch('/api/auth/me.php', { credentials: 'include' });
+          const json = await res.json();
+          
+          if (!json.success || !json.user) {
+            showBulkOrderAuthModal();
+            return;
+          }
+        } catch(e) {
+          showBulkOrderAuthModal();
+          return;
+        }
+      })();
+
+      function showBulkOrderAuthModal() {
+        // Create modal overlay
+        const modal = document.createElement('div');
+        modal.style.cssText = `
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: rgba(0, 0, 0, 0.5);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          z-index: 99999;
+          backdrop-filter: blur(4px);
+        `;
+
+        modal.innerHTML = `
+          <div style="
+            background: white;
+            border-radius: 12px;
+            padding: 32px;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+          ">
+            <h2 style="
+              font-size: 22px;
+              font-weight: 700;
+              color: #1e293b;
+              margin: 0 0 12px;
+            ">Create an Account First</h2>
+            
+            <p style="
+              font-size: 14px;
+              color: #64748b;
+              line-height: 1.5;
+              margin: 0 0 24px;
+            ">You need to be logged in to submit bulk orders and track your inquiries.</p>
+            
+            <div style="display: flex; gap: 10px; justify-content: center;">
+              <a href="login.html?redirect=bulk-orders.html" style="
+                display: inline-block;
+                padding: 10px 24px;
+                background: white;
+                color: #475569;
+                border: 2px solid #e2e8f0;
+                border-radius: 8px;
+                font-size: 14px;
+                font-weight: 600;
+                text-decoration: none;
+                cursor: pointer;
+              ">
+                Login
+              </a>
+              
+              <a href="register.html?redirect=bulk-orders.html" style="
+                display: inline-block;
+                padding: 10px 24px;
+                background: #f97316;
+                color: white;
+                border: none;
+                border-radius: 8px;
+                font-size: 14px;
+                font-weight: 700;
+                text-decoration: none;
+                cursor: pointer;
+              ">
+                Create Account
+              </a>
+            </div>
+            
+            <a href="Page.html" style="
+              display: block;
+              margin-top: 16px;
+              background: none;
+              border: none;
+              color: #94a3b8;
+              font-size: 13px;
+              cursor: pointer;
+              padding: 8px;
+              text-decoration: none;
+            ">Maybe later</a>
+          </div>
+        `;
+
+        // Prevent closing modal on overlay click - force user to choose
+        document.body.appendChild(modal);
+      }
+
+      // ── Min date ──
+      const dateInput = document.getElementById("bulk-date");
+      if (dateInput) {
+        dateInput.min = new Date().toISOString().split("T")[0];
+      }
+
+      // ── State ──
+      let allProducts = []; // from API
+      let orderItems = []; // { id, productId, name, variantId, variantSize, unit, price, qty }
+
+      // ── Load products from API ──
+      async function loadProducts() {
+        try {
+          const res = await fetch("/api/products/index.php");
+          const json = await res.json();
+          if (json.success) allProducts = json.data;
+        } catch (e) {
+          console.error("Failed to load products", e);
+        }
+      }
+      loadProducts();
+
+      // ── Pre-fill form if logged in ──
+      (async () => {
+        try {
+          const res = await fetch("/api/auth/me.php");
+          const json = await res.json();
+          if (json.success && json.user) {
+            const u = json.user;
+            if (u.full_name)
+              document.getElementById("bulk-name").value = u.full_name;
+            if (u.phone) document.getElementById("bulk-phone").value = u.phone;
+            if (u.email) document.getElementById("bulk-email").value = u.email;
+            if (u.address)
+              document.getElementById("bulk-address").value = u.address;
+          }
+        } catch (_) {}
+      })();
+
+      // ── Search logic ──
+      const bqInput = document.getElementById("bq-search-input");
+      const bqResults = document.getElementById("bq-search-results");
+
+      bqInput.addEventListener("input", () => {
+        const q = bqInput.value.trim().toLowerCase();
+        if (q.length < 2) {
+          bqResults.classList.remove("open");
+          return;
+        }
+
+        const matches = allProducts
+          .filter(
+            (p) => {
+              // First filter: Only show products available for bulk orders
+              const availType = p.availability_type || 'both';
+              if (availType === 'walkin_only') return false; // Exclude walk-in only products
+              
+              // Second filter: Match search query
+              return (
+                p.name.toLowerCase().includes(q) ||
+                (p.category || "").toLowerCase().includes(q) ||
+                (p.sku || "").toLowerCase().includes(q)
+              );
+            }
+          )
+          .slice(0, 10);
+
+        if (matches.length === 0) {
+          bqResults.innerHTML =
+            '<div class="bq-result-item" style="color:#94a3b8; cursor:default;">No products found.</div>';
+          bqResults.classList.add("open");
+          return;
+        }
+
+        bqResults.innerHTML = matches
+          .map((p) => {
+            const hasVariants = p.variants && p.variants.length > 0;
+            
+            // Stock status for base product or variants
+            let stockStatus = '';
+            let stockColor = '#64748b';
+            let totalStock = 0;
+            
+            if (hasVariants) {
+              totalStock = p.variants.reduce((sum, v) => sum + (v.stock || 0), 0);
+              if (totalStock <= 0) {
+                stockStatus = 'Out of Stock';
+                stockColor = '#dc2626';
+              } else if (totalStock <= 10) {
+                stockStatus = `Low Stock (${totalStock} ${p.unit || 'pcs'})`;
+                stockColor = '#f59e0b';
+              } else {
+                stockStatus = `${totalStock} ${p.unit || 'pcs'} available`;
+                stockColor = '#64748b';
+              }
+            } else {
+              totalStock = p.stock || 0;
+              if (totalStock <= 0) {
+                stockStatus = 'Out of Stock';
+                stockColor = '#dc2626';
+              } else if (totalStock <= (p.criticalQuantity || 5)) {
+                stockStatus = `Low Stock (${totalStock} ${p.unit || 'pcs'})`;
+                stockColor = '#f59e0b';
+              } else {
+                stockStatus = `${totalStock} ${p.unit || 'pcs'} available`;
+                stockColor = '#64748b';
+              }
+            }
+            
+            const variantBtns = hasVariants
+              ? p.variants
+                  .map((v) => {
+                    const vStock = v.stock || 0;
+                    const vStockLabel = vStock <= 0 ? 'Out of Stock' : vStock <= 10 ? `Low (${vStock})` : `${vStock} avail`;
+                    const vStockColor = vStock <= 0 ? '#dc2626' : vStock <= 10 ? '#f59e0b' : '#64748b';
+                    const disabled = vStock <= 0 ? 'disabled style="opacity:0.5; cursor:not-allowed;"' : '';
+                    
+                    return `
+              <button class="bq-variant-btn" ${disabled} onclick="addItem(${p.id}, '${escHtml(p.name)}', '${escHtml(p.unit)}', ${v.price}, ${v.id}, '${escHtml(v.size)}', ${vStock}); event.stopPropagation();">
+                ${escHtml(v.size)} — ₱${Number(v.price).toLocaleString("en-PH", { minimumFractionDigits: 2 })}
+                <span style="font-size:10px; font-weight:600; color:${vStockColor}; margin-left:4px;">${vStockLabel}</span>
+              </button>`;
+                  })
+                  .join("")
+              : "";
+
+            const baseBtn = !hasVariants
+              ? `<button class="bq-add-base-btn" ${totalStock <= 0 ? 'disabled style="opacity:0.5; cursor:not-allowed;"' : ''} onclick="addItem(${p.id}, '${escHtml(p.name)}', '${escHtml(p.unit)}', ${p.price}, null, null, ${totalStock}); event.stopPropagation();">
+               + Add
+             </button>`
+              : "";
+
+            const discPrice =
+              p.discount > 0
+                ? `<span style="color:#dc2626; font-size:11px; margin-left:6px;">-${p.discount}% disc.</span>`
+                : "";
+
+            return `<div class="bq-result-item">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <div class="bq-result-name">${escHtml(p.name)}</div>
+              <div class="bq-result-meta">
+                ${escHtml(p.category)} · ₱${Number(p.price).toLocaleString("en-PH", { minimumFractionDigits: 2 })}/${escHtml(p.unit)}${discPrice}
+                <br>
+                <span style="font-size:10px; font-weight:600; color:${stockColor};">${stockStatus}</span>
+              </div>
+            </div>
+            ${baseBtn}
+          </div>
+          ${hasVariants ? `<div class="bq-result-variants">${variantBtns}</div>` : ""}
+        </div>`;
+          })
+          .join("");
+
+        bqResults.classList.add("open");
+      });
+
+      // Close dropdown on outside click
+      document.addEventListener("click", (e) => {
+        if (!bqInput.contains(e.target) && !bqResults.contains(e.target)) {
+          bqResults.classList.remove("open");
+        }
+      });
+
+      function escHtml(str) {
+        return String(str || "")
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#39;");
+      }
+
+      // ── Add item to order list ──
+      function addItem(productId, name, unit, price, variantId, variantSize, availableStock) {
+        // Check if already in list (same product + same variant)
+        const existing = orderItems.find(
+          (i) => i.productId === productId && i.variantId === variantId,
+        );
+        
+        if (existing) {
+          // Check if adding 1 more exceeds available stock
+          if (existing.qty + 1 > availableStock) {
+            alert(`Cannot add more. Only ${availableStock} ${unit} available in stock.`);
+            return;
+          }
+          existing.qty++;
+          renderItems();
+          bqResults.classList.remove("open");
+          bqInput.value = "";
+          return;
+        }
+
+        // Check if stock is available
+        if (availableStock <= 0) {
+          alert(`${name} is out of stock.`);
+          return;
+        }
+
+        const effectivePrice = price;
+        orderItems.push({
+          uid: Date.now() + Math.random(),
+          productId,
+          name,
+          variantId,
+          variantSize,
+          unit,
+          price: effectivePrice,
+          qty: 1,
+          availableStock, // Store available stock for validation
+        });
+
+        renderItems();
+        bqResults.classList.remove("open");
+        bqInput.value = "";
+      }
+
+      // ── Render items table ──
+      function renderItems() {
+        const tbody = document.getElementById("bq-items-tbody");
+        const wrap = document.getElementById("bq-items-wrap");
+        const empty = document.getElementById("bq-empty-note");
+
+        if (orderItems.length === 0) {
+          wrap.style.display = "none";
+          empty.style.display = "block";
+          updateTotals();
+          return;
+        }
+
+        wrap.style.display = "block";
+        empty.style.display = "none";
+
+        tbody.innerHTML = orderItems
+          .map((item, idx) => {
+            const subtotal = item.price * item.qty;
+            const variantLabel = item.variantSize
+              ? `<span style="font-size:11px; background:#f1f5f9; padding:2px 8px; border-radius:4px; color:#475569;">${escHtml(item.variantSize)}</span>`
+              : '<span style="color:#94a3b8; font-size:12px;">Base</span>';
+            
+            // Stock warning if quantity exceeds available
+            const stockWarning = item.qty > item.availableStock 
+              ? `<div style="font-size:10px; color:#ef4444; margin-top:2px;">⚠ Only ${item.availableStock} ${item.unit} available</div>`
+              : '';
+            
+            return `<tr>
+          <td>
+            <strong>${escHtml(item.name)}</strong>
+            ${stockWarning}
+          </td>
+          <td>${variantLabel}</td>
+          <td>₱${Number(item.price).toLocaleString("en-PH", { minimumFractionDigits: 2 })} / ${escHtml(item.unit)}</td>
+          <td>
+            <input class="bq-qty-input" type="number" min="1" max="${item.availableStock}" value="${item.qty}"
+              onchange="updateQty(${idx}, this.value)" />
+            <div style="font-size:9px; color:#64748b; margin-top:2px;">Max: ${item.availableStock}</div>
+          </td>
+          <td><strong>₱${Number(subtotal).toLocaleString("en-PH", { minimumFractionDigits: 2 })}</strong></td>
+          <td><button class="bq-remove-btn" onclick="removeItem(${idx})" title="Remove">✕</button></td>
+        </tr>`;
+          })
+          .join("");
+
+        updateTotals();
+      }
+
+      function updateQty(idx, val) {
+        const item = orderItems[idx];
+        let qty = Math.max(1, parseInt(val) || 1);
+        
+        // Validate against available stock
+        if (qty > item.availableStock) {
+          alert(`Cannot exceed available stock. Only ${item.availableStock} ${item.unit} available.`);
+          qty = item.availableStock;
+        }
+        
+        item.qty = qty;
+        renderItems();
+      }
+
+      function removeItem(idx) {
+        orderItems.splice(idx, 1);
+        renderItems();
+      }
+
+      // ── Update totals & discount ──
+      function updateTotals() {
+        const subtotal = orderItems.reduce((s, i) => s + i.price * i.qty, 0);
+        const BULK_THRESHOLD = 5000;
+        const discount = subtotal >= BULK_THRESHOLD ? subtotal * 0.1 : 0;
+        const total = subtotal - discount;
+
+        document.getElementById("bq-subtotal").textContent =
+          "₱" + subtotal.toLocaleString("en-PH", { minimumFractionDigits: 2 });
+        document.getElementById("bq-total").textContent =
+          "₱" + total.toLocaleString("en-PH", { minimumFractionDigits: 2 });
+
+        const discRow = document.getElementById("bq-discount-row");
+        const discNote = document.getElementById("bq-discount-note");
+        if (discount > 0) {
+          document.getElementById("bq-discount-val").textContent =
+            "−₱" +
+            discount.toLocaleString("en-PH", { minimumFractionDigits: 2 });
+          discRow.style.display = "flex";
+          discNote.style.display = "block";
+        } else {
+          discRow.style.display = "none";
+          discNote.style.display = "none";
+        }
+      }
+
+      // ── Submit ──
+      async function submitBulkForm() {
+        const btn = document.querySelector(".form-submit");
+        const errBox = document.getElementById("form-error");
+        const success = document.getElementById("form-success");
+
+        const name = document.getElementById("bulk-name").value.trim();
+        const phone = document.getElementById("bulk-phone").value.trim();
+        const address = document.getElementById("bulk-address").value.trim();
+
+        if (!name) {
+          showErr("Full name is required.");
+          return;
+        }
+        if (!phone) {
+          showErr("Contact number is required.");
+          return;
+        }
+        if (!address) {
+          showErr("Delivery address is required.");
+          return;
+        }
+        if (orderItems.length === 0) {
+          showErr("Please add at least one product to your order.");
+          return;
+        }
+
+        // Validate stock availability
+        const stockIssues = orderItems.filter(item => item.qty > item.availableStock);
+        if (stockIssues.length > 0) {
+          const issueList = stockIssues.map(i => `${i.name}: ${i.qty} requested but only ${i.availableStock} available`).join('\n');
+          showErr(`Stock availability issues:\n${issueList}\n\nPlease adjust quantities before submitting.`);
+          return;
+        }
+
+        errBox.style.display = "none";
+        success.style.display = "none";
+        btn.disabled = true;
+        btn.textContent = "Submitting…";
+
+        const subtotal = orderItems.reduce((s, i) => s + i.price * i.qty, 0);
+        const discount = subtotal >= 5000 ? subtotal * 0.1 : 0;
+        const total = subtotal - discount;
+
+        const items = orderItems.map((i) => ({
+          product_id: i.productId,
+          variant_id: i.variantId || null,
+          name: i.name,
+          variant_size: i.variantSize || null,
+          unit: i.unit,
+          price: i.price,
+          qty: i.qty,
+          subtotal: i.price * i.qty,
+        }));
+
+        const payload = {
+          order_source: "online",
+          customer_name: name,
+          contact_number: phone,
+          email: document.getElementById("bulk-email").value.trim(),
+          address,
+          project_type: document.getElementById("bulk-project").value,
+          preferred_date: document.getElementById("bulk-date").value || null,
+          items,
+          notes: document.getElementById("bulk-notes").value.trim(),
+          quoted_amount: total,
+          discount_type: discount > 0 ? "bulk" : null,
+          discount_amount: discount,
+        };
+
+        try {
+          const res = await fetch("/api/bulk-orders/index.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload),
+          });
+          const json = await res.json();
+
+          if (json.success) {
+            orderItems = [];
+            renderItems();
+            [
+              "bulk-name",
+              "bulk-phone",
+              "bulk-email",
+              "bulk-address",
+              "bulk-notes",
+            ].forEach((id) => {
+              const el = document.getElementById(id);
+              if (el) el.value = "";
+            });
+            document.getElementById("bulk-project").value = "";
+            document.getElementById("bulk-date").value = "";
+
+            success.innerHTML = `
+             Bulk order submitted!<br>
+            Reference: <strong>${json.data.bulk_ref}</strong><br>
+            Estimated Total: <strong>₱${Number(json.data.quoted_amount).toLocaleString("en-PH", { minimumFractionDigits: 2 })}</strong><br>
+            <span style="font-size:12px; opacity:0.8;">Our team will review and confirm within 1 business day.</span>`;
+            success.style.display = "block";
+            success.scrollIntoView({ behavior: "smooth", block: "center" });
+          } else {
+            showErr(json.error || "Failed to submit. Please try again.");
+          }
+        } catch (err) {
+          showErr("Server error. Please try again later.");
+        } finally {
+          btn.disabled = false;
+          btn.textContent = "Submit Bulk Order Inquiry";
+        }
+      }
+
+      function showErr(msg) {
+        const errBox = document.getElementById("form-error");
+        errBox.textContent = msg;
+        errBox.style.display = "block";
+        errBox.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+    </script>
+  </body>
+</html>

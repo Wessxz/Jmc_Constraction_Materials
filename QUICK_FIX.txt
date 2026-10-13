@@ -1,0 +1,124 @@
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                    JMC HARDWARE - QUICK DATABASE FIX                         ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+PROBLEM:
+  ❌ MySQL Error #1050 - Table 'activity_logs' already exists
+
+SOLUTION:
+  ✅ Use jmc_inventory_fixed.sql instead of jmc_inventory.sql
+
+══════════════════════════════════════════════════════════════════════════════
+
+🚀 QUICK IMPORT STEPS:
+
+1. Open phpMyAdmin (http://localhost/phpmyadmin)
+
+2. Select your database:
+   → jmc_hardware (XAMPP)
+   → u266998007_jmc_inventory (Hostinger)
+
+3. Click "Import" tab
+
+4. Choose file: jmc_inventory_fixed.sql
+
+5. Click "Go" button
+
+6. Wait for: "Import has been successfully finished" ✅
+
+══════════════════════════════════════════════════════════════════════════════
+
+🔧 IF YOU WANT COMPLETELY FRESH DATABASE:
+
+Step 1: Run this SQL first (in SQL tab):
+────────────────────────────────────────
+SET FOREIGN_KEY_CHECKS = 0;
+
+DROP TABLE IF EXISTS activity_logs;
+DROP TABLE IF EXISTS bulk_orders;
+DROP TABLE IF EXISTS cart_items;
+DROP TABLE IF EXISTS categories;
+DROP TABLE IF EXISTS deliveries;
+DROP TABLE IF EXISTS item_returns;
+DROP TABLE IF EXISTS orders;
+DROP TABLE IF EXISTS order_cancellations;
+DROP TABLE IF EXISTS password_resets;
+DROP TABLE IF EXISTS products;
+DROP TABLE IF EXISTS product_variants;
+DROP TABLE IF EXISTS returns;
+DROP TABLE IF EXISTS sales;
+DROP TABLE IF EXISTS transactions;
+DROP TABLE IF EXISTS truck_batches;
+DROP TABLE IF EXISTS users;
+
+SET FOREIGN_KEY_CHECKS = 1;
+────────────────────────────────────────
+
+Step 2: Then import jmc_inventory_fixed.sql
+
+══════════════════════════════════════════════════════════════════════════════
+
+📊 WHAT'S DIFFERENT IN FIXED FILE?
+
+jmc_inventory.sql (ORIGINAL):
+  ❌ CREATE TABLE `activity_logs` ...
+  ❌ CREATE TABLE `users` ...
+  → Causes #1050 error if table exists
+
+jmc_inventory_fixed.sql (FIXED):
+  ✅ DROP TABLE IF EXISTS `activity_logs`;
+  ✅ DROP TABLE IF EXISTS `users`;
+  ✅ CREATE TABLE `activity_logs` ...
+  ✅ CREATE TABLE `users` ...
+  → No errors, clean import
+
+══════════════════════════════════════════════════════════════════════════════
+
+✅ VERIFY IMPORT SUCCESS:
+
+Run this SQL to check:
+────────────────────────────────────────
+SHOW TABLES;
+────────────────────────────────────────
+
+Should show 16 tables:
+  1. activity_logs
+  2. bulk_orders
+  3. cart_items
+  4. categories
+  5. deliveries
+  6. item_returns
+  7. orders
+  8. order_cancellations
+  9. password_resets
+  10. products
+  11. product_variants
+  12. returns
+  13. sales
+  14. transactions
+  15. truck_batches
+  16. users
+
+══════════════════════════════════════════════════════════════════════════════
+
+FILES CREATED FOR YOU:
+
+  ✅ jmc_inventory_fixed.sql        - Fixed SQL file (USE THIS!)
+  ✅ DATABASE_IMPORT_GUIDE.md       - Detailed instructions
+  ✅ reset-database.sql             - Quick reset script
+  ✅ QUICK_FIX.txt                  - This file
+
+══════════════════════════════════════════════════════════════════════════════
+
+⚠️  IMPORTANT NOTES:
+
+• Always use jmc_inventory_fixed.sql for imports
+• Original jmc_inventory.sql will cause #1050 errors
+• Backup your database before importing if it has important data
+• Fixed file is safe to import multiple times
+
+══════════════════════════════════════════════════════════════════════════════
+
+DONE! 🎉
+
+Your database should now import without errors.

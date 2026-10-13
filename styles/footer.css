@@ -1,0 +1,156 @@
+.footer {
+  background: #1e293b;
+  color: white;
+  padding: 60px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Top section */
+.footer-top {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+}
+
+.footer-logo img {
+  width: 120px;
+  height: auto;
+}
+
+.footer-features {
+  display: flex;
+  gap: 40px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.footer-features .feature {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.footer-features .feature img {
+  width: 50px;
+  height: 50px;
+}
+
+.footer-features .feature p {
+  margin: 0;
+  font-weight: 600;
+}
+
+/* Bottom section */
+.footer-bottom {
+  display: flex;
+  gap:13%;
+  text-align: left;
+  background-color: #1e293b;
+  padding: 60px 20px;
+}
+
+
+.footer-column h3 {
+  font-size: 18px;
+  margin-bottom: 15px;
+  color: #f97316;
+}
+
+.footer-column p,
+.footer-column li {
+  font-size: 14px;
+  margin-bottom: 8px;
+  color: #fff;
+  line-height: 1.5;
+}
+
+.footer-column ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-column ul li:hover {
+  color: #f97316;
+  cursor: pointer;
+}
+
+/* Branch spacing */
+.branch {
+  margin-bottom: 20px;
+}
+
+.branch strong {
+  display: block;
+  color: white;
+  margin-bottom: 5px;
+}
+
+.jmc-logo{
+    width: 150px;
+    height: 150px;
+}
+.jmc-logo img{
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+}
+
+.fb {
+  font-weight: bold;
+  font-size: 16px;
+color: white;
+}
+
+.fb-letter {
+  background-color: blue;
+  padding-left: 4px;
+  border-radius: 50px;
+}
+
+/* ── Mobile Responsive ──────────────────────────── */
+@media (max-width: 768px) {
+    .footer-bottom {
+        flex-direction: column;
+        gap: 30px;
+        padding: 30px 16px;
+    }
+
+    .footer-features {
+        gap: 20px;
+    }
+
+    .footer-column h3 {
+        font-size: 16px;
+    }
+
+    .jmc-logo {
+        width: 100px;
+        height: 100px;
+    }
+}
+
+@media (max-width: 480px) {
+    .footer {
+        padding: 40px 16px;
+        gap: 30px;
+    }
+
+    .footer-features {
+        gap: 16px;
+    }
+
+    .footer-features .feature img {
+        width: 36px;
+        height: 36px;
+    }
+
+    .footer-features .feature p {
+        font-size: 12px;
+    }
+}

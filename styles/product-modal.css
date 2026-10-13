@@ -1,0 +1,335 @@
+/* =============================================
+   PRODUCT QUICK-VIEW MODAL
+   shop.html — triggered when a product card is clicked
+============================================= */
+
+/* Overlay */
+.pq-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.55);
+  backdrop-filter: blur(3px);
+  z-index: 9100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.22s ease;
+}
+
+.pq-overlay.open {
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* Modal box */
+.pq-modal {
+  background: #ffffff;
+  border-radius: 18px;
+  width: 100%;
+  max-width: 740px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.22);
+  display: flex;
+  flex-direction: row;
+  transform: translateY(24px) scale(0.97);
+  transition: transform 0.25s ease;
+  position: relative;
+}
+
+.pq-overlay.open .pq-modal {
+  transform: translateY(0) scale(1);
+}
+
+/* Close button */
+.pq-close {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  background: #f1f5f9;
+  border: none;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  font-size: 18px;
+  line-height: 34px;
+  text-align: center;
+  cursor: pointer;
+  color: #475569;
+  z-index: 10;
+  transition: background 0.15s;
+}
+
+.pq-close:hover {
+  background: #e2e8f0;
+}
+
+/* Image pane */
+.pq-image-pane {
+  flex: 0 0 300px;
+  background: #f8fafc;
+  border-radius: 18px 0 0 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 24px;
+  overflow: hidden;
+}
+
+.pq-image-pane img {
+  width: 100%;
+  max-height: 260px;
+  object-fit: contain;
+  border-radius: 10px;
+}
+
+/* Info pane */
+.pq-info-pane {
+  flex: 1;
+  padding: 32px 28px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* Category badge */
+.pq-category {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #f97316;
+  background: #fff7ed;
+  padding: 3px 10px;
+  border-radius: 20px;
+  width: fit-content;
+}
+
+.pq-name {
+  font-size: 22px;
+  font-weight: 800;
+  color: #0f172a;
+  line-height: 1.25;
+  margin: 0;
+}
+
+.pq-price {
+  font-size: 26px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+/* Stock status */
+.pq-stock {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.pq-stock.in-stock  { color: #16a34a; }
+.pq-stock.low-stock { color: #d97706; }
+.pq-stock.critical  { color: #dc2626; }
+.pq-stock.out       { color: #94a3b8; }
+
+/* Divider */
+.pq-divider {
+  border: none;
+  border-top: 1px solid #e2e8f0;
+  margin: 0;
+}
+
+/* Specs selector */
+.pq-specs-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #475569;
+  margin-bottom: 8px;
+}
+
+.pq-spec-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.pq-spec-chip {
+  padding: 7px 14px;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #374151;
+  background: white;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s, color 0.15s;
+}
+
+.pq-spec-chip:hover {
+  border-color: #f97316;
+  color: #f97316;
+}
+
+.pq-spec-chip.selected {
+  border-color: #f97316;
+  background: #fff7ed;
+  color: #f97316;
+  font-weight: 700;
+}
+
+/* Quantity + Add to Cart row */
+.pq-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+/* Quantity stepper */
+.pq-qty-stepper {
+  display: flex;
+  align-items: center;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.pq-qty-stepper button {
+  width: 36px;
+  height: 44px;
+  border: none;
+  background: #f1f5f9;
+  font-size: 18px;
+  font-weight: 700;
+  color: #374151;
+  cursor: pointer;
+  transition: background 0.15s;
+  line-height: 1;
+}
+
+.pq-qty-stepper button:hover {
+  background: #e2e8f0;
+}
+
+.pq-qty-stepper input {
+  width: 44px;
+  height: 44px;
+  border: none;
+  border-left: 1.5px solid #e2e8f0;
+  border-right: 1.5px solid #e2e8f0;
+  text-align: center;
+  font-size: 15px;
+  font-weight: 700;
+  color: #0f172a !important;
+  -webkit-text-fill-color: #0f172a !important;
+  background: #ffffff !important;
+  outline: none;
+  appearance: textfield;
+  -moz-appearance: textfield;
+  padding: 0;
+}
+
+/* Hide number input spinners */
+.pq-qty-stepper input::-webkit-outer-spin-button,
+.pq-qty-stepper input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Add to cart button */
+.pq-add-btn {
+  flex: 1;
+  height: 44px;
+  background: #f97316;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: background 0.2s;
+}
+
+.pq-add-btn:hover {
+  background: #ea6c0a;
+}
+
+.pq-add-btn:disabled {
+  background: #94a3b8;
+  cursor: not-allowed;
+}
+
+/* Unit label */
+.pq-unit {
+  font-size: 12px;
+  color: #94a3b8;
+  margin-top: -8px;
+}
+
+/* Responsive — stack vertically on small screens */
+@media (max-width: 580px) {
+  .pq-modal {
+    flex-direction: column;
+    max-width: 100%;
+  }
+
+  .pq-image-pane {
+    flex: none;
+    border-radius: 18px 18px 0 0;
+    padding: 24px;
+  }
+
+  .pq-image-pane img {
+    max-height: 180px;
+  }
+
+  .pq-info-pane {
+    padding: 20px 18px 24px;
+  }
+}
+
+/* Qty validation error message */
+.pq-qty-error {
+  font-size: 12px;
+  font-weight: 600;
+  color: #dc2626;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 6px;
+  padding: 6px 10px;
+  margin-top: -6px;
+  animation: pq-error-in 0.18s ease;
+}
+
+@keyframes pq-error-in {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Max-stock flash on qty input */
+@keyframes pq-flash-red {
+  0%, 100% { background: #ffffff !important; color: #0f172a !important; -webkit-text-fill-color: #0f172a !important; }
+  40%       { background: #fee2e2 !important; color: #dc2626 !important; -webkit-text-fill-color: #dc2626 !important; }
+}
+
+.pq-qty-stepper input.pq-qty-max {
+  animation: pq-flash-red 0.55s ease;
+}
+
+/* ── Sizes available badge on product cards ── */
+.specs-badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  color: #2563eb;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  padding: 2px 8px;
+  border-radius: 20px;
+  margin-bottom: 4px;
+  width: fit-content;
+}

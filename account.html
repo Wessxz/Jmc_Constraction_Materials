@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Account - JMC Materials</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  
+  <!-- Global Styles -->
+  <link rel="stylesheet" href="styles/general.css" />
+  <link rel="stylesheet" href="styles/topbar.css" />
+  <link rel="stylesheet" href="styles/header.css" />
+  <link rel="stylesheet" href="styles/category.css" />
+  
+  <!-- Account Specific Style -->
+  <link rel="stylesheet" href="styles/account.css">
+</head>
+<body>
+
+  <!-- HEADER (From Page.html) -->
+  <header class="header">
+    <div class="left-header">
+      <div class="hamburger-menu" id="hamburgerMenu">&#9776;</div>
+      <div class="logo">
+        <a href="Page.html">
+          <img class="jmc" src="img/download.png" alt="JMC Materials" />
+        </a>
+      </div>
+    </div>
+    <div class="mid-header">
+      <div class="cart">
+        <img src="Icons/download (1).png" alt="Cart" />
+        <span class="cart-badge" id="cart-badge" style="display: none;">0</span>
+      </div>
+    </div>
+  </header>
+
+
+  <!-- ACCOUNT LAYOUT -->
+  <div class="account-wrapper">
+    
+    <!-- SIDEBAR -->
+    <aside class="account-sidebar">
+      
+      <!-- User Info Match -->
+      <div class="user-info-header">
+        <div class="avatar-placeholder">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="8" r="4"/>
+            <path d="M4 22C4 17.5817 7.58172 14 12 14C16.4183 14 20 17.5817 20 22"/>
+          </svg>
+        </div>
+        <div class="user-greeting">
+          <span class="hello-text">Hello!</span>
+          <span class="username-text" id="display-username">Loading...</span>
+        </div>
+      </div>
+
+      <!-- Navigation Menu -->
+      <ul class="sidebar-menu">
+        <li><a href="#" class="sidebar-btn" data-target="orders-section">My Orders</a></li>
+        <li><a href="#" class="sidebar-btn" data-target="addresses-section">Addresses</a></li>
+        <li><a href="#" class="sidebar-btn" data-target="bulk-orders-section">Bulk Orders</a></li>
+        <li><a href="#" class="sidebar-btn" data-target="details-section">Account Details</a></li>
+        <li><a href="login.html" class="sidebar-btn">Log Out</a></li>
+      </ul>
+
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="account-content">
+
+      <!-- ORDERS -->
+      <section id="orders-section" class="content-section">
+        <h2>My Orders</h2>
+        <div class="table-responsive">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Order</th>
+                <th>Date</th>
+                <th>Status</th>
+                <th>Total</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="orders-tbody">
+              <!-- JS injected -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- RESERVATIONS -->
+      <section id="reservations-section" class="content-section">
+        <h2>Reservations</h2>
+        <p class="dashboard-desc" style="margin-bottom: 15px;">Track your local pickup reservations here.</p>
+        <div class="table-responsive">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Reservation</th>
+                <th>Date Reserved</th>
+                <th>Status</th>
+                <th>Details</th>
+              </tr>
+            </thead>
+            <tbody id="reservations-tbody">
+              <!-- JS injected -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ADDRESSES -->
+      <section id="addresses-section" class="content-section">
+        <h2>Addresses</h2>
+        <p class="dashboard-desc" style="margin-bottom: 20px;">The following addresses will be used on the checkout page by default.</p>
+        
+        <form class="account-form" id="address-form">
+          <div class="form-group">
+            <label>Full Name</label>
+            <input type="text" id="bill-name" value="" required>
+          </div>
+          <div class="form-group">
+            <label>Street Address</label>
+            <input type="text" id="bill-street" value="" required>
+          </div>
+          <div class="form-group">
+            <label>Town / City</label>
+            <input type="text" id="bill-city" value="" required>
+          </div>
+          <div class="form-group">
+            <label>Contact Number</label>
+            <input type="text" id="bill-phone" value="" required>
+          </div>
+          <button type="submit" class="btn">Save Address</button>
+        </form>
+      </section>
+
+      <!-- BULK ORDERS -->
+      <section id="bulk-orders-section" class="content-section">
+        <h2>My Bulk Orders</h2>
+        <p class="dashboard-desc" style="margin-bottom:20px;">Track your bulk order inquiries and their current status.</p>
+        <div id="bulk-orders-list">
+          <p style="text-align:center; color:#94a3b8; padding:20px 0;">Loading…</p>
+        </div>
+      </section>
+
+      <!-- ACCOUNT DETAILS -->
+      <section id="details-section" class="content-section">
+        <h2>Account Details</h2>
+        <form class="account-form" id="details-form">
+          <div class="form-group">
+            <label>Display Name</label>
+            <input type="text" id="account-display-name" value="" required>
+            <span style="font-size: 0.8rem; color: #6b7280; margin-top: 4px; display: block;">
+              This will be how your name will be displayed in the account section and in reviews.
+            </span>
+          </div>
+          <div class="form-group">
+            <label>Email Address</label>
+            <input type="email" id="account-email" value="" required>
+          </div>
+
+          <h3 style="margin: 30px 0 15px; font-size: 1.2rem; color: #111;">Password Change</h3>
+          <div class="form-group">
+            <label>Current Password (leave blank to leave unchanged)</label>
+            <input type="password" id="current-pass">
+          </div>
+          <div class="form-group">
+            <label>New Password (leave blank to leave unchanged)</label>
+            <input type="password" id="new-pass">
+          </div>
+          <div class="form-group">
+            <label>Confirm New Password</label>
+            <input type="password" id="confirm-pass">
+          </div>
+          
+          <button type="submit" class="btn">Save Changes</button>
+        </form>
+      </section>
+
+    </main>
+  </div>
+
+  <div id="toast" class="toast">Feedback message</div>
+
+  <!-- Global Nav JS -->
+  <script src="Js/navigation.js?v=2"></script>
+  <!-- Account JS -->
+  <script src="Js/account.js?v=2"></script>
+</body>
+</html>

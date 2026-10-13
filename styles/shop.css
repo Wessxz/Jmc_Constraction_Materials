@@ -1,0 +1,296 @@
+/* =========================
+   SHOP / CATALOGUE
+========================= */
+
+.shop-section {
+  padding: 50px 60px;
+  background: #f8f9fa;
+}
+
+.shop-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+}
+
+.shop-header h2 {
+  font-size: 28px;
+  color: #1f2937;
+}
+
+.shop-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.shop-controls select,
+.shop-controls input {
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  outline: none;
+  font-size: 14px;
+}
+
+.shop-controls input {
+  flex: 1;
+}
+
+.shop-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 18px;
+}
+
+.shop-card {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.07);
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  transition: 0.3s;
+}
+
+.shop-card:hover {
+  transform: translateY(-4px);
+}
+
+.shop-card img {
+  width: 100%;
+  object-fit: contain;
+  height: 130px;
+}
+
+.shop-card .title {
+  font-size: 13px;
+  font-weight: 600;
+  margin: 8px 0;
+  color: #1f2937;
+}
+
+.shop-card .price {
+  font-size: 14px;
+  font-weight: 700;
+  color: #f97316;
+  margin-bottom: 10px;
+}
+
+.shop-card h4 {
+  font-size: 13px;
+  font-weight: 600;
+  margin: 6px 0 4px;
+  color: #1f2937;
+}
+
+.shop-card button {
+  padding: 8px 10px;
+  border: none;
+  border-radius: 8px;
+  background: #f97316;
+  color: white;
+  cursor: pointer;
+  font-size: 12px;
+  width: 100%;
+  transition: 0.3s;
+}
+
+.shop-card button:hover {
+  background: #ea6c0a;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 30px;
+}
+
+.pagination button {
+  padding: 10px 18px;
+  border: none;
+  border-radius: 8px;
+  background: #f97316;
+  color: white;
+  cursor: pointer;
+}
+
+/* ── Discount Badge ──────────────────────────────── */
+.discount-badge {
+    display: inline-block;
+    background: #dc2626;
+    color: #fff;
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 12px;
+    margin-right: 5px;
+    vertical-align: middle;
+    letter-spacing: 0.3px;
+}
+
+.original-price {
+    text-decoration: line-through;
+    color: #94a3b8;
+    font-size: 0.85em;
+    margin-right: 4px;
+}
+
+/* ── Mobile Responsive ──────────────────────────── */
+@media (max-width: 768px) {
+    .shop-section {
+        padding: 30px 16px;
+    }
+
+    .shop-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .shop-header h2 {
+        font-size: 20px;
+    }
+
+    .shop-controls {
+        width: 100%;
+        flex-wrap: wrap;
+    }
+
+    .shop-controls select,
+    .shop-controls input {
+        width: 100%;
+        font-size: 13px;
+    }
+
+    .shop-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+
+    .shop-card img {
+        height: 110px;
+    }
+}
+
+@media (max-width: 380px) {
+    .shop-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+    }
+
+    .shop-card {
+        padding: 8px;
+    }
+
+    .shop-card img {
+        height: 90px;
+    }
+
+    .shop-card h4 {
+        font-size: 11px;
+    }
+
+    .shop-card button {
+        font-size: 11px;
+        padding: 6px 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    .shop-section {
+        padding: 20px 10px;
+    }
+
+    .shop-header h2 {
+        font-size: 18px;
+    }
+
+    .shop-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+    }
+
+    .shop-card {
+        padding: 8px 6px;
+    }
+
+    .shop-card img {
+        height: 95px;
+    }
+
+    .shop-card .title,
+    .shop-card h4 {
+        font-size: 11px;
+    }
+
+    .shop-card .price {
+        font-size: 12px;
+    }
+
+    .shop-card button {
+        font-size: 11px;
+        padding: 6px 4px;
+    }
+
+    .pagination {
+        gap: 8px;
+    }
+
+    .pagination button {
+        padding: 8px 12px;
+        font-size: 13px;
+    }
+}
+
+/* ── Shop page only — override horizontal scroll to vertical grid on mobile ── */
+@media (max-width: 600px) {
+    .js-shop-grid.products-grid {
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 12px !important;
+        overflow-x: unset !important;
+        flex-direction: unset !important;
+        scroll-snap-type: unset !important;
+        padding-bottom: 0 !important;
+    }
+
+    .js-shop-grid .product-card {
+        flex: unset !important;
+        min-width: unset !important;
+        width: 100% !important;
+        scroll-snap-align: unset !important;
+    }
+
+    .js-shop-grid .product-card-img-wrap {
+        height: 130px;
+    }
+
+    .js-shop-grid .product-card-img-wrap img {
+        height: 130px;
+    }
+
+    .js-shop-grid .product-card-body {
+        padding: 10px 12px 12px;
+    }
+
+    .js-shop-grid .product-card-name {
+        font-size: 12px;
+        min-height: unset;
+    }
+
+    .js-shop-grid .price {
+        font-size: 13px;
+    }
+
+    .js-shop-grid .add-to-cart-btn {
+        font-size: 12px;
+        padding: 8px 0;
+    }
+}

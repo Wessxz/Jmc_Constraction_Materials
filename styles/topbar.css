@@ -1,0 +1,24 @@
+.top-bar {
+    background: #1e293b;
+    color: white;
+    padding: 8px 60px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+}
+
+.top-bar a {
+    color: #f97316;
+    margin-left: 15px;
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+}
+
+.top-bar a:hover {
+    opacity: 0.8;
+}
+
+.right-side {
+    display: flex;
+    gap: 15px;
+}
